@@ -3,7 +3,7 @@ export default function Hero() {
     <header className="hero">
       <p className="badge">Portfolio</p>
 
-      <h1>Ton Nom</h1>
+      <h1 className="hero-title">Ton Nom</h1>
 
       <p className="subtitle">
         Étudiant / Ingénieur — React • Firebase • Web
