@@ -33,9 +33,7 @@ export default function Parcours() {
     <div className="page-stack">
       <section className="section">
         <h1>Parcours</h1>
-        <p className="muted">
-          Chronologie claire, orientée impact et facilement lisible.
-        </p>
+        <p className="muted">Chronologie claire, orientée impact et facilement lisible.</p>
         <Timeline items={grouped.education} onSelect={setSelectedItem} />
       </section>
 
