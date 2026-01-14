@@ -75,7 +75,6 @@ export default function Parcours() {
             <div className="modal-images">
               {selectedItem.images?.map((image, index) => {
                 const key = `${selectedItem.id}-${index}`;
-
                 if (imageErrors[key]) {
                   return (
                     <div key={key} className="modal-image-fallback">

@@ -1,0 +1,17 @@
+@media (max-width: 720px) {
+  .content {
+    padding-top: 100px;
+  }
+
+  .timeline {
+    padding-left: 18px;
+  }
+
+  .timeline-card {
+    padding-left: 18px;
+  }
+
+  .timeline-dot {
+    left: -6px;
+  }
+}
