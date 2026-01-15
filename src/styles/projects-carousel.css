@@ -48,6 +48,9 @@
   place-items: center;
   transform-style: preserve-3d;
   z-index: 1;
+
+  /* Laisse respirer les cartes sur les côtés (réduit l’impression de chevauchement) */
+  padding-inline: clamp(12px, 4vw, 52px);
 }
 
 .project-carousel-card {

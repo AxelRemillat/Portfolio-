@@ -22,6 +22,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
   const startYRef = useRef(0);
   const pointerIdRef = useRef<number | null>(null);
   const draggedRef = useRef(false);
+  const pressedIndexRef = useRef<number | null>(null);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -57,6 +58,13 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (event.button !== 0 && event.pointerType === "mouse") return;
+
+    // Déterminer quelle carte est pressée (pour pouvoir ouvrir au pointerup)
+    const target = event.target as HTMLElement;
+    const card = target.closest(".project-carousel-card") as HTMLElement | null;
+    const indexAttribute = card?.dataset.index;
+    pressedIndexRef.current =
+      indexAttribute !== undefined ? Number(indexAttribute) : null;
 
     draggedRef.current = false;
     pointerIdRef.current = event.pointerId;
@@ -100,11 +108,27 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
 
     event.currentTarget.releasePointerCapture(event.pointerId);
     pointerIdRef.current = null;
+
+    // Important: on termine le drag (snap)
     endDrag();
+
+    // Si ce n'était PAS un drag => c'est un clic => on ouvre la modal
+    if (!draggedRef.current && pressedIndexRef.current !== null) {
+      const index = pressedIndexRef.current;
+      const project = projects[index];
+      if (project) {
+        // UX: on centre la carte puis on ouvre
+        setActiveIndex(index);
+        setActiveProject(project);
+      }
+    }
+
+    pressedIndexRef.current = null;
   };
 
   const handlePointerCancel = () => {
     pointerIdRef.current = null;
+    pressedIndexRef.current = null;
     endDrag();
   };
 
@@ -137,18 +161,18 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
 
       if (abs === 1) {
         scale = 0.96;
-        opacity = 0.86;
-        blur = 0.6;
+        opacity = 0.88;
+        blur = 0.5;
         translateZ = -40;
         rotateY = direction * 12;
-        translateX = direction * cardWidth * 0.78;
+        translateX = direction * cardWidth * 0.92;
       } else if (abs === 2) {
         scale = 0.9;
-        opacity = 0.6;
-        blur = 1.6;
+        opacity = 0.62;
+        blur = 1.4;
         translateZ = -90;
         rotateY = direction * 22;
-        translateX = direction * cardWidth * 1.32;
+        translateX = direction * cardWidth * 1.28;
       } else if (abs > 2) {
         scale = 0.8;
         opacity = 0.2;
@@ -169,18 +193,6 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
       } as React.CSSProperties;
     };
   }, [cardWidth, dragOffset, isDragging, prefersReducedMotion]);
-
-  const handleCardClick = (index: number) => {
-    // Si on vient de drag => pas d’ouverture modal
-    if (draggedRef.current) return;
-
-    const project = projects[index];
-    if (!project) return;
-
-    // UX: clic sur une carte non active => on la centre + on ouvre direct
-    setActiveIndex(index);
-    setActiveProject(project);
-  };
 
   return (
     <section className="section projects-carousel-section">
@@ -218,8 +230,8 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
                     ? "project-carousel-card active"
                     : "project-carousel-card"
                 }
+                data-index={index}
                 style={getCardStyle(offset)}
-                onClick={() => handleCardClick(index)}
               >
                 <div className="project-carousel-media">
                   {project.coverImage ? (
