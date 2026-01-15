@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const highlights = [
@@ -13,9 +13,29 @@ export default function Hero() {
     secondary: false,
   });
 
+  const [isVisible, setIsVisible] = useState(false);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
+
   const handleImageError = (key: "primary" | "secondary") => () => {
     setImageErrors((prev) => ({ ...prev, [key]: true }));
   };
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !mediaRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(mediaRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="hero">
@@ -54,27 +74,32 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero-media">
-          {imageErrors.primary ? (
-            <div className="photo-frame">Photo</div>
-          ) : (
-            <img
-              src="/me-1.jpg"
-              alt="Portrait principal"
-              className="photo"
-              onError={handleImageError("primary")}
-            />
-          )}
-          {imageErrors.secondary ? (
-            <div className="photo-frame">Photo</div>
-          ) : (
-            <img
-              src="/me-2.jpg"
-              alt="Portrait secondaire"
-              className="photo"
-              onError={handleImageError("secondary")}
-            />
-          )}
+        <div ref={mediaRef} className={`hero-media ${isVisible ? "is-visible" : ""}`}>
+          <div className="portrait" data-variant="primary">
+            {imageErrors.primary ? (
+              <div className="portrait-fallback">Photo</div>
+            ) : (
+              <img
+                src="/me-1.jpg"
+                alt="Portrait principal"
+                className="portrait-image"
+                onError={handleImageError("primary")}
+              />
+            )}
+          </div>
+
+          <div className="portrait" data-variant="secondary">
+            {imageErrors.secondary ? (
+              <div className="portrait-fallback">Photo</div>
+            ) : (
+              <img
+                src="/me-2.jpg"
+                alt="Portrait secondaire"
+                className="portrait-image"
+                onError={handleImageError("secondary")}
+              />
+            )}
+          </div>
         </div>
       </div>
     </header>
