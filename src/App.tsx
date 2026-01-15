@@ -1,21 +1,22 @@
-import "./App.css";
-import Hero from "./components/Hero";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
+import "./styles/index.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./layout/Layout";
+import Home from "./pages/Home";
+import Parcours from "./pages/Parcours";
+import ProjectsPage from "./pages/Projects";
+import ContactPage from "./pages/Contact";
 
 export default function App() {
   return (
-    <div className="page">
-      <Hero />
-
-      <main className="content">
-        <Projects />
-        <Contact />
-      </main>
-
-      <footer className="footer">
-        <small>© {new Date().getFullYear()} Ton Nom</small>
-      </footer>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/parcours" element={<Parcours />} />
+          <Route path="/projets" element={<ProjectsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
