@@ -11,18 +11,30 @@ const DRAG_THRESHOLD = 120;
 const CLICK_DRAG_TOLERANCE_PX = 10;
 
 export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [dragOffset, setDragOffset] = useState(0);
+  const initialIndex = (count: number) => {
+    if (count >= 3) return Math.floor(count / 2);
+    if (count === 2) return 1;
+    return 0;
+  };
+
+  const [activeIndex, setActiveIndex] = useState(() => initialIndex(projects.length));
   const [isDragging, setIsDragging] = useState(false);
   const [cardWidth, setCardWidth] = useState(380);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
+  // Drag refs
   const startXRef = useRef(0);
   const startYRef = useRef(0);
   const pointerIdRef = useRef<number | null>(null);
   const draggedRef = useRef(false);
   const pressedIndexRef = useRef<number | null>(null);
+
+  // Smooth “tapis roulant”
+  const rawOffsetRef = useRef(0);
+  const smoothedOffsetRef = useRef(0);
+  const [smoothedOffset, setSmoothedOffset] = useState(0);
+  const animationFrameRef = useRef<number | null>(null);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,6 +45,11 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
+
+  // Si la liste de projets change, on recentre sur le milieu
+  useEffect(() => {
+    setActiveIndex(initialIndex(projects.length));
+  }, [projects.length]);
 
   useEffect(() => {
     const measure = () => {
@@ -49,6 +66,46 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
     return () => window.removeEventListener("resize", measure);
   }, []);
 
+  // Animation smoothing (conveyor)
+  useEffect(() => {
+    const animate = () => {
+      const target = rawOffsetRef.current;
+
+      setSmoothedOffset((prev) => {
+        if (prefersReducedMotion) {
+          smoothedOffsetRef.current = target;
+          return target;
+        }
+
+        const next = prev + (target - prev) * 0.18;
+        const settled = Math.abs(next) < 0.2 && !isDragging ? 0 : next;
+        smoothedOffsetRef.current = settled;
+        return settled;
+      });
+
+      if (
+        isDragging ||
+        Math.abs(rawOffsetRef.current) > 0.2 ||
+        Math.abs(smoothedOffsetRef.current) > 0.2
+      ) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+      } else {
+        animationFrameRef.current = null;
+      }
+    };
+
+    if (animationFrameRef.current === null) {
+      animationFrameRef.current = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+    };
+  }, [isDragging, prefersReducedMotion]);
+
   const maxIndex = projects.length - 1;
 
   const goTo = (index: number) => {
@@ -63,8 +120,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
     const target = event.target as HTMLElement;
     const card = target.closest(".project-carousel-card") as HTMLElement | null;
     const indexAttribute = card?.dataset.index;
-    pressedIndexRef.current =
-      indexAttribute !== undefined ? Number(indexAttribute) : null;
+    pressedIndexRef.current = indexAttribute !== undefined ? Number(indexAttribute) : null;
 
     draggedRef.current = false;
     pointerIdRef.current = event.pointerId;
@@ -72,7 +128,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
     startYRef.current = event.clientY;
 
     setIsDragging(true);
-    setDragOffset(0);
+    rawOffsetRef.current = 0;
 
     event.currentTarget.setPointerCapture(event.pointerId);
   };
@@ -87,7 +143,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
       draggedRef.current = true;
     }
 
-    setDragOffset(deltaX);
+    rawOffsetRef.current = deltaX;
   };
 
   const endDrag = () => {
@@ -95,12 +151,14 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
 
     setIsDragging(false);
 
-    if (Math.abs(dragOffset) > DRAG_THRESHOLD) {
-      const direction = dragOffset > 0 ? -1 : 1;
+    const currentOffset = rawOffsetRef.current;
+    if (Math.abs(currentOffset) > DRAG_THRESHOLD) {
+      const direction = currentOffset > 0 ? -1 : 1;
       goTo(activeIndex + direction);
     }
 
-    setDragOffset(0);
+    // Laisse le smoothing ramener doucement vers 0
+    rawOffsetRef.current = 0;
   };
 
   const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -109,7 +167,6 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
     event.currentTarget.releasePointerCapture(event.pointerId);
     pointerIdRef.current = null;
 
-    // Important: on termine le drag (snap)
     endDrag();
 
     // Si ce n'était PAS un drag => c'est un clic => on ouvre la modal
@@ -117,7 +174,6 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
       const index = pressedIndexRef.current;
       const project = projects[index];
       if (project) {
-        // UX: on centre la carte puis on ouvre
         setActiveIndex(index);
         setActiveProject(project);
       }
@@ -159,40 +215,43 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
       let rotateY = 0;
       let translateX = 0;
 
+      // Gap réel entre cartes => réduit le chevauchement
+      const gap = Math.max(18, cardWidth * 0.06);
+
       if (abs === 1) {
         scale = 0.96;
         opacity = 0.88;
         blur = 0.5;
         translateZ = -40;
         rotateY = direction * 12;
-        translateX = direction * cardWidth * 0.92;
+        translateX = direction * (cardWidth + gap);
       } else if (abs === 2) {
         scale = 0.9;
         opacity = 0.62;
         blur = 1.4;
         translateZ = -90;
         rotateY = direction * 22;
-        translateX = direction * cardWidth * 1.28;
+        translateX = direction * (cardWidth + gap) * 2;
       } else if (abs > 2) {
         scale = 0.8;
         opacity = 0.2;
         blur = 4;
         translateZ = -120;
         rotateY = direction * 28;
-        translateX = direction * cardWidth * 1.45;
+        translateX = direction * (cardWidth + gap) * abs;
       }
 
       const transition = prefersReducedMotion || isDragging ? "none" : undefined;
 
       return {
-        transform: `translateX(${translateX + dragOffset}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
+        transform: `translateX(${translateX + smoothedOffset}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
         opacity,
         filter: prefersReducedMotion ? "none" : `blur(${blur}px)`,
         zIndex: 10 - abs,
         transition,
       } as React.CSSProperties;
     };
-  }, [cardWidth, dragOffset, isDragging, prefersReducedMotion]);
+  }, [cardWidth, isDragging, prefersReducedMotion, smoothedOffset]);
 
   return (
     <section className="section projects-carousel-section">
@@ -225,12 +284,9 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
               <button
                 key={project.id}
                 type="button"
-                className={
-                  index === activeIndex
-                    ? "project-carousel-card active"
-                    : "project-carousel-card"
-                }
+                className={index === activeIndex ? "project-carousel-card active" : "project-carousel-card"}
                 data-index={index}
+                data-offset={offset}
                 style={getCardStyle(offset)}
               >
                 <div className="project-carousel-media">
