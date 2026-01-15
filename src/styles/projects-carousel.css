@@ -9,6 +9,9 @@
   gap: 24px;
 }
 
+/* Flèches supprimées volontairement (UI inutile) */
+/* .projects-carousel-actions / .carousel-arrow supprimés */
+
 .projects-carousel-shell {
   margin-top: 32px;
   position: relative;
@@ -28,7 +31,11 @@
   position: absolute;
   inset: 10% 0;
   border-radius: 32px;
-  background: linear-gradient(120deg, rgba(94, 234, 212, 0.08), rgba(37, 99, 235, 0.08));
+  background: linear-gradient(
+    120deg,
+    rgba(94, 234, 212, 0.08),
+    rgba(37, 99, 235, 0.08)
+  );
   filter: blur(10px);
   z-index: 0;
 }
@@ -62,6 +69,7 @@
     filter 550ms cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 550ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform, opacity, filter;
+
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -88,12 +96,18 @@
   height: 100%;
   object-fit: cover;
   display: block;
+
+  /* Important: permet le drag sur la zone image (events gérés par le parent) */
   pointer-events: none;
   -webkit-user-drag: none;
 }
 
 .project-carousel-placeholder {
-  background: linear-gradient(130deg, rgba(94, 234, 212, 0.25), rgba(15, 23, 42, 0.8));
+  background: linear-gradient(
+    130deg,
+    rgba(94, 234, 212, 0.25),
+    rgba(15, 23, 42, 0.8)
+  );
 }
 
 .project-carousel-content {
@@ -120,6 +134,7 @@
   font-size: 14px;
 }
 
+/* Lisibilité: éviter que les cartes non actives "débordent" visuellement */
 .project-carousel-card:not(.active) .project-carousel-description {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -127,6 +142,7 @@
   overflow: hidden;
 }
 
+/* Modal content */
 .project-modal {
   display: flex;
   flex-direction: column;
@@ -183,6 +199,7 @@
   flex-wrap: wrap;
 }
 
+/* Modal grand format quand open */
 .project-modal-open .modal {
   width: min(1100px, 92vw);
   max-height: 88vh;
