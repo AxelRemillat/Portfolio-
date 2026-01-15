@@ -7,6 +7,8 @@ type ProjectsCarousel3DProps = {
 };
 
 const DRAG_THRESHOLD = 120;
+// Seuil pour distinguer un clic d’un drag (évite ouverture modal pendant un swipe)
+const CLICK_DRAG_TOLERANCE_PX = 10;
 
 export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -15,11 +17,13 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
   const [cardWidth, setCardWidth] = useState(380);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+
   const startXRef = useRef(0);
   const startYRef = useRef(0);
   const pointerIdRef = useRef<number | null>(null);
   const draggedRef = useRef(false);
   const pressedIndexRef = useRef<number | null>(null);
+
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -53,10 +57,9 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
   };
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0 && event.pointerType === "mouse") {
-      return;
-    }
+    if (event.button !== 0 && event.pointerType === "mouse") return;
 
+    // Déterminer quelle carte est pressée (pour pouvoir ouvrir au pointerup)
     const target = event.target as HTMLElement;
     const card = target.closest(".project-carousel-card") as HTMLElement | null;
     const indexAttribute = card?.dataset.index;
@@ -67,28 +70,28 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
     pointerIdRef.current = event.pointerId;
     startXRef.current = event.clientX;
     startYRef.current = event.clientY;
+
     setIsDragging(true);
     setDragOffset(0);
+
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging || pointerIdRef.current !== event.pointerId) {
-      return;
-    }
+    if (!isDragging || pointerIdRef.current !== event.pointerId) return;
 
-    const delta = event.clientX - startXRef.current;
+    const deltaX = event.clientX - startXRef.current;
     const deltaY = event.clientY - startYRef.current;
-    if (Math.hypot(delta, deltaY) > 10) {
+
+    if (Math.hypot(deltaX, deltaY) > CLICK_DRAG_TOLERANCE_PX) {
       draggedRef.current = true;
     }
-    setDragOffset(delta);
+
+    setDragOffset(deltaX);
   };
 
   const endDrag = () => {
-    if (!isDragging) {
-      return;
-    }
+    if (!isDragging) return;
 
     setIsDragging(false);
 
@@ -101,25 +104,31 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
   };
 
   const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (pointerIdRef.current !== event.pointerId) {
-      return;
-    }
+    if (pointerIdRef.current !== event.pointerId) return;
+
     event.currentTarget.releasePointerCapture(event.pointerId);
     pointerIdRef.current = null;
+
+    // Important: on termine le drag (snap)
     endDrag();
 
+    // Si ce n'était PAS un drag => c'est un clic => on ouvre la modal
     if (!draggedRef.current && pressedIndexRef.current !== null) {
-      const project = projects[pressedIndexRef.current];
+      const index = pressedIndexRef.current;
+      const project = projects[index];
       if (project) {
-        setActiveIndex(pressedIndexRef.current);
+        // UX: on centre la carte puis on ouvre
+        setActiveIndex(index);
         setActiveProject(project);
       }
     }
+
     pressedIndexRef.current = null;
   };
 
   const handlePointerCancel = () => {
     pointerIdRef.current = null;
+    pressedIndexRef.current = null;
     endDrag();
   };
 
@@ -142,6 +151,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
     return (offset: number) => {
       const abs = Math.abs(offset);
       const direction = Math.sign(offset);
+
       let scale = 1.02;
       let opacity = 1;
       let blur = 0;
@@ -189,10 +199,9 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
       <div className="projects-carousel-header">
         <div>
           <h2>Projets</h2>
-          <p className="muted">
-            Un aperçu premium et interactif des projets les plus pertinents.
-          </p>
+          <p className="muted">Un aperçu premium et interactif des projets les plus pertinents.</p>
         </div>
+        {/* Flèches supprimées volontairement */}
       </div>
 
       <div
@@ -211,6 +220,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
         <div className="projects-carousel-stage">
           {projects.map((project, index) => {
             const offset = index - activeIndex;
+
             return (
               <button
                 key={project.id}
@@ -235,12 +245,14 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
                     <div className="project-carousel-placeholder" />
                   )}
                 </div>
+
                 <div className="project-carousel-content">
                   <h3>{project.title}</h3>
                   {project.subtitle && (
                     <p className="project-carousel-subtitle">{project.subtitle}</p>
                   )}
                   <p className="project-carousel-description">{project.description}</p>
+
                   <div className="tags">
                     {project.tags.map((tag) => (
                       <span key={tag} className="tag">
