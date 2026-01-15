@@ -28,6 +28,7 @@
   gap: 16px;
 }
 
+/* Draggable sur toute la fenêtre */
 .modal.draggable {
   cursor: grab;
 }
@@ -43,7 +44,8 @@
   border-radius: 999px;
   padding: 8px 14px;
   cursor: pointer;
-  transition: border-color var(--transition), color var(--transition), transform var(--transition);
+  transition: border-color var(--transition), color var(--transition),
+    transform var(--transition);
 }
 
 .modal-close:hover,

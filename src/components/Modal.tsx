@@ -17,16 +17,16 @@ export default function Modal({
 }: ModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+
   const dragStartRef = useRef({ x: 0, y: 0 });
   const originRef = useRef({ x: 0, y: 0 });
   const dragCandidateRef = useRef(false);
 
   useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
+    if (!isOpen) return;
 
     setPosition({ x: 0, y: 0 });
 
@@ -52,14 +52,12 @@ export default function Modal({
     Math.min(Math.max(value, min), max);
 
   const handleDragStart = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggable) {
-      return;
-    }
+    if (!draggable) return;
 
-    if (event.pointerType === "touch") {
-      return;
-    }
+    // Sur mobile/touch, on évite le drag pour ne pas casser le scroll/UX
+    if (event.pointerType === "touch") return;
 
+    // Si on clique sur un élément interactif, on ne démarre pas le drag
     const target = event.target as HTMLElement;
     if (target.closest("button, a, input, textarea, select, label")) {
       return;
@@ -68,21 +66,23 @@ export default function Modal({
     dragStartRef.current = { x: event.clientX, y: event.clientY };
     originRef.current = { ...position };
     dragCandidateRef.current = true;
+
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const handleDragMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggable || !dragCandidateRef.current || !modalRef.current) {
-      return;
-    }
+    if (!draggable || !dragCandidateRef.current || !modalRef.current) return;
 
     const deltaX = event.clientX - dragStartRef.current.x;
     const deltaY = event.clientY - dragStartRef.current.y;
+
+    // Tant qu'on n'a pas dépassé un petit seuil, on ne "bascule" pas en drag
     if (!isDragging && Math.hypot(deltaX, deltaY) < 8) {
       return;
     }
 
-    setIsDragging(true);
+    if (!isDragging) setIsDragging(true);
+
     const rect = modalRef.current.getBoundingClientRect();
     const maxX = Math.max(0, window.innerWidth - rect.width);
     const maxY = Math.max(0, window.innerHeight - rect.height);
@@ -94,9 +94,7 @@ export default function Modal({
   };
 
   const handleDragEnd = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggable) {
-      return;
-    }
+    if (!draggable) return;
 
     if (dragCandidateRef.current) {
       dragCandidateRef.current = false;
@@ -109,7 +107,11 @@ export default function Modal({
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
       <div
         className={
-          draggable ? (isDragging ? "modal draggable is-dragging" : "modal draggable") : "modal"
+          draggable
+            ? isDragging
+              ? "modal draggable is-dragging"
+              : "modal draggable"
+            : "modal"
         }
         role="dialog"
         aria-modal="true"
@@ -128,7 +130,7 @@ export default function Modal({
         onPointerUp={handleDragEnd}
         onPointerCancel={handleDragEnd}
       >
-        <div className="modal-header">
+        <div className={draggable ? "modal-header draggable" : "modal-header"}>
           <h2>{title}</h2>
           <button
             type="button"
