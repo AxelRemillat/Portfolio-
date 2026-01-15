@@ -28,6 +28,14 @@
   gap: 16px;
 }
 
+.modal.draggable {
+  cursor: grab;
+}
+
+.modal.draggable.is-dragging {
+  cursor: grabbing;
+}
+
 .modal-close {
   background: transparent;
   border: 1px solid rgba(148, 163, 184, 0.35);
