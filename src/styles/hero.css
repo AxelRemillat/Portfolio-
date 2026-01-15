@@ -30,7 +30,12 @@
 }
 
 .hero-title {
-  background: linear-gradient(120deg, #ffffff 10%, rgba(59, 130, 246, 0.85) 65%, #ffffff 100%);
+  background: linear-gradient(
+    120deg,
+    #ffffff 10%,
+    rgba(59, 130, 246, 0.85) 65%,
+    #ffffff 100%
+  );
   -webkit-background-clip: text;
   color: transparent;
 }
@@ -73,12 +78,14 @@
   flex-wrap: wrap;
 }
 
+/* Base media layout (kept for compatibility) */
 .hero-media {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 
+/* Old photo styles (kept in case some pages still use them) */
 .photo,
 .photo-frame {
   width: 100%;
@@ -97,6 +104,7 @@
   text-transform: uppercase;
 }
 
+/* Premium portraits (Codex) */
 .hero-media {
   position: relative;
 }
@@ -130,7 +138,12 @@
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(140deg, rgba(59, 130, 246, 0.6), rgba(59, 130, 246, 0.05) 55%, rgba(255, 255, 255, 0.08));
+  background: linear-gradient(
+    140deg,
+    rgba(59, 130, 246, 0.6),
+    rgba(59, 130, 246, 0.05) 55%,
+    rgba(255, 255, 255, 0.08)
+  );
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   pointer-events: none;
@@ -159,7 +172,12 @@
 }
 
 .portrait:hover::before {
-  background: linear-gradient(140deg, rgba(59, 130, 246, 0.7), rgba(59, 130, 246, 0.1) 55%, rgba(255, 255, 255, 0.12));
+  background: linear-gradient(
+    140deg,
+    rgba(59, 130, 246, 0.7),
+    rgba(59, 130, 246, 0.1) 55%,
+    rgba(255, 255, 255, 0.12)
+  );
 }
 
 .portrait-image,

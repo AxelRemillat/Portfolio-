@@ -12,6 +12,7 @@ export default function Hero() {
     primary: false,
     secondary: false,
   });
+
   const [isVisible, setIsVisible] = useState(false);
   const mediaRef = useRef<HTMLDivElement | null>(null);
 
@@ -20,9 +21,7 @@ export default function Hero() {
   };
 
   useEffect(() => {
-    if (typeof window === "undefined" || !mediaRef.current) {
-      return;
-    }
+    if (typeof window === "undefined" || !mediaRef.current) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -35,7 +34,6 @@ export default function Hero() {
     );
 
     observer.observe(mediaRef.current);
-
     return () => observer.disconnect();
   }, []);
 
@@ -76,10 +74,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div
-          ref={mediaRef}
-          className={`hero-media ${isVisible ? "is-visible" : ""}`}
-        >
+        <div ref={mediaRef} className={`hero-media ${isVisible ? "is-visible" : ""}`}>
           <div className="portrait" data-variant="primary">
             {imageErrors.primary ? (
               <div className="portrait-fallback">Photo</div>
@@ -92,6 +87,7 @@ export default function Hero() {
               />
             )}
           </div>
+
           <div className="portrait" data-variant="secondary">
             {imageErrors.secondary ? (
               <div className="portrait-fallback">Photo</div>

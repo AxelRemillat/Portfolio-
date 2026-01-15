@@ -33,9 +33,7 @@ export default function Parcours() {
     <div className="page-stack">
       <section className="section">
         <h1>Parcours</h1>
-        <p className="muted">
-          Chronologie claire, orientée impact et facilement lisible.
-        </p>
+        <p className="muted">Chronologie claire, orientée impact et facilement lisible.</p>
         <Timeline items={grouped.education} onSelect={setSelectedItem} />
       </section>
 
@@ -77,6 +75,7 @@ export default function Parcours() {
             <div className="modal-images">
               {selectedItem.images?.map((image, index) => {
                 const key = `${selectedItem.id}-${index}`;
+
                 if (imageErrors[key]) {
                   return (
                     <div key={key} className="modal-image-fallback">
