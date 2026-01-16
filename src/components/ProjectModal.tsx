@@ -24,17 +24,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const description = project.details ?? project.description;
 
   return (
-    <Modal
-      isOpen={Boolean(project)}
-      title={project.title}
-      onClose={onClose}
-      draggable
-    >
+    <Modal isOpen={Boolean(project)} title={project.title} onClose={onClose} draggable>
       <div className="project-modal">
         {project.subtitle && (
           <p className="project-modal-subtitle">{project.subtitle}</p>
         )}
-
         <p className="project-modal-description">{description}</p>
 
         {project.tags?.length > 0 && (
@@ -78,7 +72,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               GitHub
             </a>
           )}
-
           {project.liveUrl && (
             <a
               className="link"
