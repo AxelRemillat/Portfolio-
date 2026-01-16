@@ -31,9 +31,7 @@ export default function Modal({
     setPosition({ x: 0, y: 0 });
 
     const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+      if (event.key === "Escape") onClose();
     };
 
     document.addEventListener("keydown", handleKey);
@@ -44,9 +42,7 @@ export default function Modal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
 
   const clamp = (value: number, min: number, max: number) =>
     Math.min(Math.max(value, min), max);
@@ -59,9 +55,7 @@ export default function Modal({
 
     // Si on clique sur un élément interactif, on ne démarre pas le drag
     const target = event.target as HTMLElement;
-    if (target.closest("button, a, input, textarea, select, label")) {
-      return;
-    }
+    if (target.closest("button, a, input, textarea, select, label")) return;
 
     dragStartRef.current = { x: event.clientX, y: event.clientY };
     originRef.current = { ...position };
@@ -77,9 +71,7 @@ export default function Modal({
     const deltaY = event.clientY - dragStartRef.current.y;
 
     // Tant qu'on n'a pas dépassé un petit seuil, on ne "bascule" pas en drag
-    if (!isDragging && Math.hypot(deltaX, deltaY) < 8) {
-      return;
-    }
+    if (!isDragging && Math.hypot(deltaX, deltaY) < 8) return;
 
     if (!isDragging) setIsDragging(true);
 
@@ -119,9 +111,7 @@ export default function Modal({
         ref={modalRef}
         style={
           draggable
-            ? {
-                transform: `translate(${position.x}px, ${position.y}px)`,
-              }
+            ? { transform: `translate(${position.x}px, ${position.y}px)` }
             : undefined
         }
         onClick={(event) => event.stopPropagation()}

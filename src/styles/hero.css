@@ -9,6 +9,29 @@
   align-items: center;
 }
 
+.hero-text,
+.hero-media {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.hero-text {
+  transform: translateX(-24px);
+}
+
+.hero-enter .hero-text,
+.hero-enter .hero-media {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.hero-enter .hero-media {
+  transition-delay: 120ms;
+}
+
 .hero-text {
   display: flex;
   flex-direction: column;
@@ -340,6 +363,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-text,
+  .hero-media {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   .hero-text::before,
   .hero-text::after,
   .hero-media::before,

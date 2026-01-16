@@ -2,11 +2,45 @@
   position: relative;
 }
 
+#projects {
+  scroll-margin-top: 90px;
+}
+
+.projects-carousel-section::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  background: radial-gradient(
+    circle at 30% 40%,
+    rgba(59, 130, 246, 0.18),
+    transparent 60%
+  );
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.projects-carousel-section > * {
+  position: relative;
+  z-index: 1;
+}
+
 .projects-carousel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
+}
+
+.projects-carousel-header h2 {
+  font-size: clamp(28px, 4vw, 36px);
+}
+
+.projects-carousel-cta {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.04em;
 }
 
 /* Flèches supprimées volontairement (UI inutile) */
@@ -20,6 +54,7 @@
   transform-style: preserve-3d;
   outline: none;
   cursor: grab;
+  overflow: hidden;
 }
 
 .projects-carousel-shell:focus-visible {
@@ -55,7 +90,7 @@
 
 .project-carousel-card {
   position: absolute;
-  width: clamp(280px, 34vw, 480px);
+  width: clamp(320px, 44vw, 620px);
   aspect-ratio: 16 / 10;
   border-radius: 24px;
   border: 1px solid rgba(148, 163, 184, 0.3);
@@ -72,9 +107,18 @@
     filter 550ms cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 550ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform, opacity, filter;
-
   user-select: none;
   -webkit-user-drag: none;
+}
+
+.project-carousel-card::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
 }
 
 /* Séparateur discret entre vignettes (voisins immédiats) */
@@ -107,7 +151,19 @@
 }
 
 .project-carousel-card.active {
-  box-shadow: 0 28px 60px rgba(15, 23, 42, 0.6);
+  border-color: rgba(94, 234, 212, 0.45);
+  box-shadow: 0 34px 80px rgba(15, 23, 42, 0.6),
+    inset 0 -3px 0 rgba(94, 234, 212, 0.55);
+}
+
+.project-carousel-card.active::before {
+  opacity: 1;
+}
+
+.project-carousel-card:not(.active):hover {
+  filter: brightness(1.06);
+  border-color: rgba(148, 163, 184, 0.45);
+  box-shadow: 0 26px 60px rgba(15, 23, 42, 0.5);
 }
 
 .project-carousel-card:focus-visible {

@@ -17,14 +17,17 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     };
   }, [project]);
 
-  if (!project) {
-    return null;
-  }
+  if (!project) return null;
 
   const description = project.details ?? project.description;
 
   return (
-    <Modal isOpen={Boolean(project)} title={project.title} onClose={onClose} draggable>
+    <Modal
+      isOpen={Boolean(project)}
+      title={project.title}
+      onClose={onClose}
+      draggable
+    >
       <div className="project-modal">
         {project.subtitle && (
           <p className="project-modal-subtitle">{project.subtitle}</p>
