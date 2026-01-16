@@ -7,8 +7,8 @@ type ProjectsCarousel3DProps = {
 };
 
 const DRAG_THRESHOLD = 120;
-// Seuil pour distinguer un clic d’un drag (évite ouverture modal pendant un swipe)
 const CLICK_DRAG_TOLERANCE_PX = 10;
+const CARD_GAP_PX = 36;
 
 export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps) {
   const initialIndex = (count: number) => {
@@ -56,9 +56,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
       const card = containerRef.current?.querySelector<HTMLButtonElement>(
         ".project-carousel-card",
       );
-      if (card) {
-        setCardWidth(card.getBoundingClientRect().width);
-      }
+      if (card) setCardWidth(card.getBoundingClientRect().width);
     };
 
     measure();
@@ -215,29 +213,30 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
       let rotateY = 0;
       let translateX = 0;
 
-      // Gap réel entre cartes => réduit le chevauchement
-      const gap = Math.max(18, cardWidth * 0.06);
+      const gap = CARD_GAP_PX;
 
-      if (abs === 1) {
+      if (abs === 0) {
+        scale = 1.05;
+      } else if (abs === 1) {
         scale = 0.96;
-        opacity = 0.88;
+        opacity = 0.86;
         blur = 0.5;
         translateZ = -40;
-        rotateY = direction * 12;
+        rotateY = direction * 10;
         translateX = direction * (cardWidth + gap);
       } else if (abs === 2) {
         scale = 0.9;
-        opacity = 0.62;
-        blur = 1.4;
+        opacity = 0.6;
+        blur = 1.2;
         translateZ = -90;
-        rotateY = direction * 22;
+        rotateY = direction * 18;
         translateX = direction * (cardWidth + gap) * 2;
-      } else if (abs > 2) {
-        scale = 0.8;
-        opacity = 0.2;
-        blur = 4;
-        translateZ = -120;
-        rotateY = direction * 28;
+      } else if (abs >= 3) {
+        scale = 0.78;
+        opacity = 0;
+        blur = 6;
+        translateZ = -160;
+        rotateY = direction * 26;
         translateX = direction * (cardWidth + gap) * abs;
       }
 
@@ -248,6 +247,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
         opacity,
         filter: prefersReducedMotion ? "none" : `blur(${blur}px)`,
         zIndex: 10 - abs,
+        pointerEvents: abs >= 3 ? "none" : "auto",
         transition,
       } as React.CSSProperties;
     };
@@ -259,6 +259,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
         <div>
           <h2>Projets</h2>
           <p className="muted">Un aperçu premium et interactif des projets les plus pertinents.</p>
+          <p className="projects-carousel-cta">Glissez pour explorer · Cliquez pour ouvrir</p>
         </div>
         {/* Flèches supprimées volontairement */}
       </div>
@@ -287,6 +288,8 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
                 className={index === activeIndex ? "project-carousel-card active" : "project-carousel-card"}
                 data-index={index}
                 data-offset={offset}
+                data-active={index === activeIndex ? "true" : "false"}
+                aria-current={index === activeIndex}
                 style={getCardStyle(offset)}
               >
                 <div className="project-carousel-media">
