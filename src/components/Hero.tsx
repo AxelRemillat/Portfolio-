@@ -14,6 +14,7 @@ export default function Hero() {
   });
 
   const [isVisible, setIsVisible] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const mediaRef = useRef<HTMLDivElement | null>(null);
 
   const handleImageError = (key: "primary" | "secondary") => () => {
@@ -37,9 +38,24 @@ export default function Hero() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsReady(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  const handleScrollToProjects = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const target = document.getElementById("projects");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.location.hash = "#projects";
+    }
+  };
+
   return (
     <header className="hero">
-      <div className="hero-content">
+      <div className={`hero-content ${isReady ? "hero-enter" : ""}`}>
         <div className="hero-text">
           <p className="badge">Portfolio</p>
 
@@ -62,9 +78,9 @@ export default function Hero() {
           </div>
 
           <div className="actions">
-            <Link className="btn primary" to="/projets">
+            <button type="button" className="btn primary" onClick={handleScrollToProjects}>
               Voir mes projets
-            </Link>
+            </button>
             <Link className="btn" to="/parcours">
               Mon parcours
             </Link>
