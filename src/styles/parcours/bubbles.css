@@ -1,0 +1,68 @@
+@property --float-offset { syntax: "<length>"; inherits: true; initial-value: 0px; }
+.parcours-bubble {
+  --bubble-scale: 1; --drag-x: 0px; --drag-y: 0px;
+  position: relative; border: none; background: none; padding: 0; cursor: grab;
+  transform: translate(var(--drag-x), var(--drag-y)) translateY(var(--float-offset))
+    scale(var(--bubble-scale));
+  transition: transform 200ms ease, filter 200ms ease;
+  animation: bubble-float var(--float-duration, 6.5s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+.parcours-bubble.dragging { --bubble-scale: 1.08; cursor: grabbing; z-index: 4; }
+.parcours-bubble.returning { transition: transform 260ms ease; }
+.parcours-bubble-core {
+  width: 112px; height: 112px; border-radius: 999px; display: grid; place-items: center;
+  font-weight: 700; letter-spacing: 0.08em; color: #f8fafc;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.45), transparent 45%),
+    radial-gradient(circle at 70% 80%, color-mix(in srgb, var(--bubble-color) 70%, #020617 30%), transparent 60%),
+    radial-gradient(circle at 50% 50%, var(--bubble-color), color-mix(in srgb, var(--bubble-color) 60%, #020617 40%));
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.45), inset 0 -12px 20px rgba(15, 23, 42, 0.25);
+}
+.parcours-bubble.current .parcours-bubble-core {
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.55), 0 0 18px color-mix(in srgb, var(--bubble-color) 60%, transparent 40%);
+}
+.parcours-bubble.active .parcours-bubble-core {
+  outline: 2px solid color-mix(in srgb, var(--bubble-color) 70%, #ffffff 30%);
+  outline-offset: 4px;
+}
+.parcours-bubble-label { font-size: 14px; }
+.parcours-bubble-gloss {
+  position: absolute; inset: 12px 18px auto 18px; height: 24px; border-radius: 999px;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.65), transparent); opacity: 0.6;
+}
+.parcours-bubble-particles { position: absolute; inset: 0; pointer-events: none; opacity: 0; }
+.parcours-bubble.popping .parcours-bubble-core { animation: bubble-pop 420ms ease-out; }
+.parcours-bubble.popping .parcours-bubble-particles { opacity: 1; }
+.parcours-bubble.popping .particle { animation: particle-pop 420ms ease-out forwards; }
+.parcours-bubble.dropping .parcours-bubble-core { animation: bubble-snap 260ms ease-out; }
+.particle {
+  position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; border-radius: 999px;
+  background: color-mix(in srgb, var(--bubble-color) 70%, #ffffff 30%); opacity: 0;
+}
+.particle-1 { --tx: -24px; --ty: -30px; }
+.particle-2 { --tx: 28px; --ty: -20px; }
+.particle-3 { --tx: -30px; --ty: 18px; }
+.particle-4 { --tx: 26px; --ty: 24px; }
+.particle-5 { --tx: 0px; --ty: -34px; }
+@keyframes bubble-float { 0%, 100% { --float-offset: -6px; } 50% { --float-offset: 6px; } }
+@keyframes bubble-pop {
+  0% { transform: scale(1); opacity: 1; }
+  60% { transform: scale(1.12); opacity: 0.9; }
+  100% { transform: scale(0.4); opacity: 0; }
+}
+@keyframes particle-pop {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.2); }
+}
+@keyframes bubble-snap {
+  0% { transform: scale(1); }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(0.95); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parcours-bubble { animation: none; transition: none; }
+  .parcours-bubble.popping .parcours-bubble-core,
+  .parcours-bubble.popping .particle,
+  .parcours-bubble.dropping .parcours-bubble-core { animation: none; }
+}
