@@ -43,12 +43,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         {project.images?.length > 0 && (
           <div className="project-modal-gallery">
             {project.images.map((image) => (
-              <img
-                key={image}
-                src={image}
-                alt={project.title}
-                loading="lazy"
-              />
+              <img key={image} src={image} alt={project.title} loading="lazy" />
             ))}
           </div>
         )}
@@ -76,6 +71,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               GitHub
             </a>
           )}
+
           {project.liveUrl && (
             <a
               className="link"

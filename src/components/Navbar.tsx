@@ -36,7 +36,7 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        <span className="brand">AR</span>
+        <span className="brand">Axel Remillat</span>
         <nav className="nav">
           <button type="button" className="nav-link" onClick={handleProjectsClick}>
             Projets

@@ -13,8 +13,8 @@
 .hero-media {
   opacity: 0;
   transform: translateX(24px);
-  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .hero-enter .hero-media {
-  transition-delay: 120ms;
+  transition-delay: 160ms;
 }
 
 .hero-text {
@@ -43,12 +43,10 @@
 .hero-text > * {
   position: relative;
   z-index: 1;
-
-  /* Stagger premium */
   opacity: 0;
   transform: translateX(-16px);
-  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hero-enter .hero-text > * {
@@ -57,27 +55,43 @@
 }
 
 .hero-enter .hero-text > *:nth-child(1) {
-  transition-delay: 40ms;
-}
-
-.hero-enter .hero-text > *:nth-child(2) {
   transition-delay: 80ms;
 }
 
-.hero-enter .hero-text > *:nth-child(3) {
-  transition-delay: 120ms;
-}
-
-.hero-enter .hero-text > *:nth-child(4) {
+.hero-enter .hero-text > *:nth-child(2) {
   transition-delay: 160ms;
 }
 
+.hero-enter .hero-text > *:nth-child(3) {
+  transition-delay: 240ms;
+}
+
+.hero-enter .hero-text > *:nth-child(4) {
+  transition-delay: 320ms;
+}
+
 .hero-enter .hero-text > *:nth-child(5) {
-  transition-delay: 200ms;
+  transition-delay: 400ms;
 }
 
 .hero-enter .hero-text > *:nth-child(6) {
-  transition-delay: 240ms;
+  transition-delay: 480ms;
+}
+
+.hero .actions .btn.primary {
+  padding: 12px 22px;
+  font-size: 15px;
+  background: linear-gradient(120deg, rgba(59, 130, 246, 0.9), rgba(94, 234, 212, 0.8));
+  box-shadow: 0 18px 40px rgba(59, 130, 246, 0.25);
+}
+
+.hero .actions .btn.primary:hover {
+  box-shadow: 0 22px 50px rgba(59, 130, 246, 0.35);
+}
+
+.hero .actions .btn.primary:focus-visible {
+  outline: 2px solid rgba(94, 234, 212, 0.8);
+  outline-offset: 3px;
 }
 
 .hero-text::before,
@@ -99,12 +113,7 @@
   background-position: center right;
   filter: grayscale(1) blur(1px);
   z-index: 0;
-  mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.35) 35%,
-    rgba(0, 0, 0, 0.9) 75%
-  );
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 35%, rgba(0, 0, 0, 0.9) 75%);
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent 0%,
