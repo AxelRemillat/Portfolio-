@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import TypingText from "./TypingText";
+import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 
 const highlights = [
   "React & Firebase pour des produits rapides.",
@@ -15,6 +17,7 @@ export default function Hero() {
   const [isVisible, setIsVisible] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const mediaRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const handleImageError = (key: "primary" | "secondary") => () => {
     setImageErrors((prev) => ({ ...prev, [key]: true }));
@@ -44,11 +47,7 @@ export default function Hero() {
 
   const handleScrollToProjects = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-
     const target = document.getElementById("projects");
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
 
     if (target) {
       target.scrollIntoView({
@@ -66,7 +65,13 @@ export default function Hero() {
         <div className="hero-text">
           <p className="badge">Portfolio</p>
 
-          <h1 className="hero-title">Axel Remillat</h1>
+          <TypingText
+            as="h1"
+            text="Axel Remillat"
+            className="hero-title typing-title"
+            speedMs={24}
+            startDelayMs={120}
+          />
 
           <p className="subtitle">Étudiant ingénieur</p>
 

@@ -50,10 +50,10 @@ export default function Modal({
   const handleDragStart = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!draggable) return;
 
-    // Sur mobile/touch, on évite le drag pour ne pas casser le scroll/UX
+    // Évite le drag sur mobile / touch
     if (event.pointerType === "touch") return;
 
-    // Si on clique sur un élément interactif, on ne démarre pas le drag
+    // Ne pas démarrer le drag depuis un élément interactif
     const target = event.target as HTMLElement;
     if (target.closest("button, a, input, textarea, select, label")) return;
 
@@ -70,7 +70,7 @@ export default function Modal({
     const deltaX = event.clientX - dragStartRef.current.x;
     const deltaY = event.clientY - dragStartRef.current.y;
 
-    // Tant qu'on n'a pas dépassé un petit seuil, on ne "bascule" pas en drag
+    // Seuil avant de considérer un vrai drag
     if (!isDragging && Math.hypot(deltaX, deltaY) < 8) return;
 
     if (!isDragging) setIsDragging(true);
@@ -110,7 +110,9 @@ export default function Modal({
         aria-label={title}
         ref={modalRef}
         style={
-          draggable ? { transform: `translate(${position.x}px, ${position.y}px)` } : undefined
+          draggable
+            ? { transform: `translate(${position.x}px, ${position.y}px)` }
+            : undefined
         }
         onClick={(event) => event.stopPropagation()}
         onPointerDown={handleDragStart}
@@ -129,6 +131,7 @@ export default function Modal({
             Fermer
           </button>
         </div>
+
         <div className="modal-body">{children}</div>
       </div>
     </div>
