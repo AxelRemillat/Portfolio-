@@ -118,7 +118,8 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
     const target = event.target as HTMLElement;
     const card = target.closest(".project-carousel-card") as HTMLElement | null;
     const indexAttribute = card?.dataset.index;
-    pressedIndexRef.current = indexAttribute !== undefined ? Number(indexAttribute) : null;
+    pressedIndexRef.current =
+      indexAttribute !== undefined ? Number(indexAttribute) : null;
 
     draggedRef.current = false;
     pointerIdRef.current = event.pointerId;
@@ -261,7 +262,9 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
           <p className="muted">
             Un aperçu premium et interactif des projets les plus pertinents.
           </p>
-          <p className="projects-carousel-cta">Glissez pour explorer · Cliquez pour ouvrir</p>
+          <p className="projects-carousel-cta">
+            Glissez pour explorer · Cliquez pour ouvrir
+          </p>
         </div>
       </div>
 
@@ -316,7 +319,6 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
                     <p className="project-carousel-subtitle">{project.subtitle}</p>
                   )}
                   <p className="project-carousel-description">{project.description}</p>
-
                   <div className="tags">
                     {project.tags.map((tag) => (
                       <span key={tag} className="tag">

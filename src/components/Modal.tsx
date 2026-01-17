@@ -110,9 +110,7 @@ export default function Modal({
         aria-label={title}
         ref={modalRef}
         style={
-          draggable
-            ? { transform: `translate(${position.x}px, ${position.y}px)` }
-            : undefined
+          draggable ? { transform: `translate(${position.x}px, ${position.y}px)` } : undefined
         }
         onClick={(event) => event.stopPropagation()}
         onPointerDown={handleDragStart}

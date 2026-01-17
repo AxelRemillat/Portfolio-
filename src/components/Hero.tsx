@@ -95,7 +95,10 @@ export default function Hero() {
           </div>
         </div>
 
-        <div ref={mediaRef} className={`hero-media ${isVisible ? "is-visible" : ""}`}>
+        <div
+          ref={mediaRef}
+          className={`hero-media ${isVisible ? "is-visible" : ""}`}
+        >
           <div className="portrait" data-variant="primary">
             {imageErrors.primary ? (
               <div className="portrait-fallback">Photo</div>
