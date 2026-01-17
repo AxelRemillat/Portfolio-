@@ -1,0 +1,128 @@
+.parcours-page {
+  display: grid;
+  gap: 26px;
+}
+.parcours-layout {
+  display: grid;
+  gap: 24px;
+}
+.parcours-bubbles {
+  display: grid;
+  gap: 16px;
+}
+.parcours-bubble {
+  position: relative;
+  padding: 16px 18px;
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: radial-gradient(circle at top, rgba(59, 130, 246, 0.18), transparent 70%),
+    rgba(15, 23, 42, 0.6);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+.parcours-bubble::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, rgba(94, 234, 212, 0.4), transparent 60%) border-box;
+  mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.parcours-bubble:hover,
+.parcours-bubble:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.35);
+}
+.parcours-bubble:focus-visible {
+  outline: 2px solid rgba(94, 234, 212, 0.6);
+  outline-offset: 4px;
+}
+.parcours-bubble.active {
+  border-color: rgba(94, 234, 212, 0.6);
+  box-shadow: 0 18px 40px rgba(10, 16, 32, 0.45);
+}
+.parcours-bubble.active::after {
+  opacity: 1;
+}
+.parcours-bubble.current {
+  background: radial-gradient(circle at top, rgba(94, 234, 212, 0.25), transparent 65%),
+    rgba(15, 23, 42, 0.7);
+}
+.parcours-bubble-period {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.parcours-bubble-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.parcours-screen {
+  padding: 22px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.72);
+  box-shadow: 0 24px 60px rgba(5, 9, 20, 0.45);
+  display: grid;
+  gap: 16px;
+}
+.parcours-screen-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.parcours-screen-period {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 6px;
+}
+.parcours-screen-badge {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(94, 234, 212, 0.16);
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  color: rgba(94, 234, 212, 0.9);
+}
+.parcours-screen-summary {
+  margin: 0;
+  color: var(--text-muted);
+}
+.parcours-screen-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.parcours-screen-section h4 {
+  margin: 0 0 6px;
+}
+.parcours-screen-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+}
+@media (min-width: 900px) {
+  .parcours-layout {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parcours-bubble {
+    transition: none;
+  }
+}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import TypingText from "./TypingText";
+import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 
 const highlights = [
   "React & Firebase pour des produits rapides.",
@@ -14,7 +15,9 @@ export default function Hero() {
   });
 
   const [isVisible, setIsVisible] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const mediaRef = useRef<HTMLDivElement | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const handleImageError = (key: "primary" | "secondary") => () => {
     setImageErrors((prev) => ({ ...prev, [key]: true }));
@@ -37,13 +40,37 @@ export default function Hero() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsReady(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  const handleScrollToProjects = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const target = document.getElementById("projects");
+    if (target) {
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    } else {
+      window.location.hash = "#projects";
+    }
+  };
+
   return (
     <header className="hero">
-      <div className="hero-content">
+      <div className={`hero-content ${isReady ? "hero-enter" : ""}`}>
         <div className="hero-text">
           <p className="badge">Portfolio</p>
 
-          <h1 className="hero-title">Axel Remillat</h1>
+          <TypingText
+            as="h1"
+            text="Axel Remillat"
+            className="hero-title typing-title"
+            speedMs={24}
+            startDelayMs={120}
+          />
 
           <p className="subtitle">Étudiant ingénieur</p>
 
@@ -62,15 +89,9 @@ export default function Hero() {
           </div>
 
           <div className="actions">
-            <Link className="btn primary" to="/projets">
+            <button type="button" className="btn primary" onClick={handleScrollToProjects}>
               Voir mes projets
-            </Link>
-            <Link className="btn" to="/parcours">
-              Mon parcours
-            </Link>
-            <Link className="btn" to="/contact">
-              Me contacter
-            </Link>
+            </button>
           </div>
         </div>
 
