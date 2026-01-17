@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 
 const highlights = [
   "React & Firebase pour des produits rapides.",
@@ -14,6 +13,7 @@ export default function Hero() {
   });
 
   const [isVisible, setIsVisible] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const mediaRef = useRef<HTMLDivElement | null>(null);
 
   const handleImageError = (key: "primary" | "secondary") => () => {
@@ -37,9 +37,28 @@ export default function Hero() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsReady(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  const handleScrollToProjects = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const target = document.getElementById("projects");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (target) {
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+    } else {
+      window.location.hash = "#projects";
+    }
+  };
+
   return (
     <header className="hero">
-      <div className="hero-content">
+      <div className={`hero-content ${isReady ? "hero-enter" : ""}`}>
         <div className="hero-text">
           <p className="badge">Portfolio</p>
 
@@ -62,15 +81,9 @@ export default function Hero() {
           </div>
 
           <div className="actions">
-            <Link className="btn primary" to="/projets">
+            <button type="button" className="btn primary" onClick={handleScrollToProjects}>
               Voir mes projets
-            </Link>
-            <Link className="btn" to="/parcours">
-              Mon parcours
-            </Link>
-            <Link className="btn" to="/contact">
-              Me contacter
-            </Link>
+            </button>
           </div>
         </div>
 
