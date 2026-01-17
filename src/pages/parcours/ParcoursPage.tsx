@@ -4,16 +4,20 @@ import "../../styles/parcours.css";
 
 export default function ParcoursPage() {
   const current = parcoursCaps.find((cap) => cap.isCurrent);
+
   const [selectedId, setSelectedId] = useState<string | null>(
     current?.id ?? parcoursCaps[0]?.id ?? null,
   );
-  const selectedCap = parcoursCaps.find((cap) => cap.id === selectedId) ?? current;
+
+  const selectedCap =
+    parcoursCaps.find((cap) => cap.id === selectedId) ?? current ?? null;
 
   return (
     <section className="section parcours-page">
       <h1>Parcours</h1>
       <p className="muted">
-        Navigation par bulles: sélectionnez une étape pour afficher le détail dans l’écran dédié.
+        Navigation par bulles: sélectionnez une étape pour afficher le détail dans
+        l’écran dédié.
       </p>
 
       <div className="parcours-layout">
@@ -61,6 +65,7 @@ export default function ParcoursPage() {
                   ))}
                 </ul>
               </div>
+
               <div className="parcours-screen-section">
                 <h4>Compétences débloquées</h4>
                 <div className="tags">
@@ -71,6 +76,7 @@ export default function ParcoursPage() {
                   ))}
                 </div>
               </div>
+
               <div className="parcours-screen-section">
                 <h4>Highlights</h4>
                 <ul className="parcours-screen-list">

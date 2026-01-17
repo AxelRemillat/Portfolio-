@@ -5,7 +5,9 @@
 @import "./components.css";
 @import "./timeline.css";
 @import "./modal.css";
+
 @import "./carousel/projectsCarousel.css";
 @import "./carousel/projectModal.css";
+
 @import "./contact.css";
 @import "./responsive.css";

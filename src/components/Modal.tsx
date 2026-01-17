@@ -17,23 +17,21 @@ export default function Modal({
 }: ModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+
   const dragStartRef = useRef({ x: 0, y: 0 });
   const originRef = useRef({ x: 0, y: 0 });
   const dragCandidateRef = useRef(false);
 
   useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
+    if (!isOpen) return;
 
     setPosition({ x: 0, y: 0 });
 
     const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+      if (event.key === "Escape") onClose();
     };
 
     document.addEventListener("keydown", handleKey);
@@ -44,45 +42,39 @@ export default function Modal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
 
   const clamp = (value: number, min: number, max: number) =>
     Math.min(Math.max(value, min), max);
 
   const handleDragStart = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggable) {
-      return;
-    }
+    if (!draggable) return;
 
-    if (event.pointerType === "touch") {
-      return;
-    }
+    // Évite le drag sur mobile / touch
+    if (event.pointerType === "touch") return;
 
+    // Ne pas démarrer le drag depuis un élément interactif
     const target = event.target as HTMLElement;
-    if (target.closest("button, a, input, textarea, select, label")) {
-      return;
-    }
+    if (target.closest("button, a, input, textarea, select, label")) return;
 
     dragStartRef.current = { x: event.clientX, y: event.clientY };
     originRef.current = { ...position };
     dragCandidateRef.current = true;
+
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const handleDragMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggable || !dragCandidateRef.current || !modalRef.current) {
-      return;
-    }
+    if (!draggable || !dragCandidateRef.current || !modalRef.current) return;
 
     const deltaX = event.clientX - dragStartRef.current.x;
     const deltaY = event.clientY - dragStartRef.current.y;
-    if (!isDragging && Math.hypot(deltaX, deltaY) < 8) {
-      return;
-    }
 
-    setIsDragging(true);
+    // Seuil avant de considérer un vrai drag
+    if (!isDragging && Math.hypot(deltaX, deltaY) < 8) return;
+
+    if (!isDragging) setIsDragging(true);
+
     const rect = modalRef.current.getBoundingClientRect();
     const maxX = Math.max(0, window.innerWidth - rect.width);
     const maxY = Math.max(0, window.innerHeight - rect.height);
@@ -94,9 +86,7 @@ export default function Modal({
   };
 
   const handleDragEnd = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggable) {
-      return;
-    }
+    if (!draggable) return;
 
     if (dragCandidateRef.current) {
       dragCandidateRef.current = false;
@@ -109,7 +99,11 @@ export default function Modal({
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
       <div
         className={
-          draggable ? (isDragging ? "modal draggable is-dragging" : "modal draggable") : "modal"
+          draggable
+            ? isDragging
+              ? "modal draggable is-dragging"
+              : "modal draggable"
+            : "modal"
         }
         role="dialog"
         aria-modal="true"
@@ -117,9 +111,7 @@ export default function Modal({
         ref={modalRef}
         style={
           draggable
-            ? {
-                transform: `translate(${position.x}px, ${position.y}px)`,
-              }
+            ? { transform: `translate(${position.x}px, ${position.y}px)` }
             : undefined
         }
         onClick={(event) => event.stopPropagation()}
@@ -128,7 +120,7 @@ export default function Modal({
         onPointerUp={handleDragEnd}
         onPointerCancel={handleDragEnd}
       >
-        <div className="modal-header">
+        <div className={draggable ? "modal-header draggable" : "modal-header"}>
           <h2>{title}</h2>
           <button
             type="button"
@@ -139,6 +131,7 @@ export default function Modal({
             Fermer
           </button>
         </div>
+
         <div className="modal-body">{children}</div>
       </div>
     </div>
