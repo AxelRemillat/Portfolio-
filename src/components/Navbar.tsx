@@ -38,9 +38,7 @@ export default function Navbar() {
       <div className="navbar-inner">
         <span className="brand">Axel Remillat</span>
         <nav className="nav">
-          <button type="button" className="nav-link" onClick={handleProjectsClick}>
-            Projets
-          </button>
+          
           {navItems.map((item) => (
             <NavLink
               key={item.to}
