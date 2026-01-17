@@ -1,7 +1,7 @@
 export type ParcoursCap = {
   id: string;
-  label: string;
-  color: string;
+  label: string;          // Texte dans la bulle (RISE, BAC, etc.)
+  color: string;          // Couleur principale de la bulle
   period: string;
   title: string;
   org: string;
@@ -9,8 +9,8 @@ export type ParcoursCap = {
   learned: string[];
   skills: string[];
   highlights: string[];
-  floatDelay: string;
-  floatDuration: string;
+  floatDelay: string;     // Décalage animation flottante
+  floatDuration: string;  // Durée animation flottante
   isCurrent?: boolean;
 };
 
@@ -83,7 +83,8 @@ export const parcoursCaps: ParcoursCap[] = [
     period: "2021 — 2022",
     title: "Stages & projets terrain",
     org: "Missions courtes",
-    summary: "Premières livraisons produit, découverte du travail en équipe et de la rigueur terrain.",
+    summary:
+      "Premières livraisons produit, découverte du travail en équipe et de la rigueur terrain.",
     learned: [
       "Comprendre des besoins opérationnels",
       "Itérer vite avec les utilisateurs",
@@ -101,7 +102,8 @@ export const parcoursCaps: ParcoursCap[] = [
     period: "2020 — 2021",
     title: "Socle scientifique",
     org: "Bac général",
-    summary: "Base analytique solide et premiers projets numériques orientés curiosité.",
+    summary:
+      "Base analytique solide et premiers projets numériques orientés curiosité.",
     learned: ["Méthode scientifique", "Esprit logique", "Travail en autonomie"],
     skills: ["Sciences", "Maths", "Rigueur"],
     highlights: ["Projet numérique", "Ouverture technologique"],
