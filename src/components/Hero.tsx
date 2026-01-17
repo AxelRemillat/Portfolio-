@@ -48,6 +48,7 @@ export default function Hero() {
   const handleScrollToProjects = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const target = document.getElementById("projects");
+
     if (target) {
       target.scrollIntoView({
         behavior: prefersReducedMotion ? "auto" : "smooth",
@@ -89,13 +90,20 @@ export default function Hero() {
           </div>
 
           <div className="actions">
-            <button type="button" className="btn primary" onClick={handleScrollToProjects}>
+            <button
+              type="button"
+              className="btn primary"
+              onClick={handleScrollToProjects}
+            >
               Voir mes projets
             </button>
           </div>
         </div>
 
-        <div ref={mediaRef} className={`hero-media ${isVisible ? "is-visible" : ""}`}>
+        <div
+          ref={mediaRef}
+          className={`hero-media ${isVisible ? "is-visible" : ""}`}
+        >
           <div className="portrait" data-variant="primary">
             {imageErrors.primary ? (
               <div className="portrait-fallback">Photo</div>
