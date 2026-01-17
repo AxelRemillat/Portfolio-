@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const navItems = [
   { label: "Home", to: "/" },
   { label: "Parcours", to: "/parcours" },
-  { label: "Projets", to: "/projets" },
+  { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ];
 
@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        <span className="brand">AR</span>
+        <span className="brand">Axel Remillat</span>
         <nav className="nav">
           {navItems.map((item) => (
             <NavLink
