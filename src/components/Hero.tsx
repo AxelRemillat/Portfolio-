@@ -76,8 +76,9 @@ export default function Hero() {
           <p className="subtitle">Étudiant ingénieur</p>
 
           <p className="hero-intro">
-            Je conçois des produits web sobres et efficaces. Je recherche un stage,
-            des projets concrets ou une opportunité pour créer de la valeur.
+            Je conçois des produits web sobres et efficaces. Je recherche un
+            stage, des projets concrets ou une opportunité pour créer de la
+            valeur.
           </p>
 
           <div className="hero-highlights">

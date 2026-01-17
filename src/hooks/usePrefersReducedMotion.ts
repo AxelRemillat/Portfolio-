@@ -5,10 +5,17 @@ export default function usePrefersReducedMotion() {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const handleChange = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = () => {
+      setPrefersReducedMotion(mediaQuery.matches);
+    };
+
     handleChange();
     mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
   }, []);
 
   return prefersReducedMotion;

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import BubbleList from "../../components/parcours/BubbleList";
+import DropScreen from "../../components/parcours/DropScreen";
 import { parcoursCaps } from "../../data/parcoursCaps";
 import "../../styles/parcours.css";
 
@@ -8,85 +10,54 @@ export default function ParcoursPage() {
   const [selectedId, setSelectedId] = useState<string | null>(
     current?.id ?? parcoursCaps[0]?.id ?? null,
   );
+  const [isDropActive, setIsDropActive] = useState(false);
+  const dropRef = useRef<HTMLDivElement | null>(null);
 
-  const selectedCap =
-    parcoursCaps.find((cap) => cap.id === selectedId) ?? current ?? null;
+  const selectedCap = useMemo(
+    () =>
+      parcoursCaps.find((cap) => cap.id === selectedId) ??
+      current ??
+      parcoursCaps[0],
+    [current, selectedId],
+  );
+
+  const getDropRect = useCallback(() => {
+    return dropRef.current?.getBoundingClientRect() ?? null;
+  }, []);
+
+  const handleSelect = (id: string) => setSelectedId(id);
+
+  const handleDragHover = (isOver: boolean) => setIsDropActive(isOver);
+
+  const handleDrop = (id: string, didDrop: boolean) => {
+    setIsDropActive(false);
+    if (didDrop) setSelectedId(id);
+  };
 
   return (
     <section className="section parcours-page">
       <h1>Parcours</h1>
       <p className="muted">
-        Navigation par bulles: sélectionnez une étape pour afficher le détail dans
-        l’écran dédié.
+        Glissez une bulle dans l’écran ou cliquez pour afficher le détail de
+        l’étape.
       </p>
 
       <div className="parcours-layout">
-        <div className="parcours-bubbles" role="list">
-          {parcoursCaps.map((cap) => {
-            const isSelected = cap.id === selectedId;
-            return (
-              <button
-                key={cap.id}
-                type="button"
-                className={`parcours-bubble${isSelected ? " active" : ""}${
-                  cap.isCurrent ? " current" : ""
-                }`}
-                onClick={() => setSelectedId(cap.id)}
-                aria-pressed={isSelected}
-              >
-                <span className="parcours-bubble-period">{cap.period}</span>
-                <span className="parcours-bubble-title">{cap.title}</span>
-              </button>
-            );
-          })}
-        </div>
+        <BubbleList
+          caps={parcoursCaps}
+          selectedId={selectedId}
+          onSelect={handleSelect}
+          onDragHover={handleDragHover}
+          onDrop={handleDrop}
+          getDropRect={getDropRect}
+        />
 
         {selectedCap && (
-          <article className="parcours-screen" aria-live="polite">
-            <header className="parcours-screen-header">
-              <div>
-                <p className="parcours-screen-period">{selectedCap.period}</p>
-                <h2>{selectedCap.title}</h2>
-                <p className="muted">{selectedCap.org}</p>
-              </div>
-              {selectedCap.isCurrent && (
-                <span className="parcours-screen-badge">En cours</span>
-              )}
-            </header>
-
-            <p className="parcours-screen-summary">{selectedCap.summary}</p>
-
-            <div className="parcours-screen-grid">
-              <div className="parcours-screen-section">
-                <h4>Ce que j’ai appris</h4>
-                <ul className="parcours-screen-list">
-                  {selectedCap.learned.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="parcours-screen-section">
-                <h4>Compétences débloquées</h4>
-                <div className="tags">
-                  {selectedCap.skills.map((skill) => (
-                    <span key={skill} className="tag">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="parcours-screen-section">
-                <h4>Highlights</h4>
-                <ul className="parcours-screen-list">
-                  {selectedCap.highlights.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </article>
+          <DropScreen
+            ref={dropRef}
+            cap={selectedCap}
+            isDropActive={isDropActive}
+          />
         )}
       </div>
     </section>

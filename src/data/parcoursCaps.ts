@@ -1,5 +1,7 @@
 export type ParcoursCap = {
   id: string;
+  label: string;          // Texte dans la bulle (RISE, BAC, etc.)
+  color: string;          // Couleur principale de la bulle
   period: string;
   title: string;
   org: string;
@@ -7,12 +9,16 @@ export type ParcoursCap = {
   learned: string[];
   skills: string[];
   highlights: string[];
+  floatDelay: string;     // Décalage animation flottante
+  floatDuration: string;  // Durée animation flottante
   isCurrent?: boolean;
 };
 
 export const parcoursCaps: ParcoursCap[] = [
   {
     id: "current",
+    label: "ESME",
+    color: "#3ad5a7",
     period: "2024 — aujourd’hui",
     title: "Niveau actuel — BUT + montée en puissance produit",
     org: "ESME / projets personnels",
@@ -28,10 +34,14 @@ export const parcoursCaps: ParcoursCap[] = [
       "Refonte portfolio premium orientée recruteurs",
       "Déploiement continu sur projets React",
     ],
+    floatDelay: "0s",
+    floatDuration: "6.4s",
     isCurrent: true,
   },
   {
     id: "mobility",
+    label: "RISE",
+    color: "#4aa3ff",
     period: "2023 — 2024",
     title: "Projet mobilité internationale",
     org: "RISE",
@@ -44,9 +54,13 @@ export const parcoursCaps: ParcoursCap[] = [
     ],
     skills: ["React", "Firebase", "UX", "Produit"],
     highlights: ["Prototype fonctionnel", "Parcours guidé"],
+    floatDelay: "0.4s",
+    floatDuration: "6.8s",
   },
   {
     id: "automation",
+    label: "N8N",
+    color: "#8b5cf6",
     period: "2022 — 2023",
     title: "Automatisation & IA",
     org: "n8n / workflows",
@@ -59,16 +73,41 @@ export const parcoursCaps: ParcoursCap[] = [
     ],
     skills: ["Automation", "n8n", "Ops"],
     highlights: ["Dashboards d’exécution", "Alerting"],
+    floatDelay: "0.2s",
+    floatDuration: "7.2s",
   },
   {
-    id: "foundation",
+    id: "internships",
+    label: "Stages",
+    color: "#f59e0b",
     period: "2021 — 2022",
-    title: "Socle technique & design",
-    org: "Formation & projets courts",
+    title: "Stages & projets terrain",
+    org: "Missions courtes",
     summary:
-      "Apprentissage des fondamentaux web et premières interfaces orientées expérience.",
-    learned: ["Bases UI solides", "Approche mobile-first", "Tests rapides"],
-    skills: ["HTML", "CSS", "JavaScript"],
-    highlights: ["Mini projets UI", "Bases front-end"],
+      "Premières livraisons produit, découverte du travail en équipe et de la rigueur terrain.",
+    learned: [
+      "Comprendre des besoins opérationnels",
+      "Itérer vite avec les utilisateurs",
+      "Documenter des livrables clairs",
+    ],
+    skills: ["Méthode", "Coordination", "UI"],
+    highlights: ["Retours utilisateurs", "Projets encadrés"],
+    floatDelay: "0.6s",
+    floatDuration: "6.6s",
+  },
+  {
+    id: "bac",
+    label: "BAC",
+    color: "#f472b6",
+    period: "2020 — 2021",
+    title: "Socle scientifique",
+    org: "Bac général",
+    summary:
+      "Base analytique solide et premiers projets numériques orientés curiosité.",
+    learned: ["Méthode scientifique", "Esprit logique", "Travail en autonomie"],
+    skills: ["Sciences", "Maths", "Rigueur"],
+    highlights: ["Projet numérique", "Ouverture technologique"],
+    floatDelay: "0.1s",
+    floatDuration: "7s",
   },
 ];

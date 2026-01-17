@@ -28,6 +28,7 @@ export default function Modal({
   useEffect(() => {
     if (!isOpen) return;
 
+    // Reset position à chaque ouverture
     setPosition({ x: 0, y: 0 });
 
     const handleKey = (event: KeyboardEvent) => {
@@ -95,16 +96,16 @@ export default function Modal({
     }
   };
 
+  const modalClassName = draggable
+    ? isDragging
+      ? "modal draggable is-dragging"
+      : "modal draggable"
+    : "modal";
+
   return (
     <div className="modal-backdrop" role="presentation" onClick={onClose}>
       <div
-        className={
-          draggable
-            ? isDragging
-              ? "modal draggable is-dragging"
-              : "modal draggable"
-            : "modal"
-        }
+        className={modalClassName}
         role="dialog"
         aria-modal="true"
         aria-label={title}
