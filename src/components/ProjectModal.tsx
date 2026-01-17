@@ -22,12 +22,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const description = project.details ?? project.description;
 
   return (
-    <Modal
-      isOpen={Boolean(project)}
-      title={project.title}
-      onClose={onClose}
-      draggable
-    >
+    <Modal isOpen={Boolean(project)} title={project.title} onClose={onClose} draggable>
       <div className="project-modal">
         {project.subtitle && (
           <p className="project-modal-subtitle">{project.subtitle}</p>
@@ -66,22 +61,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         <div className="project-modal-links">
           {project.repoUrl && (
-            <a
-              className="link"
-              href={project.repoUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a className="link" href={project.repoUrl} target="_blank" rel="noreferrer">
               GitHub
             </a>
           )}
           {project.liveUrl && (
-            <a
-              className="link"
-              href={project.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a className="link" href={project.liveUrl} target="_blank" rel="noreferrer">
               Démo
             </a>
           )}

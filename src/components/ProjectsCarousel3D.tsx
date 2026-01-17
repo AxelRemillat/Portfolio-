@@ -331,10 +331,7 @@ export default function ProjectsCarousel3D({ projects }: ProjectsCarousel3DProps
         </div>
       </div>
 
-      <ProjectModal
-        project={activeProject}
-        onClose={() => setActiveProject(null)}
-      />
+      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </section>
   );
 }

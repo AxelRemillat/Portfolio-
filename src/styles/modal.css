@@ -34,15 +34,7 @@
   z-index: 2;
 }
 
-.modal.draggable {
-  cursor: grab;
-}
-
-.modal.draggable.is-dragging {
-  cursor: grabbing;
-}
-
-/* Draggable sur toute la fenêtre */
+/* Draggable */
 .modal.draggable {
   cursor: grab;
 }

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 
 const highlights = [
   "React & Firebase pour des produits rapides.",
@@ -45,9 +44,17 @@ export default function Hero() {
 
   const handleScrollToProjects = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
     const target = document.getElementById("projects");
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
     if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
     } else {
       window.location.hash = "#projects";
     }
@@ -78,15 +85,13 @@ export default function Hero() {
           </div>
 
           <div className="actions">
-            <button type="button" className="btn primary" onClick={handleScrollToProjects}>
+            <button
+              type="button"
+              className="btn primary"
+              onClick={handleScrollToProjects}
+            >
               Voir mes projets
             </button>
-            <Link className="btn" to="/parcours">
-              Mon parcours
-            </Link>
-            <Link className="btn" to="/contact">
-              Me contacter
-            </Link>
           </div>
         </div>
 

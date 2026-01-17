@@ -43,8 +43,32 @@
   letter-spacing: 0.04em;
 }
 
-/* Flèches supprimées volontairement (UI inutile) */
-/* .projects-carousel-actions / .carousel-arrow supprimés */
+/* Next steps (CTA bas de Home) */
+.next-steps-grid {
+  margin-top: 20px;
+}
+
+.next-step-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: var(--text-primary);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.next-step-card span {
+  font-size: 20px;
+  color: var(--text-muted);
+}
+
+.next-step-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(94, 234, 212, 0.35);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.45);
+}
 
 .projects-carousel-shell {
   margin-top: 32px;
