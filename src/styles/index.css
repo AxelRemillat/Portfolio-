@@ -14,4 +14,7 @@
 @import "./parcours/screen.css";
 
 @import "./contact.css";
+@import "./vous-et-moi/vousEtMoi.css";
+@import "./vous-et-moi/vousEtMoiSections.css";
+@import "./vous-et-moi/aurora.css";
 @import "./responsive.css";

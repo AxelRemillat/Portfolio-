@@ -1,0 +1,50 @@
+.vous-et-moi {
+  position: relative;
+  background: var(--vem-bg, #f6f2ea);
+  color: var(--vem-text, #0b1220);
+  padding: 120px 0 140px;
+  overflow: hidden;
+}
+
+.vous-et-moi-inner {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, 90vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.vous-et-moi-header {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vous-et-moi-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  color: rgba(11, 18, 32, 0.6);
+}
+
+.vous-et-moi-title {
+  font-size: clamp(2.4rem, 3.8vw, 4rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.vous-et-moi-intro {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(11, 18, 32, 0.75);
+  margin: 0;
+}
+
+.vous-et-moi-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 110px;
+}
