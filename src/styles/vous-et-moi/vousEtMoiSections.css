@@ -55,6 +55,7 @@
   opacity: 0;
 }
 
+/* reveal (stagger) */
 .reveal {
   opacity: 0;
   transform: translateY(32px);
@@ -86,6 +87,7 @@
     align-items: center;
   }
 
+  /* ✅ layouts déstructurés a/b/c */
   .vem-section--a .vem-title-block,
   .vem-section--a .vem-text-block {
     grid-column: 1 / 7;

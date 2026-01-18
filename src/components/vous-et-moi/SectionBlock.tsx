@@ -2,9 +2,16 @@ import useRevealOnScroll from "./useRevealOnScroll";
 import type { SectionData } from "../../pages/vous-et-moi/sectionsData";
 
 const layoutClassMap: Record<SectionData["layout"], string> = {
+  // ✅ on garde les variantes "a/b/c" (style déstructuré)
   a: "vem-section--a",
   b: "vem-section--b",
   c: "vem-section--c",
+
+  // ✅ compat si jamais ton type SectionData contient encore les anciens layouts
+  // (si TS râle pas, ça aide à éviter d'autres conflits)
+  "text-left": "vem-section--text-left",
+  "text-right": "vem-section--text-right",
+  stacked: "vem-section--stacked",
 };
 
 type SectionBlockProps = {
@@ -15,7 +22,7 @@ export default function SectionBlock({ section }: SectionBlockProps) {
   const titleReveal = useRevealOnScroll<HTMLHeadingElement>();
   const textReveal = useRevealOnScroll<HTMLDivElement>();
   const imageReveal = useRevealOnScroll<HTMLDivElement>();
-  const layoutClass = layoutClassMap[section.layout];
+  const layoutClass = layoutClassMap[section.layout] ?? "vem-section--a";
 
   return (
     <section className={`vem-section ${layoutClass}`} id={section.id}>
@@ -28,6 +35,7 @@ export default function SectionBlock({ section }: SectionBlockProps) {
         >
           <h2 className="vem-title">{section.title}</h2>
         </div>
+
         <div
           ref={textReveal.ref}
           className={`vem-text-block reveal ${textReveal.isVisible ? "is-visible" : ""}`}
@@ -39,6 +47,7 @@ export default function SectionBlock({ section }: SectionBlockProps) {
             </p>
           ))}
         </div>
+
         <div
           ref={imageReveal.ref}
           className={`vem-image-block reveal ${imageReveal.isVisible ? "is-visible" : ""}`}
@@ -46,6 +55,7 @@ export default function SectionBlock({ section }: SectionBlockProps) {
         >
           <img src={section.image} alt="Portrait placeholder" loading="lazy" />
         </div>
+
         <span className="vem-orb" aria-hidden="true" />
       </div>
     </section>
