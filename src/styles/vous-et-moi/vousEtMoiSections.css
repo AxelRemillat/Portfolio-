@@ -1,0 +1,119 @@
+.vem-section {
+  position: relative;
+}
+
+.vem-section-line {
+  height: 1px;
+  background: rgba(11, 18, 32, 0.12);
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.vem-section-content {
+  display: grid;
+  gap: 32px;
+}
+
+.vem-title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.vem-text {
+  margin: 0 0 12px;
+  line-height: 1.7;
+  color: rgba(11, 18, 32, 0.78);
+}
+
+.vem-image-block img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  box-shadow: 0 22px 40px rgba(11, 18, 32, 0.12);
+}
+
+.vem-orb {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(11, 18, 32, 0.08);
+  position: absolute;
+  opacity: 0;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: calc(var(--delay, 0ms));
+}
+
+.reveal[data-delay="0"] {
+  --delay: 0ms;
+}
+
+.reveal[data-delay="120"] {
+  --delay: 120ms;
+}
+
+.reveal[data-delay="220"] {
+  --delay: 220ms;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 900px) {
+  .vem-section-content {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    align-items: center;
+  }
+
+  .vem-section--text-left .vem-title-block,
+  .vem-section--text-left .vem-text-block {
+    grid-column: 1 / 7;
+  }
+
+  .vem-section--text-left .vem-image-block {
+    grid-column: 7 / 13;
+  }
+
+  .vem-section--text-right .vem-title-block,
+  .vem-section--text-right .vem-text-block {
+    grid-column: 6 / 13;
+  }
+
+  .vem-section--text-right .vem-image-block {
+    grid-column: 1 / 6;
+    transform: translateY(24px);
+  }
+
+  .vem-section--stacked .vem-title-block,
+  .vem-section--stacked .vem-text-block {
+    grid-column: 2 / 12;
+  }
+
+  .vem-section--stacked .vem-image-block {
+    grid-column: 1 / 7;
+    margin-top: 32px;
+  }
+
+  .vem-section--stacked .vem-orb {
+    opacity: 1;
+    bottom: -20px;
+    right: 18%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
