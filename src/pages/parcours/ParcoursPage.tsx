@@ -5,34 +5,42 @@ import { parcoursCaps } from "../../data/parcoursCaps";
 import "../../styles/parcours.css";
 
 export default function ParcoursPage() {
-  const current = parcoursCaps.find((cap) => cap.isCurrent);
+  const current = useMemo(() => parcoursCaps.find((cap) => cap.isCurrent), []);
 
   const [selectedId, setSelectedId] = useState<string | null>(
     current?.id ?? parcoursCaps[0]?.id ?? null,
   );
   const [isDropActive, setIsDropActive] = useState(false);
+
   const dropRef = useRef<HTMLDivElement | null>(null);
 
-  const selectedCap = useMemo(
-    () =>
+  const selectedCap = useMemo(() => {
+    return (
       parcoursCaps.find((cap) => cap.id === selectedId) ??
       current ??
-      parcoursCaps[0],
-    [current, selectedId],
-  );
+      parcoursCaps[0] ??
+      null
+    );
+  }, [current, selectedId]);
 
   const getDropRect = useCallback(() => {
     return dropRef.current?.getBoundingClientRect() ?? null;
   }, []);
 
-  const handleSelect = (id: string) => setSelectedId(id);
+  const handleSelect = useCallback((id: string) => {
+    setSelectedId(id);
+  }, []);
 
-  const handleDragHover = (isOver: boolean) => setIsDropActive(isOver);
+  const handleDragHover = useCallback((isOver: boolean) => {
+    setIsDropActive(isOver);
+  }, []);
 
-  const handleDrop = (id: string, didDrop: boolean) => {
+  const handleDrop = useCallback((id: string, didDrop: boolean) => {
     setIsDropActive(false);
     if (didDrop) setSelectedId(id);
-  };
+  }, []);
+
+  const accentColor = selectedCap?.color ?? "rgba(148, 163, 184, 0.35)";
 
   return (
     <section className="section parcours-page">
@@ -57,6 +65,7 @@ export default function ParcoursPage() {
             ref={dropRef}
             cap={selectedCap}
             isDropActive={isDropActive}
+            accentColor={accentColor}
           />
         )}
       </div>

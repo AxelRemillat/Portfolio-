@@ -8,6 +8,7 @@
   gap: 24px;
 }
 
+/* colonne bulles */
 .parcours-bubble-list {
   display: grid;
   gap: 18px;
@@ -17,10 +18,17 @@
 @media (min-width: 900px) {
   .parcours-layout {
     grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+
+    /* ✅ important: on garde le top align (rien ne "monte") */
     align-items: start;
   }
 
   .parcours-bubble-list {
     justify-items: start;
+  }
+
+  /* ✅ écran plus long uniquement vers le bas */
+  .parcours-screen {
+    min-height: 650px; /* ajuste si tu veux: 520 / 600 */
   }
 }
