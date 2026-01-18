@@ -1,0 +1,89 @@
+.vem-contact {
+  position: relative;
+  width: 100%;
+  padding: 40px 0 0;
+}
+
+.vem-contact__line {
+  height: 1px;
+  width: 100%;
+  background: rgba(11, 18, 32, 0.14);
+  margin-bottom: 32px;
+}
+
+.vem-contact__card {
+  background: #0b0f16;
+  color: #f7f4ee;
+  border-radius: 28px;
+  padding: 64px clamp(24px, 6vw, 72px);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-shadow: 0 40px 80px rgba(11, 18, 32, 0.35);
+  transform-origin: center top;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.vem-contact__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vem-contact__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.7rem;
+  color: rgba(247, 244, 238, 0.7);
+  margin: 0;
+}
+
+.vem-contact__title {
+  font-family: var(--vem-font-display, "Inter Tight", "Inter", sans-serif);
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.vem-contact__copy {
+  margin: 0;
+  color: rgba(247, 244, 238, 0.75);
+  line-height: 1.7;
+}
+
+.vem-contact__cta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #0b0f16;
+  background: #f6f2ea;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px rgba(11, 18, 32, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vem-contact__cta:hover,
+.vem-contact__cta:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(11, 18, 32, 0.3);
+}
+
+@media (min-width: 900px) {
+  .vem-contact__card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .vem-contact__cta {
+    align-self: center;
+  }
+}

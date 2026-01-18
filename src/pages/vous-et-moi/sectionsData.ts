@@ -1,4 +1,4 @@
-export type SectionLayout = "text-left" | "text-right" | "stacked";
+export type SectionLayout = "a" | "b" | "c";
 
 export type SectionData = {
   id: string;
@@ -18,7 +18,7 @@ export const sectionsData: SectionData[] = [
       "pensées pour les utilisateurs finaux.",
     ],
     image: "/images/vous-et-moi-1.svg",
-    layout: "text-left",
+    layout: "a",
   },
   {
     id: "travailler",
@@ -29,7 +29,7 @@ export const sectionsData: SectionData[] = [
       "fonctionnalités qui créent de la valeur.",
     ],
     image: "/images/vous-et-moi-2.svg",
-    layout: "text-right",
+    layout: "b",
   },
   {
     id: "apporter",
@@ -40,6 +40,6 @@ export const sectionsData: SectionData[] = [
       "à transformer une idée en produit utilisable.",
     ],
     image: "/images/vous-et-moi-3.svg",
-    layout: "stacked",
+    layout: "c",
   },
 ];

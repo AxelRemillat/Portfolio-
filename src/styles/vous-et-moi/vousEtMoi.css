@@ -1,15 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap");
+
+/* ✅ appliqué via useBodyClass("vem-body") uniquement sur cette page */
+.vem-body {
+  background: #f6f2ea;
+  overflow-x: hidden;
+}
+
+/* ✅ full-bleed (supprime le “fond bleu” sur les côtés) */
 .vous-et-moi {
   position: relative;
-  background: var(--vem-bg, #f6f2ea);
+  width: 100vw;
+  min-height: 100vh;
+  margin-left: calc(50% - 50vw);
+  background: #f6f2ea;
   color: var(--vem-text, #0b1220);
   padding: 120px 0 140px;
   overflow: hidden;
+
+  --vem-font-display: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI",
+    Roboto, Arial, sans-serif;
+  --vem-font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+
+  font-family: var(--vem-font-body);
 }
 
 .vous-et-moi-inner {
   position: relative;
   z-index: 1;
-  width: min(1100px, 90vw);
+  width: min(1160px, 92vw);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -17,7 +36,7 @@
 }
 
 .vous-et-moi-header {
-  max-width: 680px;
+  max-width: 720px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -25,26 +44,30 @@
 
 .vous-et-moi-eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.75rem;
-  color: rgba(11, 18, 32, 0.6);
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+  color: rgba(11, 18, 32, 0.55);
+  margin: 0;
 }
 
 .vous-et-moi-title {
-  font-size: clamp(2.4rem, 3.8vw, 4rem);
-  line-height: 1.05;
+  font-family: var(--vem-font-display);
+  font-size: clamp(2.6rem, 4.6vw, 4.6rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
 .vous-et-moi-intro {
   font-size: 1.05rem;
-  line-height: 1.7;
-  color: rgba(11, 18, 32, 0.75);
+  line-height: 1.75;
+  color: rgba(11, 18, 32, 0.72);
   margin: 0;
 }
 
 .vous-et-moi-sections {
   display: flex;
   flex-direction: column;
-  gap: 110px;
+  gap: 120px;
 }

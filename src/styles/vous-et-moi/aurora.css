@@ -1,47 +1,74 @@
-.aurora {
-  position: absolute;
-  inset: -20% 0 0 0;
-  overflow: hidden;
-  pointer-events: none;
+/* ✅ Unified aurora background for "Vous & Moi"
+   - Full page off-white base
+   - Soft vertical gradient that can shift with --vem-scroll (optional)
+   - 3 blobs with slow motion
+*/
+
+.vem-background {
+  position: fixed;
+  inset: 0;
   z-index: 0;
+  pointer-events: none;
+  background: #f6f2ea;
+  overflow: hidden;
+  --vem-scroll: 0;
 }
 
-.aurora__layer {
+/* base gradient: ivoire -> light gray down the page */
+.vem-background__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #f6f2ea 0%,
+    #f1ede4 40%,
+    #e6e7ea calc(70% + (var(--vem-scroll) * 20%))
+  );
+}
+
+/* aurora blobs */
+.vem-background__blob {
   position: absolute;
   width: 60vw;
   height: 60vw;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.45;
-  animation: auroraFloat 18s ease-in-out infinite;
+  filter: blur(90px);
+  opacity: 0.35;
+  animation: vemFloat 22s ease-in-out infinite;
 }
 
-.aurora__layer--one {
-  top: -10%;
+.vem-background__blob--one {
+  top: -15%;
   left: -10%;
-  background: radial-gradient(circle, rgba(232, 213, 184, 0.6), transparent 70%);
+  background: radial-gradient(circle, rgba(230, 210, 182, 0.65), transparent 70%);
 }
 
-.aurora__layer--two {
-  top: 15%;
-  right: -15%;
-  background: radial-gradient(circle, rgba(196, 212, 232, 0.5), transparent 70%);
-  animation-delay: -4s;
+.vem-background__blob--two {
+  top: 10%;
+  right: -20%;
+  background: radial-gradient(circle, rgba(206, 214, 232, 0.45), transparent 70%);
+  animation-delay: -6s;
 }
 
-.aurora__layer--three {
-  bottom: -20%;
-  left: 20%;
-  background: radial-gradient(circle, rgba(228, 215, 238, 0.45), transparent 70%);
-  animation-delay: -8s;
+.vem-background__blob--three {
+  bottom: -25%;
+  left: 15%;
+  background: radial-gradient(circle, rgba(214, 206, 226, 0.45), transparent 70%);
+  animation-delay: -12s;
 }
 
-@keyframes auroraFloat {
+@keyframes vemFloat {
   0%,
   100% {
     transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate3d(5%, -4%, 0) scale(1.05);
+    transform: translate3d(6%, -4%, 0) scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vem-background__blob {
+    animation: none;
   }
 }
