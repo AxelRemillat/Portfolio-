@@ -1,12 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap");
 
-/* ✅ appliqué via useBodyClass("vem-body") uniquement sur cette page */
 .vem-body {
   background: #f6f2ea;
   overflow-x: hidden;
 }
 
-/* ✅ full-bleed (supprime le “fond bleu” sur les côtés) */
 .vous-et-moi {
   position: relative;
   width: 100vw;
@@ -17,10 +15,9 @@
   padding: 120px 0 140px;
   overflow: hidden;
 
-  --vem-font-display: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI",
-    Roboto, Arial, sans-serif;
-  --vem-font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-    sans-serif;
+  --vem-font-display: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, sans-serif;
+  --vem-font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
   font-family: var(--vem-font-body);
 }
@@ -70,4 +67,15 @@
   display: flex;
   flex-direction: column;
   gap: 120px;
+}
+
+/* ✅ donne une respiration avant la section noire contact */
+.vem-contact {
+  margin-top: 22px;
+}
+
+@media (min-width: 900px) {
+  .vem-contact {
+    margin-top: 42px;
+  }
 }
