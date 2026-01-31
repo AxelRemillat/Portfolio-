@@ -21,23 +21,22 @@ export default function ContactCTASection() {
 
   const progress = useScrollProgress(sectionRef, { disabled: reducedMotion });
 
-  // --- Edit these as you want (or wire them to config later)
+  // --- À personnaliser (tu remplaceras par tes vraies infos)
   const email = "axel.remillat@email.com";
   const phone = "+33 6 00 00 00 00";
   const socials: ContactLink[] = [
-    { label: "Awwwards", href: "https://www.awwwards.com/" },
     { label: "Instagram", href: "https://instagram.com/" },
-    { label: "Twitter", href: "https://twitter.com/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/" },
+    { label: "Twitter", href: "https://twitter.com/" },
+    { label: "Awwwards", href: "https://www.awwwards.com/" },
   ];
 
   const dynamicStyle = useMemo(() => {
     if (reducedMotion) return undefined;
 
-    // progress: 0 -> 1 when the section enters
-    const t = 1 - progress;
-    const translateY = t * 70; // comes from below
-    const rotateX = t * 10; // slight perspective
+    const t = 1 - progress; // 1 -> 0
+    const translateY = t * 70;
+    const rotateX = t * 10;
     const scale = 0.94 + progress * 0.06;
     const opacity = 0.65 + progress * 0.35;
 
@@ -64,13 +63,20 @@ export default function ContactCTASection() {
             <a className="vem-contact__pill" href={`mailto:${email}`}>
               {email}
             </a>
-            <a className="vem-contact__pill" href={`tel:${phone.replace(/\s+/g, "")}`}>
+            <a
+              className="vem-contact__pill"
+              href={`tel:${phone.replace(/\s+/g, "")}`}
+            >
               {phone}
             </a>
           </div>
         </div>
 
-        <Link className="vem-contact__cta" to="/contact" aria-label="Aller à la page contact">
+        <Link
+          className="vem-contact__cta"
+          to="/contact"
+          aria-label="Aller à la page contact"
+        >
           <span>Me contacter</span>
         </Link>
       </div>

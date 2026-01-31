@@ -29,10 +29,8 @@
 /* aurora blobs */
 .vem-background__blob {
   position: absolute;
-
   width: min(60vw, 780px);
   height: min(60vw, 780px);
-
   border-radius: 50%;
   filter: blur(90px);
   opacity: 0.35;

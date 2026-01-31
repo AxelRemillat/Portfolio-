@@ -17,6 +17,7 @@ export default function VemBackground() {
     const update = () => {
       frame = 0;
 
+      // Si réduction de mouvement → fond statique
       if (media.matches) return;
 
       const doc = document.documentElement;

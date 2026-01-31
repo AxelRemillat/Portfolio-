@@ -22,8 +22,8 @@ export default function VousEtMoiPage() {
           </h1>
 
           <p className="vous-et-moi-intro">
-            Un aperçu humain et concret de ce que je construis, de ma manière de travailler et de
-            la valeur que je peux apporter.
+            Un aperçu humain et concret de ce que je construis, de ma manière de
+            travailler et de la valeur que je peux apporter.
           </p>
         </header>
 

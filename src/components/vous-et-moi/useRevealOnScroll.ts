@@ -42,6 +42,7 @@ export default function useRevealOnScroll<T extends HTMLElement>(
           return;
         }
 
+        // one-shot
         if (entry.isIntersecting) {
           setIsVisible(true);
           observer.unobserve(entry.target);

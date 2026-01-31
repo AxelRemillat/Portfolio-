@@ -19,7 +19,6 @@ function clamp01(n: number) {
   return Math.min(Math.max(n, 0), 1);
 }
 
-/** petite courbe "ciné" */
 function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
@@ -49,9 +48,7 @@ export default function useScrollProgress(
       const rect = node.getBoundingClientRect();
       const vh = window.innerHeight || 1;
 
-      // On mappe rect.top entre (start*vh) -> (end*vh)
-      // start (bas de viewport) => progress 0
-      // end (plus haut) => progress 1
+      // rect.top map: start*vh -> end*vh
       const startPx = vh * start;
       const endPx = vh * end;
       const range = startPx - endPx || 1;
