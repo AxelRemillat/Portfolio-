@@ -1,13 +1,8 @@
-import Contact from "../components/Contact";
+import ContactPageView from "./contact/ContactPageView";
+import "../styles/contact/contactPage.css";
+import "../styles/contact/contactForm.css";
+import "../styles/contact/contactSidebar.css";
 
 export default function ContactPage() {
-  return (
-    <section className="section">
-      <h1>Contact</h1>
-      <p className="muted">
-        Un message rapide suffit pour discuter d’une opportunité.
-      </p>
-      <Contact />
-    </section>
-  );
+  return <ContactPageView />;
 }

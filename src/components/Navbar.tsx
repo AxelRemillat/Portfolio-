@@ -3,7 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 const navItems = [
   { label: "Home", to: "/" },
   { label: "Parcours", to: "/parcours" },
-  { label: "About", to: "/about" },
+  { label: "Vous & Moi", to: "/vous-et-moi" },
   { label: "Contact", to: "/contact" },
 ];
 

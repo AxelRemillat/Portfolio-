@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&display=swap");
+
+.vem-body {
+  background: #f6f2ea;
+  overflow-x: hidden;
+}
+
+.vous-et-moi {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  margin-left: calc(50% - 50vw);
+  background: #f6f2ea;
+  color: var(--vem-text, #0b1220);
+  padding: 120px 0 140px;
+  overflow: hidden;
+  --vem-font-display: "Inter Tight", "Inter", sans-serif;
+  --vem-font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--vem-font-body, "Inter", "Helvetica Neue", Arial, sans-serif);
+}
+
+.vous-et-moi-inner {
+  position: relative;
+  z-index: 1;
+  width: min(1160px, 92vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.vous-et-moi-header {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vous-et-moi-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+  color: rgba(11, 18, 32, 0.55);
+}
+
+.vous-et-moi-title {
+  font-family: var(--vem-font-display, "Inter Tight", "Inter", sans-serif);
+  font-size: clamp(2.6rem, 4.6vw, 4.6rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.vous-et-moi-intro {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgba(11, 18, 32, 0.72);
+  margin: 0;
+}
+
+.vous-et-moi-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+}
