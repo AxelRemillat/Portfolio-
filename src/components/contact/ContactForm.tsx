@@ -1,4 +1,5 @@
 import type { ChangeEvent, FormEvent } from "react";
+import ContactSubmitOrb from "./ContactSubmitOrb";
 
 type FormState = {
   name: string;
@@ -11,41 +12,70 @@ type FormState = {
 type ContactFormProps = {
   data: FormState;
   status: "idle" | "sending" | "sent";
-  error: string;
+
   onChange: (field: keyof FormState, value: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
-  fieldError: (field: keyof FormState) => boolean;
+
+  onUserEdit?: () => void;
+  onTouch: (field: keyof FormState) => void;
+
+  fieldErrorMessage: (field: keyof FormState) => string | null;
+
+  // email valide + service choisi
+  canSend: boolean;
 };
 
 export default function ContactForm({
   data,
   status,
-  error,
   onChange,
   onSubmit,
-  fieldError,
+  onUserEdit,
+  onTouch,
+  fieldErrorMessage,
+  canSend,
 }: ContactFormProps) {
-  const handleChange = (field: keyof FormState) =>
-    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange =
+    (field: keyof FormState) =>
+    (
+      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => {
+      if (status === "sent") onUserEdit?.();
       onChange(field, event.target.value);
     };
 
+  const emailError = fieldErrorMessage("email");
+  const serviceError = fieldErrorMessage("service");
+
   return (
     <form id="contact-form" className="contact-form" onSubmit={onSubmit} noValidate>
+      {/* ORB flottant (indépendant du champ message) */}
+      <div
+        className="contact-form__floatingOrb"
+        data-ready={canSend ? "true" : "false"}
+        aria-hidden="false"
+      >
+        <ContactSubmitOrb
+          status={status}
+          disabled={!canSend || status === "sending"}
+        />
+      </div>
+
       <div className="contact-form__row">
         <span className="contact-form__index">01</span>
         <label className="contact-form__field" htmlFor="contact-name">
-          <span>Nom complet *</span>
+          <span>Nom complet</span>
           <input
             id="contact-name"
             type="text"
             value={data.name}
             onChange={handleChange("name")}
-            required
-            aria-invalid={fieldError("name")}
+            onBlur={() => onTouch("name")}
+            autoComplete="name"
           />
         </label>
       </div>
+
       <div className="contact-form__row">
         <span className="contact-form__index">02</span>
         <label className="contact-form__field" htmlFor="contact-email">
@@ -55,11 +85,17 @@ export default function ContactForm({
             type="email"
             value={data.email}
             onChange={handleChange("email")}
+            onBlur={() => onTouch("email")}
             required
-            aria-invalid={fieldError("email")}
+            aria-invalid={Boolean(emailError)}
+            autoComplete="email"
           />
+          {emailError && (
+            <p className="contact-form__hint contact-form__hint--error">{emailError}</p>
+          )}
         </label>
       </div>
+
       <div className="contact-form__row">
         <span className="contact-form__index">03</span>
         <label className="contact-form__field" htmlFor="contact-organization">
@@ -69,17 +105,23 @@ export default function ContactForm({
             type="text"
             value={data.organization}
             onChange={handleChange("organization")}
+            onBlur={() => onTouch("organization")}
+            autoComplete="organization"
           />
         </label>
       </div>
+
       <div className="contact-form__row">
         <span className="contact-form__index">04</span>
         <label className="contact-form__field" htmlFor="contact-service">
-          <span>Service</span>
+          <span>Service *</span>
           <select
             id="contact-service"
             value={data.service}
             onChange={handleChange("service")}
+            onBlur={() => onTouch("service")}
+            required
+            aria-invalid={Boolean(serviceError)}
           >
             <option value="">Choisir une option</option>
             <option value="web">Web design</option>
@@ -87,25 +129,26 @@ export default function ContactForm({
             <option value="ux">UX</option>
             <option value="autre">Autre</option>
           </select>
+
+          {serviceError && (
+            <p className="contact-form__hint contact-form__hint--error">{serviceError}</p>
+          )}
         </label>
       </div>
-      <div className="contact-form__row">
+
+      {/* Message (sans orb dedans) */}
+      <div className="contact-form__row contact-form__row--message">
         <span className="contact-form__index">05</span>
         <label className="contact-form__field" htmlFor="contact-message">
-          <span>Message *</span>
+          <span>Message</span>
           <textarea
             id="contact-message"
             rows={4}
             value={data.message}
             onChange={handleChange("message")}
-            required
-            aria-invalid={fieldError("message")}
+            onBlur={() => onTouch("message")}
           />
         </label>
-      </div>
-      <div className="contact-form__footer" aria-live="polite">
-        {error && <p className="contact-form__error">{error}</p>}
-        {status === "sent" && <p className="contact-form__success">Message envoyé. Merci !</p>}
       </div>
     </form>
   );
