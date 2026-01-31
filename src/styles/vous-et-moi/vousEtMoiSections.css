@@ -1,0 +1,136 @@
+.vem-section {
+  position: relative;
+}
+
+.vem-section-line {
+  height: 1px;
+  background: rgba(11, 18, 32, 0.12);
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.vem-section-content {
+  display: grid;
+  gap: 32px;
+}
+
+.vem-title {
+  font-family: var(--vem-font-display, "Inter Tight", "Inter", sans-serif);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.vem-text {
+  margin: 0 0 12px;
+  line-height: 1.75;
+  color: rgba(11, 18, 32, 0.74);
+  font-size: 1rem;
+}
+
+.vem-text-block {
+  max-width: 520px;
+}
+
+.vem-image-block {
+  position: relative;
+}
+
+.vem-image-block img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  box-shadow: 0 28px 60px rgba(11, 18, 32, 0.16);
+}
+
+.vem-orb {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(11, 18, 32, 0.08);
+  position: absolute;
+  opacity: 0;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: calc(var(--stagger, 0) * 140ms);
+}
+
+.reveal[data-stagger="0"] {
+  --stagger: 0;
+}
+
+.reveal[data-stagger="1"] {
+  --stagger: 1;
+}
+
+.reveal[data-stagger="2"] {
+  --stagger: 2;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 900px) {
+  .vem-section-content {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 28px;
+    align-items: center;
+  }
+
+  .vem-section--a .vem-title-block,
+  .vem-section--a .vem-text-block {
+    grid-column: 1 / 7;
+  }
+
+  .vem-section--a .vem-image-block {
+    grid-column: 7 / 13;
+    transform: translateY(-10px);
+  }
+
+  .vem-section--b .vem-title-block,
+  .vem-section--b .vem-text-block {
+    grid-column: 6 / 13;
+  }
+
+  .vem-section--b .vem-image-block {
+    grid-column: 1 / 6;
+    transform: translateY(36px);
+  }
+
+  .vem-section--c .vem-title-block,
+  .vem-section--c .vem-text-block {
+    grid-column: 2 / 12;
+  }
+
+  .vem-section--c .vem-text-block {
+    max-width: 620px;
+  }
+
+  .vem-section--c .vem-image-block {
+    grid-column: 2 / 8;
+    margin-top: 28px;
+  }
+
+  .vem-section--c .vem-orb {
+    opacity: 1;
+    bottom: -24px;
+    right: 12%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

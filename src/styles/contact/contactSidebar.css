@@ -1,0 +1,67 @@
+.contact-sidebar {
+  display: grid;
+  gap: 20px;
+  padding: 28px;
+  border-radius: 20px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #f8fafc;
+  --text-muted: rgba(226, 232, 240, 0.7);
+}
+
+.contact-sidebar h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.contact-sidebar__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+.contact-sidebar__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-sidebar__value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  background: rgba(59, 130, 246, 0.2);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.contact-sidebar__copy {
+  border: none;
+  background: rgba(148, 163, 184, 0.15);
+  color: #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.contact-sidebar__meta {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.contact-sidebar__socials {
+  display: flex;
+  gap: 16px;
+}
+
+.contact-sidebar__socials a {
+  color: #f8fafc;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.contact-sidebar__socials a:hover {
+  border-color: rgba(59, 130, 246, 0.8);
+}
