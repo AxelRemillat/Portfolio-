@@ -1,16 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
 
 type ScrollProgressOptions = {
   disabled?: boolean;
+  /**
+   * Où commence l'animation (en % de viewport).
+   * 0.85 => démarre quand le haut de la section atteint ~85% du viewport.
+   */
+  start?: number;
+  /**
+   * Où finit l'animation (en % de viewport).
+   * 0.25 => finit quand le haut de la section arrive à ~25% du viewport.
+   */
+  end?: number;
 };
+
+function clamp01(n: number) {
+  return Math.min(Math.max(n, 0), 1);
+}
+
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3);
+}
 
 export default function useScrollProgress(
   target: RefObject<HTMLElement>,
-  options: ScrollProgressOptions = {}
+  options: ScrollProgressOptions = {},
 ) {
-  const { disabled = false } = options;
+  const { disabled = false, start = 0.85, end = 0.25 } = options;
+
   const [progress, setProgress] = useState(0);
+  const lastRef = useRef(-1);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (disabled) {
@@ -18,39 +39,46 @@ export default function useScrollProgress(
       return;
     }
 
-    let frame = 0;
-
     const update = () => {
-      frame = 0;
+      rafRef.current = null;
+
       const node = target.current;
-      if (!node) {
-        return;
-      }
+      if (!node) return;
+
       const rect = node.getBoundingClientRect();
-      const viewport = window.innerHeight || 1;
-      const raw = 1 - rect.top / viewport;
-      const clamped = Math.min(Math.max(raw, 0), 1);
-      setProgress(clamped);
+      const vh = window.innerHeight || 1;
+
+      // rect.top map: start*vh -> end*vh
+      const startPx = vh * start;
+      const endPx = vh * end;
+      const range = startPx - endPx || 1;
+
+      const raw = (startPx - rect.top) / range;
+      const clamped = clamp01(raw);
+      const eased = easeOutCubic(clamped);
+
+      // évite de spam setState pour des micro variations
+      if (Math.abs(eased - lastRef.current) > 0.002) {
+        lastRef.current = eased;
+        setProgress(eased);
+      }
     };
 
-    const onScroll = () => {
-      if (frame === 0) {
-        frame = window.requestAnimationFrame(update);
-      }
+    const schedule = () => {
+      if (rafRef.current !== null) return;
+      rafRef.current = window.requestAnimationFrame(update);
     };
 
     update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
 
     return () => {
-      if (frame) {
-        window.cancelAnimationFrame(frame);
-      }
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      if (rafRef.current !== null) window.cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
     };
-  }, [disabled, target]);
+  }, [disabled, end, start, target]);
 
   return progress;
 }

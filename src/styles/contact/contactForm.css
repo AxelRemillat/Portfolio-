@@ -1,4 +1,5 @@
 .contact-form {
+  position: relative; /* important pour l'orb en absolute */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -40,47 +41,53 @@
   border-color: transparent;
 }
 
-.contact-form__error,
-.contact-form__success {
-  margin: 0;
-  font-size: 0.9rem;
+/* ✅ message d’aide/erreur sous les champs */
+.contact-form__hint {
+  margin: -2px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.35;
 }
 
-.contact-form__error {
+.contact-form__hint--error {
   color: #fca5a5;
 }
 
-.contact-form__success {
-  color: #86efac;
-}
-
+/* =========================
+   ORB BUTTON
+   ========================= */
 .contact-orb {
-  width: 150px;
-  height: 150px;
+  width: 170px;
+  height: 170px;
   border-radius: 999px;
   border: none;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.9), rgba(59, 130, 246, 0.4));
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.95),
+    rgba(59, 130, 246, 0.35)
+  );
   color: #fff;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* IMPORTANT : le JS gère transform => pas de transform en CSS hover/active */
+  transition: box-shadow 0.2s ease, opacity 0.2s ease, filter 0.2s ease;
   box-shadow: 0 24px 60px rgba(59, 130, 246, 0.4);
+
+  filter: saturate(1.05);
 }
 
 .contact-orb:hover {
-  transform: translateY(-4px) scale(1.02);
-}
-
-.contact-orb:active {
-  transform: scale(0.98);
+  box-shadow: 0 28px 70px rgba(59, 130, 246, 0.55);
+  filter: saturate(1.12);
 }
 
 .contact-orb:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   box-shadow: none;
+  filter: none;
 }
 
 .contact-orb.is-sent {
@@ -96,9 +103,72 @@
   }
 }
 
+/* =========================
+   ORB FLOTTANT (indépendant)
+   ========================= */
+.contact-form__floatingOrb {
+  display: flex;
+  justify-content: flex-end;
+
+  /* IMPORTANT: sinon le bouton ne reçoit pas les events pointer (interaction JS figée) */
+  pointer-events: auto;
+
+  /* évite un gros bloc invisible qui gêne les champs */
+  width: fit-content;
+  margin-left: auto;
+}
+
+.contact-form__floatingOrb .contact-orb {
+  pointer-events: auto;
+}
+
+/* petit "float" discret (sur le container, pas sur le bouton) */
+@keyframes orbFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* quand prêt à envoyer : float + glow */
+.contact-form__floatingOrb[data-ready="true"] {
+  animation: orbFloat 3.2s ease-in-out infinite;
+}
+
+.contact-form__floatingOrb[data-ready="true"] .contact-orb:not(:disabled) {
+  box-shadow: 0 28px 70px rgba(59, 130, 246, 0.55);
+}
+
+/* optionnel: coupe le float au hover pour mieux sentir le “spring” */
+.contact-form__floatingOrb:hover {
+  animation: none !important;
+}
+
+/* Desktop : on place l’orb en “bouton indépendant” à droite, sans coller au message */
 @media (min-width: 900px) {
-  .contact-orb {
-    justify-self: end;
-    margin-top: 12px;
+  .contact-form {
+    padding-right: 220px;
+  }
+
+  .contact-form__floatingOrb {
+    position: absolute;
+    right: -120px;
+    top: 75%;
+    transform: translateY(-50%);
+
+    /* évite le bloc 300px invisible */
+    width: fit-content;
+
+    /* IMPORTANT: autorise les events pour l'interaction */
+    pointer-events: auto;
+  }
+
+  .contact-form__floatingOrb .contact-orb {
+    pointer-events: auto;
   }
 }

@@ -1,40 +1,49 @@
 import { useEffect, useRef } from "react";
 
+function clamp01(n: number) {
+  return Math.min(Math.max(n, 0), 1);
+}
+
 export default function VemBackground() {
   const backgroundRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const node = backgroundRef.current;
-    if (!node || prefersReducedMotion) {
-      return;
-    }
+    if (!node) return;
 
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
 
     const update = () => {
       frame = 0;
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
+
+      // Si réduction de mouvement → fond statique
+      if (media.matches) return;
+
+      const doc = document.documentElement;
+      const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 0);
       const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-      node.style.setProperty("--vem-scroll", progress.toFixed(3));
+
+      node.style.setProperty("--vem-scroll", clamp01(progress).toFixed(3));
     };
 
-    const onScroll = () => {
-      if (frame === 0) {
-        frame = window.requestAnimationFrame(update);
-      }
+    const schedule = () => {
+      if (frame !== 0) return;
+      frame = window.requestAnimationFrame(update);
     };
+
+    const onPrefChange = () => schedule();
 
     update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    media.addEventListener("change", onPrefChange);
 
     return () => {
-      if (frame) {
-        window.cancelAnimationFrame(frame);
-      }
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      media.removeEventListener("change", onPrefChange);
     };
   }, []);
 

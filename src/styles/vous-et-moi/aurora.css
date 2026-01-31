@@ -1,3 +1,8 @@
+/* ✅ Unified aurora background for "Vous & Moi"
+   - Full page off-white base
+   - Soft vertical gradient that can shift with --vem-scroll
+   - 3 blobs with slow motion
+*/
 .vem-background {
   position: fixed;
   inset: 0;
@@ -8,6 +13,7 @@
   --vem-scroll: 0;
 }
 
+/* base gradient: ivoire -> light gray down the page */
 .vem-background__gradient {
   position: absolute;
   inset: 0;
@@ -19,10 +25,11 @@
   );
 }
 
+/* aurora blobs */
 .vem-background__blob {
   position: absolute;
-  width: 60vw;
-  height: 60vw;
+  width: min(60vw, 780px);
+  height: min(60vw, 780px);
   border-radius: 50%;
   filter: blur(90px);
   opacity: 0.35;
@@ -56,6 +63,13 @@
   }
   50% {
     transform: translate3d(6%, -4%, 0) scale(1.05);
+  }
+}
+
+@media (max-width: 520px) {
+  .vem-background__blob {
+    filter: blur(75px);
+    opacity: 0.32;
   }
 }
 

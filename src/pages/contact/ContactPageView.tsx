@@ -3,7 +3,6 @@ import type { FormEvent } from "react";
 import ContactForm from "../../components/contact/ContactForm";
 import ContactHero from "../../components/contact/ContactHero";
 import ContactSidebar from "../../components/contact/ContactSidebar";
-import ContactSubmitOrb from "../../components/contact/ContactSubmitOrb";
 import TechGridBackground from "../../components/contact/TechGridBackground";
 import VemBackground from "../../components/vous-et-moi/VemBackground";
 
@@ -16,6 +15,7 @@ type FormState = {
 };
 
 type SubmitStatus = "idle" | "sending" | "sent";
+type FieldKey = keyof FormState;
 
 const initialForm: FormState = {
   name: "",
@@ -25,62 +25,79 @@ const initialForm: FormState = {
   message: "",
 };
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function ContactPageView() {
   const [formData, setFormData] = useState<FormState>(initialForm);
-  const [error, setError] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [touched, setTouched] = useState<Record<FieldKey, boolean>>({
+    name: false,
+    email: false,
+    organization: false,
+    service: false,
+    message: false,
+  });
 
-  const isValid = useMemo(() => {
-    return Boolean(
-      formData.name.trim() && formData.email.trim() && formData.message.trim()
-    );
-  }, [formData.email, formData.message, formData.name]);
+  const isEmailValid = useMemo(
+    () => emailRegex.test(formData.email.trim()),
+    [formData.email],
+  );
+
+  const canSend = useMemo(() => {
+    return isEmailValid && Boolean(formData.service.trim());
+  }, [isEmailValid, formData.service]);
 
   useEffect(() => {
-    if (status !== "sending") {
-      return;
-    }
-    const sentTimeout = window.setTimeout(() => {
-      setStatus("sent");
-    }, 700);
-    const resetTimeout = window.setTimeout(() => {
-      setStatus("idle");
-    }, 2600);
+    if (status !== "sending") return;
+
+    const sentTimeout = window.setTimeout(() => setStatus("sent"), 700);
+    const resetTimeout = window.setTimeout(() => setStatus("idle"), 2200);
+
     return () => {
       window.clearTimeout(sentTimeout);
       window.clearTimeout(resetTimeout);
     };
   }, [status]);
 
-  useEffect(() => {
-    if (status === "sent") {
-      setFormData(initialForm);
-    }
-  }, [status]);
-
-  const handleChange = (field: keyof FormState, value: string) => {
+  const handleChange = (field: FieldKey, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    if (error) {
-      setError("");
+    if (status === "sent") setStatus("idle");
+  };
+
+  const handleTouch = (field: FieldKey) => {
+    setTouched((prev) => (prev[field] ? prev : { ...prev, [field]: true }));
+  };
+
+  const getFieldErrorMessage = (field: FieldKey): string | null => {
+    if (!touched[field]) return null;
+
+    if (field === "email") {
+      if (!formData.email.trim()) return "Veuillez renseigner une adresse email.";
+      if (!isEmailValid) return "Adresse email invalide. Exemple : nom@domaine.com";
+      return null;
     }
+
+    if (field === "service") {
+      if (!formData.service.trim()) return "Veuillez sélectionner un service.";
+      return null;
+    }
+
+    return null;
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!isValid) {
-      setError("Merci de compléter les champs requis.");
-      return;
-    }
-    setError("");
+
+    setTouched((prev) => ({
+      ...prev,
+      email: true,
+      service: true,
+    }));
+
+    if (!canSend) return;
+
     setStatus("sending");
     console.info("Contact form submitted", formData);
-  };
-
-  const fieldError = (field: keyof FormState) => {
-    if (!error) {
-      return false;
-    }
-    return !formData[field].trim();
   };
 
   return (
@@ -94,12 +111,12 @@ export default function ContactPageView() {
             <ContactForm
               data={formData}
               status={status}
-              error={error}
               onChange={handleChange}
               onSubmit={handleSubmit}
-              fieldError={fieldError}
+              onTouch={handleTouch}
+              fieldErrorMessage={getFieldErrorMessage}
+              canSend={canSend}
             />
-            <ContactSubmitOrb status={status} disabled={!isValid || status === "sending"} />
           </div>
           <ContactSidebar />
         </div>
