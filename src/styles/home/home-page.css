@@ -1,215 +1,244 @@
 /* ============================================================================
-   🌞 SOLEIL VECTORIEL ANIMÉ - FLAMMES EN CSS
+   HALO LUMINEUX CONCENTRÉ - POINT DE LUMIÈRE CHAUD ORANGÉ
+   Suivi du curseur via --hero-mx et --hero-my
    ============================================================================ */
 
 .home-background__sun {
+  /* Positionnement dynamique - suivi curseur */
   position: fixed;
   top: var(--hero-my, 50%);
   left: var(--hero-mx, 50%);
   transform: translate(-50%, -50%);
   z-index: 0;
   pointer-events: none;
-
-  width: 120px;
-  height: 120px;
+  
+  /* Noyau lumineux concentré */
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  opacity: 0.95;
-
-  background: radial-gradient(
-    circle at 45% 40%,
-    rgba(255, 255, 220, 1) 0%,
-    rgba(255, 245, 180, 0.95) 20%,
-    rgba(255, 215, 100, 0.9) 45%,
-    rgba(255, 180, 60, 0.85) 70%,
-    rgba(255, 150, 40, 0.8) 100%
-  );
-
+  
+  /* Centre lumineux intense - orange chaud */
+  background: 
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 200, 120, 0.9) 0%,
+      rgba(255, 170, 90, 0.8) 20%,
+      rgba(255, 140, 70, 0.6) 40%,
+      rgba(255, 110, 50, 0.4) 60%,
+      rgba(255, 80, 30, 0.2) 80%,
+      transparent 100%
+    );
+  
+  /* Diffusion modérée pour garder la concentration */
+  filter: blur(15px);
+  
+  /* Halo concentré - moins étendu mais plus intense */
   box-shadow:
-    0 0 30px 15px rgba(255, 230, 150, 0.6),
-    0 0 60px 30px rgba(255, 200, 100, 0.4),
-    0 0 100px 50px rgba(255, 170, 70, 0.25),
-    0 0 150px 75px rgba(255, 140, 50, 0.15);
-
-  animation: sunRotate 30s linear infinite;
+    /* Couche centrale très intense */
+    0 0 30px 15px rgba(255, 180, 100, 0.7),
+    0 0 50px 25px rgba(255, 160, 80, 0.6),
+    
+    /* Couche moyenne concentrée */
+    0 0 80px 40px rgba(255, 140, 70, 0.5),
+    0 0 110px 55px rgba(255, 120, 60, 0.4),
+    
+    /* Couche externe plus douce */
+    0 0 150px 75px rgba(255, 100, 50, 0.3),
+    0 0 200px 100px rgba(255, 80, 40, 0.2),
+    
+    /* Halo final limité */
+    0 0 260px 130px rgba(255, 60, 30, 0.12),
+    0 0 330px 165px rgba(255, 50, 25, 0.06);
+  
+  /* Animation pulsation subtile */
+  animation: 
+    haloConcentratedPulse 8s ease-in-out infinite,
+    haloGlow 12s ease-in-out infinite;
+  
+  opacity: 0.95;
+  mix-blend-mode: screen;
 }
 
-/* === FLAMMES AVEC PSEUDO-ÉLÉMENTS === */
-
-.home-background__sun::before,
-.home-background__sun::after {
-  content: "";
+/* Couche de renfort lumineux (::before) - centre plus dense */
+.home-background__sun::before {
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  pointer-events: none;
-  filter: blur(2px);
-  width: 200px;
-  height: 200px;
+  
+  /* Gradient concentré au centre */
+  background: 
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 220, 150, 0.8) 0%,
+      rgba(255, 190, 110, 0.6) 30%,
+      rgba(255, 160, 80, 0.4) 60%,
+      transparent 100%
+    );
+  
+  filter: blur(10px);
+  
+  /* Animation légère */
+  animation: haloCore 10s ease-in-out infinite;
+  opacity: 0.85;
 }
 
-/* --- Couronne principale (flammes en croix) --- */
-.home-background__sun::before {
-  box-shadow:
-    /* Nord */
-    0 -85px 25px 8px rgba(255, 220, 100, 0.7),
-    0 -95px 30px 5px rgba(255, 200, 80, 0.5),
-    0 -105px 35px 3px rgba(255, 180, 60, 0.3),
-
-    /* Nord-Est */
-    60px -60px 25px 8px rgba(255, 220, 100, 0.7),
-    68px -68px 30px 5px rgba(255, 200, 80, 0.5),
-    76px -76px 35px 3px rgba(255, 180, 60, 0.3),
-
-    /* Est */
-    85px 0 25px 8px rgba(255, 220, 100, 0.7),
-    95px 0 30px 5px rgba(255, 200, 80, 0.5),
-    105px 0 35px 3px rgba(255, 180, 60, 0.3),
-
-    /* Sud-Est */
-    60px 60px 25px 8px rgba(255, 220, 100, 0.7),
-    68px 68px 30px 5px rgba(255, 200, 80, 0.5),
-    76px 76px 35px 3px rgba(255, 180, 60, 0.3),
-
-    /* Sud */
-    0 85px 25px 8px rgba(255, 220, 100, 0.7),
-    0 95px 30px 5px rgba(255, 200, 80, 0.5),
-    0 105px 35px 3px rgba(255, 180, 60, 0.3),
-
-    /* Sud-Ouest */
-    -60px 60px 25px 8px rgba(255, 220, 100, 0.7),
-    -68px 68px 30px 5px rgba(255, 200, 80, 0.5),
-    -76px 76px 35px 3px rgba(255, 180, 60, 0.3),
-
-    /* Ouest */
-    -85px 0 25px 8px rgba(255, 220, 100, 0.7),
-    -95px 0 30px 5px rgba(255, 200, 80, 0.5),
-    -105px 0 35px 3px rgba(255, 180, 60, 0.3),
-
-    /* Nord-Ouest */
-    -60px -60px 25px 8px rgba(255, 220, 100, 0.7),
-    -68px -68px 30px 5px rgba(255, 200, 80, 0.5),
-    -76px -76px 35px 3px rgba(255, 180, 60, 0.3);
-
-  animation: flameWave 4s ease-in-out infinite;
-}
-
-/* --- Couronne secondaire (flammes décalées) --- */
+/* Couche externe (::after) - diffusion limitée */
 .home-background__sun::after {
-  box-shadow:
-    30px -80px 22px 7px rgba(255, 230, 120, 0.65),
-    35px -88px 28px 4px rgba(255, 210, 90, 0.45),
-    40px -96px 32px 2px rgba(255, 190, 70, 0.25),
-
-    80px -30px 22px 7px rgba(255, 230, 120, 0.65),
-    88px -35px 28px 4px rgba(255, 210, 90, 0.45),
-    96px -40px 32px 2px rgba(255, 190, 70, 0.25),
-
-    80px 30px 22px 7px rgba(255, 230, 120, 0.65),
-    88px 35px 28px 4px rgba(255, 210, 90, 0.45),
-    96px 40px 32px 2px rgba(255, 190, 70, 0.25),
-
-    30px 80px 22px 7px rgba(255, 230, 120, 0.65),
-    35px 88px 28px 4px rgba(255, 210, 90, 0.45),
-    40px 96px 32px 2px rgba(255, 190, 70, 0.25),
-
-    -30px 80px 22px 7px rgba(255, 230, 120, 0.65),
-    -35px 88px 28px 4px rgba(255, 210, 90, 0.45),
-    -40px 96px 32px 2px rgba(255, 190, 70, 0.25),
-
-    -80px 30px 22px 7px rgba(255, 230, 120, 0.65),
-    -88px 35px 28px 4px rgba(255, 210, 90, 0.45),
-    -96px 40px 32px 2px rgba(255, 190, 70, 0.25),
-
-    -80px -30px 22px 7px rgba(255, 230, 120, 0.65),
-    -88px -35px 28px 4px rgba(255, 210, 90, 0.45),
-    -96px -40px 32px 2px rgba(255, 190, 70, 0.25),
-
-    -30px -80px 22px 7px rgba(255, 230, 120, 0.65),
-    -35px -88px 28px 4px rgba(255, 210, 90, 0.45),
-    -40px -96px 32px 2px rgba(255, 190, 70, 0.25);
-
-  animation: flameWave 4s ease-in-out infinite 2s;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  
+  /* Gradient externe doux mais limité */
+  background: 
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 150, 80, 0.5) 0%,
+      rgba(255, 120, 60, 0.3) 40%,
+      rgba(255, 90, 40, 0.15) 70%,
+      transparent 100%
+    );
+  
+  filter: blur(20px);
+  
+  /* Animation décalée */
+  animation: haloOuter 14s ease-in-out infinite 3s;
+  opacity: 0.7;
 }
 
 /* ============================================================================
-   🌬️ ANIMATIONS
+   ANIMATIONS - PULSATION CONCENTRÉE
    ============================================================================ */
 
-@keyframes sunRotate {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-@keyframes flameWave {
+/* Pulsation principale concentrée */
+@keyframes haloConcentratedPulse {
   0%, 100% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  25% {
-    transform: translate(-50%, -50%) scale(1.05);
     opacity: 0.95;
   }
   50% {
-    transform: translate(-50%, -50%) scale(0.98);
-    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
   }
-  75% {
-    transform: translate(-50%, -50%) scale(1.03);
-    opacity: 0.97;
+}
+
+/* Variation d'intensité lumineuse */
+@keyframes haloGlow {
+  0%, 100% {
+    filter: blur(15px) brightness(1);
+  }
+  33% {
+    filter: blur(17px) brightness(1.1);
+  }
+  66% {
+    filter: blur(13px) brightness(0.95);
+  }
+}
+
+/* Animation noyau central */
+@keyframes haloCore {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.12);
+    opacity: 0.95;
+  }
+}
+
+/* Animation couche externe */
+@keyframes haloOuter {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 0.8;
   }
 }
 
 /* ============================================================================
-   📱 RESPONSIVE
+   RESPONSIVE - GARDE LA CONCENTRATION SUR MOBILE
    ============================================================================ */
 
 @media (max-width: 768px) {
   .home-background__sun {
-    width: 90px;
-    height: 90px;
+    width: 65px;
+    height: 65px;
+    filter: blur(12px);
+    
+    /* Halo réduit mais toujours concentré */
+    box-shadow:
+      0 0 25px 12px rgba(255, 180, 100, 0.7),
+      0 0 45px 22px rgba(255, 160, 80, 0.6),
+      0 0 70px 35px rgba(255, 140, 70, 0.5),
+      0 0 100px 50px rgba(255, 120, 60, 0.4),
+      0 0 140px 70px rgba(255, 100, 50, 0.3),
+      0 0 190px 95px rgba(255, 80, 40, 0.2);
   }
-
-  .home-background__sun::before,
+  
+  .home-background__sun::before {
+    width: 50px;
+    height: 50px;
+    filter: blur(8px);
+  }
+  
   .home-background__sun::after {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
+    filter: blur(16px);
   }
 }
 
 @media (max-width: 480px) {
   .home-background__sun {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
+    filter: blur(10px);
   }
-
-  .home-background__sun::before,
+  
+  .home-background__sun::before {
+    width: 40px;
+    height: 40px;
+    filter: blur(7px);
+  }
+  
   .home-background__sun::after {
-    width: 120px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
+    filter: blur(14px);
   }
 }
 
 /* ============================================================================
-   ⚙️ ACCESSIBILITÉ & OPTIMISATION
+   PRÉFÉRENCES UTILISATEUR
    ============================================================================ */
 
+/* Respect préférences animations réduites */
 @media (prefers-reduced-motion: reduce) {
   .home-background__sun,
   .home-background__sun::before,
   .home-background__sun::after {
-    animation: none !important;
+    animation: none;
   }
 }
 
+/* Optimisation GPU */
 .home-background__sun,
 .home-background__sun::before,
 .home-background__sun::after {
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }

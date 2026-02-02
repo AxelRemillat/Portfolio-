@@ -1,0 +1,271 @@
+/* ============================================================================
+   TECH SCROLLER - BANDEAU DÉROULANT INFINI FLUIDE
+   ============================================================================ */
+
+.tech-scroller {
+  width: 100%;
+  overflow: hidden;
+  padding: 3rem 0;
+  position: relative;
+  background: transparent;
+  /* Aucun fond - totalement transparent */
+}
+
+/* Masques de dégradé sur les bords pour effet fluide - DÉSACTIVÉS POUR TRANSPARENCE TOTALE */
+/* 
+.tech-scroller::before,
+.tech-scroller::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.tech-scroller::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.tech-scroller::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+*/
+
+/* ============================================================================
+   TRACK - CONTENEUR D'ANIMATION
+   ============================================================================ */
+
+.tech-scroller__track {
+  display: flex;
+  gap: 4rem;
+  width: fit-content;
+  
+  /* Animation infinie fluide - 18s pour un défilement rapide */
+  animation: scroll-infinite 18s linear infinite;
+  
+  /* Pause au survol pour examiner les logos */
+  transition: animation-play-state 0.3s ease;
+}
+
+.tech-scroller__track:hover {
+  animation-play-state: paused;
+}
+
+/* ============================================================================
+   ITEMS - LOGOS INDIVIDUELS
+   ============================================================================ */
+
+.tech-scroller__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 120px;
+  
+  /* Effet de survol */
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+.tech-scroller__item:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+/* ============================================================================
+   LOGOS - IMAGES TECHNOS
+   ============================================================================ */
+
+.tech-scroller__logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  
+  /* Effet de profondeur */
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: filter 0.3s ease, transform 0.3s ease;
+  
+  /* Optimisation rendu */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.tech-scroller__item:hover .tech-scroller__logo {
+  filter: 
+    drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4))
+    drop-shadow(0 0 20px rgba(255, 200, 100, 0.3));
+  transform: rotate(-2deg);
+}
+
+/* ============================================================================
+   NOMS DES TECHNOS
+   ============================================================================ */
+
+.tech-scroller__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  letter-spacing: 0.5px;
+  
+  /* Transition douce */
+  transition: color 0.3s ease, transform 0.3s ease;
+  
+  /* Évite la sélection */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tech-scroller__item:hover .tech-scroller__name {
+  color: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+}
+
+/* ============================================================================
+   ANIMATION INFINIE - DÉFILEMENT CONTINU
+   ============================================================================ */
+
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Déplace exactement de la moitié (car on duplique les logos) */
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE - ADAPTATION MOBILE
+   ============================================================================ */
+
+/* Tablettes */
+@media (max-width: 1024px) {
+  .tech-scroller {
+    padding: 2.5rem 0;
+  }
+  
+  .tech-scroller__track {
+    gap: 3rem;
+  }
+  
+  .tech-scroller__item {
+    min-width: 100px;
+  }
+  
+  .tech-scroller__logo {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .tech-scroller__name {
+    font-size: 0.8125rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .tech-scroller {
+    padding: 2rem 0;
+  }
+  
+  .tech-scroller__track {
+    gap: 2.5rem;
+    /* Animation plus rapide sur mobile */
+    animation-duration: 15s;
+  }
+  
+  .tech-scroller__item {
+    min-width: 80px;
+    gap: 0.5rem;
+  }
+  
+  .tech-scroller__logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .tech-scroller__name {
+    font-size: 0.75rem;
+  }
+  
+  /* Effet hover simplifié sur mobile */
+  .tech-scroller__item:hover {
+    transform: translateY(-4px) scale(1.03);
+  }
+}
+
+/* Petit mobile */
+@media (max-width: 480px) {
+  .tech-scroller {
+    padding: 1.5rem 0;
+  }
+  
+  .tech-scroller__track {
+    gap: 2rem;
+    animation-duration: 12s;
+  }
+  
+  .tech-scroller__item {
+    min-width: 70px;
+  }
+  
+  .tech-scroller__logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .tech-scroller__name {
+    font-size: 0.7rem;
+  }
+}
+
+/* ============================================================================
+   ACCESSIBILITÉ
+   ============================================================================ */
+
+/* Respect des préférences de mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  .tech-scroller__track {
+    animation: none;
+  }
+  
+  .tech-scroller__track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 2rem;
+  }
+  
+  .tech-scroller__item {
+    scroll-snap-align: center;
+  }
+}
+
+/* ============================================================================
+   OPTIMISATIONS PERFORMANCES
+   ============================================================================ */
+
+.tech-scroller__track {
+  will-change: transform;
+}
+
+.tech-scroller__item {
+  will-change: transform, filter;
+}
+
+/* Force l'accélération GPU */
+.tech-scroller__logo {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
