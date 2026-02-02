@@ -1,8 +1,15 @@
+/* =========================
+   HERO MOTION
+   - garde tes transitions existantes
+   - ajoute juste ce qu'il faut pour que le fond “soleil” reste fluide
+   ========================= */
+
 .hero-text,
 .hero-media {
   opacity: 0;
   transform: translateX(24px);
-  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
@@ -21,10 +28,12 @@
   transition-delay: 160ms;
 }
 
+/* Stagger texte */
 .hero-text > * {
   opacity: 0;
   transform: translateX(-16px);
-  transition: opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+  transition:
+    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -36,27 +45,23 @@
 .hero-enter .hero-text > *:nth-child(1) {
   transition-delay: 80ms;
 }
-
 .hero-enter .hero-text > *:nth-child(2) {
   transition-delay: 160ms;
 }
-
 .hero-enter .hero-text > *:nth-child(3) {
   transition-delay: 240ms;
 }
-
 .hero-enter .hero-text > *:nth-child(4) {
   transition-delay: 320ms;
 }
-
 .hero-enter .hero-text > *:nth-child(5) {
   transition-delay: 400ms;
 }
-
 .hero-enter .hero-text > *:nth-child(6) {
   transition-delay: 480ms;
 }
 
+/* Reveal “decor” media (si tu utilises ::before/::after côté portraits) */
 .hero-media.is-visible::before,
 .hero-media.is-visible::after {
   opacity: 1;
@@ -67,6 +72,7 @@
   transition-delay: 120ms;
 }
 
+/* Watermark existant (inchangé) */
 .hero-text::before {
   animation: hero-watermark-in 800ms ease forwards;
 }
@@ -97,6 +103,18 @@
   }
 }
 
+/* =========================
+   BONUS: micro transition sur le “soleil” quand la souris bouge
+   -> évite l’effet “jitter” sans alourdir
+   ========================= */
+.hero.hero--home {
+  /* ces vars sont mises à jour dans Hero.tsx */
+  transition: --hero-mx 120ms linear, --hero-my 120ms linear;
+}
+
+/* =========================
+   Reduced motion
+   ========================= */
 @media (prefers-reduced-motion: reduce) {
   .hero-text,
   .hero-media {
@@ -140,5 +158,10 @@
 
   .portrait-image {
     transition: none;
+  }
+
+  /* stop drift “soleil” (déjà géré dans base.css mais on sécurise) */
+  .hero__bg::before {
+    animation: none;
   }
 }

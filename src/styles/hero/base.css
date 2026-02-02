@@ -1,102 +1,297 @@
+/* =========================
+   HERO — PREMIUM / IMPACTFUL
+   (match Hero.tsx: .hero, .hero-shell, .hero-left, .hero-right, .hero-photo...)
+   ========================= */
+
 .hero {
-  padding-top: 10px;
+  padding: clamp(70px, 10vh, 120px) 0 28px;
 }
 
-.hero-content {
+/* Grid principal */
+.hero-shell {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 40px;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(24px, 4vw, 60px);
   align-items: center;
+  position: relative;
 }
 
-.hero-text {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+/* Bloc texte */
+.hero-left {
+  position: relative;
+  text-shadow: 0 10px 34px rgba(0, 0, 0, 0.48);
+}
+
+/* Halo local derrière le texte (pas une carte) */
+.hero-left::before {
+  content: "";
+  position: absolute;
+  inset: -18px -18px -18px -18px;
+  border-radius: 26px;
+  background:
+    radial-gradient(
+      120% 120% at 18% 18%,
+      rgba(0, 0, 0, 0.28),
+      rgba(0, 0, 0, 0) 55%
+    ),
+    radial-gradient(
+      140% 120% at 55% 45%,
+      rgba(0, 0, 0, 0.22),
+      rgba(0, 0, 0, 0) 62%
+    );
+  filter: blur(2px);
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* IMPORTANT : le contenu reste au-dessus du halo */
+.hero-left > * {
   position: relative;
   z-index: 1;
 }
 
-.hero-text > * {
-  position: relative;
-  z-index: 1;
-}
-
-.badge {
+/* Badge scoped au hero (évite de toucher d’autres pages) */
+.hero .badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
+  height: 30px;
+  padding: 0 12px;
   border-radius: 999px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.86);
   font-size: 12px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  width: fit-content;
 }
 
+.hero-heading {
+  margin-top: 14px;
+}
+
+/* Titre plus premium : poids + gradient discret */
+.hero-title {
+  margin: 0;
+  font-size: clamp(44px, 4.8vw, 76px);
+  line-height: 1.02;
+  font-weight: 820;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.98);
+}
+
+/* Optionnel mais très “premium” : gradient léger sur le nom (ne casse pas la lisibilité) */
 .hero-title {
   background: linear-gradient(
-    120deg,
-    #ffffff 10%,
-    rgba(59, 130, 246, 0.85) 65%,
-    #ffffff 100%
+    92deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(210, 230, 255, 0.96) 42%,
+    rgba(255, 255, 255, 0.98) 78%
   );
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 
-.subtitle {
-  font-size: 18px;
-  color: var(--text-muted);
+/* Sous-titre scoped */
+.hero .subtitle {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 14px;
+  letter-spacing: 0.02em;
 }
 
+/* Intro : un peu plus grand + meilleure lecture */
 .hero-intro {
-  color: var(--text-primary);
-  opacity: 0.92;
+  margin: 18px 0 0;
+  max-width: 64ch;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 15.5px;
+  line-height: 1.78;
 }
 
+.hero-strong {
+  color: rgba(255, 255, 255, 0.98);
+  font-weight: 720;
+}
+
+/* Highlights : plus aligné, plus “UI” */
 .hero-highlights {
+  margin-top: 18px;
   display: grid;
   gap: 10px;
+  max-width: 64ch;
+  color: rgba(255, 255, 255, 0.80);
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 .highlight {
   display: flex;
-  align-items: center;
   gap: 10px;
-  color: var(--text-muted);
-  font-size: 14px;
+  align-items: flex-start;
 }
 
 .highlight-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+  margin-top: 7px;
+  background: rgba(110, 190, 255, 0.92);
+  box-shadow: 0 0 0 4px rgba(110, 190, 255, 0.18);
 }
 
-.actions {
-  margin-top: 6px;
+/* Actions */
+.hero .actions {
+  margin-top: 22px;
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.hero .actions .btn.primary {
-  padding: 12px 22px;
-  font-size: 15px;
-  background: linear-gradient(120deg, rgba(59, 130, 246, 0.9), rgba(94, 234, 212, 0.8));
-  box-shadow: 0 18px 40px rgba(59, 130, 246, 0.25);
+/* Bouton existant : on le rend plus net sans casser ton système */
+.hero .btn.primary {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
+  transform: translateZ(0);
 }
 
-.hero .actions .btn.primary:hover {
-  box-shadow: 0 22px 50px rgba(59, 130, 246, 0.35);
+.hero .btn.primary:hover {
+  transform: translateY(-1px);
 }
 
-.hero .actions .btn.primary:focus-visible {
-  outline: 2px solid rgba(94, 234, 212, 0.8);
-  outline-offset: 3px;
+/* =========================
+   PHOTO RIGHT
+   ========================= */
+
+.hero-right {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 440px;
+}
+
+/* Cadre photo premium */
+.hero-photo {
+  width: min(460px, 40vw);
+  aspect-ratio: 4 / 5;
+  border-radius: 30px;
+  overflow: hidden;
+
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 100px rgba(0, 0, 0, 0.48);
+
+  transform: translateY(6px);
+  position: relative;
+}
+
+/* Glow doux sur la photo (cohérent avec ton fond orange) */
+.hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      120% 90% at 35% 15%,
+      rgba(255, 170, 110, 0.24),
+      rgba(0, 0, 0, 0) 58%
+    ),
+    radial-gradient(
+      110% 90% at 80% 65%,
+      rgba(120, 180, 255, 0.10),
+      rgba(0, 0, 0, 0) 62%
+    );
+  pointer-events: none;
+}
+
+.hero-photoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: saturate(1.05) contrast(1.06);
+}
+
+.hero-photoFallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* =========================
+   ENTER ANIMATION HOOKS
+   ========================= */
+
+.hero-shell {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+}
+
+.hero-enter.hero-shell {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 540ms ease, transform 540ms ease;
+}
+
+/* Reveal photo au scroll */
+.hero-right {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+}
+
+.hero-right.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 540ms ease 80ms, transform 540ms ease 80ms;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .hero-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-left::before {
+    inset: -14px;
+  }
+
+  .hero-right {
+    justify-content: flex-start;
+    min-height: 320px;
+    margin-top: 12px;
+  }
+
+  .hero-photo {
+    width: min(380px, 92vw);
+    border-radius: 24px;
+    transform: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero {
+    padding: 58px 0 18px;
+  }
+
+  .hero-title {
+    font-size: clamp(38px, 10vw, 50px);
+  }
+
+  .hero-intro {
+    font-size: 14.5px;
+  }
 }

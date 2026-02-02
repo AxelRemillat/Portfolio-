@@ -9,20 +9,22 @@ const highlights = [
 ];
 
 export default function Hero() {
-  const [imageErrors, setImageErrors] = useState({
-    primary: false,
-    secondary: false,
-  });
-
+  const [imageError, setImageError] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isReady, setIsReady] = useState(false);
+
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const handleImageError = (key: "primary" | "secondary") => () => {
-    setImageErrors((prev) => ({ ...prev, [key]: true }));
-  };
+  const handleImageError = () => setImageError(true);
 
+  // Trigger entrée (classe CSS) après 1 frame
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsReady(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  // Reveal photo uniquement quand visible
   useEffect(() => {
     if (typeof window === "undefined" || !mediaRef.current) return;
 
@@ -40,11 +42,6 @@ export default function Hero() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setIsReady(true));
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
   const handleScrollToProjects = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const target = document.getElementById("projects");
@@ -60,31 +57,32 @@ export default function Hero() {
   };
 
   return (
-    <header className="hero">
-      <div className={`hero-content ${isReady ? "hero-enter" : ""}`}>
-        <div className="hero-text">
+    <header className="hero" aria-label="Présentation">
+      <div className={`hero-shell ${isReady ? "hero-enter" : ""}`}>
+        <div className="hero-left">
           <p className="badge">Portfolio</p>
 
-          <TypingText
-            as="h1"
-            text="Axel Remillat"
-            className="hero-title typing-title"
-            speedMs={24}
-            startDelayMs={120}
-          />
-
-          <p className="subtitle">Étudiant ingénieur</p>
+          <div className="hero-heading">
+            <TypingText
+              as="h1"
+              text="Axel Remillat"
+              className="hero-title typing-title"
+              speedMs={22}
+              startDelayMs={100}
+            />
+            <p className="subtitle">Étudiant ingénieur</p>
+          </div>
 
           <p className="hero-intro">
-            Je conçois des produits web sobres et efficaces. Je recherche un
-            stage, des projets concrets ou une opportunité pour créer de la
-            valeur.
+            Je conçois des produits web <span className="hero-strong">sobres</span> et{" "}
+            <span className="hero-strong">efficaces</span>. Je recherche un stage, des
+            projets concrets ou une opportunité pour <span className="hero-strong">créer de la valeur</span>.
           </p>
 
           <div className="hero-highlights">
             {highlights.map((item) => (
               <div key={item} className="highlight">
-                <span className="highlight-dot" />
+                <span className="highlight-dot" aria-hidden="true" />
                 <span>{item}</span>
               </div>
             ))}
@@ -103,30 +101,20 @@ export default function Hero() {
 
         <div
           ref={mediaRef}
-          className={`hero-media ${isVisible ? "is-visible" : ""}`}
+          className={`hero-right ${isVisible ? "is-visible" : ""}`}
+          aria-label="Photo de profil"
         >
-          <div className="portrait" data-variant="primary">
-            {imageErrors.primary ? (
-              <div className="portrait-fallback">Photo</div>
+          <div className="hero-photo">
+            {imageError ? (
+              <div className="hero-photoFallback">Photo</div>
             ) : (
               <img
                 src="/me-1.jpg"
-                alt="Portrait principal"
-                className="portrait-image"
-                onError={handleImageError("primary")}
-              />
-            )}
-          </div>
-
-          <div className="portrait" data-variant="secondary">
-            {imageErrors.secondary ? (
-              <div className="portrait-fallback">Photo</div>
-            ) : (
-              <img
-                src="/me-2.jpg"
-                alt="Portrait secondaire"
-                className="portrait-image"
-                onError={handleImageError("secondary")}
+                alt="Photo d’Axel"
+                className="hero-photoImage"
+                onError={handleImageError}
+                loading="eager"
+                decoding="async"
               />
             )}
           </div>

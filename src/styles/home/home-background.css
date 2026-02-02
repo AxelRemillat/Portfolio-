@@ -1,0 +1,87 @@
+.home-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* IMAGE : plus grande + marge => pas de trou même en bas */
+.home-background__img {
+  position: absolute;
+
+  /* ✅ marge autour pour absorber le déplacement */
+  inset: -10%;
+
+  width: 120%;
+  height: 120%;
+
+  object-fit: cover;
+  object-position: center;
+
+  /* ✅ parallax doux, et l'image reste toujours “au-delà” du viewport */
+  transform: translate3d(0, var(--bg-parallax, 0px), 0) scale(1.12);
+  will-change: transform;
+
+  filter: saturate(1.08) contrast(1.08) brightness(0.96) blur(0.35px);
+}
+
+/* SOLEIL : un vrai point lumineux (core + halo) */
+.home-background__sun {
+  position: absolute;
+  inset: -20%;
+  transform: translateZ(0);
+  will-change: background;
+
+  /* ✅ core plus “réel” + halo chaud discret */
+  background:
+    /* core (petit, très visible) */
+    radial-gradient(
+      72px 72px at var(--hero-mx, 50%) var(--hero-my, 45%),
+      rgba(255, 235, 200, 0.98),
+      rgba(255, 200, 140, 0.92) 35%,
+      rgba(255, 160, 100, 0.0) 72%
+    ),
+    /* glow (halo chaud contrôlé) */
+    radial-gradient(
+      240px 240px at var(--hero-mx, 50%) var(--hero-my, 45%),
+      rgba(255, 150, 90, 0.22),
+      rgba(255, 120, 70, 0.10) 40%,
+      rgba(0, 0, 0, 0) 75%
+    );
+
+  opacity: 0.92;
+  mix-blend-mode: screen;
+}
+
+/* Vignette : garde la lisibilité */
+.home-background__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 120% at 50% 35%,
+    rgba(0, 0, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0.30) 56%,
+    rgba(0, 0, 0, 0.52) 100%
+  );
+}
+
+/* Grain */
+.home-background__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-background__img {
+    transform: scale(1.12);
+  }
+
+  .home-background__sun {
+    opacity: 0.75;
+  }
+}

@@ -1,0 +1,215 @@
+/* ============================================================================
+   🌞 SOLEIL VECTORIEL ANIMÉ - FLAMMES EN CSS
+   ============================================================================ */
+
+.home-background__sun {
+  position: fixed;
+  top: var(--hero-my, 50%);
+  left: var(--hero-mx, 50%);
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  opacity: 0.95;
+
+  background: radial-gradient(
+    circle at 45% 40%,
+    rgba(255, 255, 220, 1) 0%,
+    rgba(255, 245, 180, 0.95) 20%,
+    rgba(255, 215, 100, 0.9) 45%,
+    rgba(255, 180, 60, 0.85) 70%,
+    rgba(255, 150, 40, 0.8) 100%
+  );
+
+  box-shadow:
+    0 0 30px 15px rgba(255, 230, 150, 0.6),
+    0 0 60px 30px rgba(255, 200, 100, 0.4),
+    0 0 100px 50px rgba(255, 170, 70, 0.25),
+    0 0 150px 75px rgba(255, 140, 50, 0.15);
+
+  animation: sunRotate 30s linear infinite;
+}
+
+/* === FLAMMES AVEC PSEUDO-ÉLÉMENTS === */
+
+.home-background__sun::before,
+.home-background__sun::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(2px);
+  width: 200px;
+  height: 200px;
+}
+
+/* --- Couronne principale (flammes en croix) --- */
+.home-background__sun::before {
+  box-shadow:
+    /* Nord */
+    0 -85px 25px 8px rgba(255, 220, 100, 0.7),
+    0 -95px 30px 5px rgba(255, 200, 80, 0.5),
+    0 -105px 35px 3px rgba(255, 180, 60, 0.3),
+
+    /* Nord-Est */
+    60px -60px 25px 8px rgba(255, 220, 100, 0.7),
+    68px -68px 30px 5px rgba(255, 200, 80, 0.5),
+    76px -76px 35px 3px rgba(255, 180, 60, 0.3),
+
+    /* Est */
+    85px 0 25px 8px rgba(255, 220, 100, 0.7),
+    95px 0 30px 5px rgba(255, 200, 80, 0.5),
+    105px 0 35px 3px rgba(255, 180, 60, 0.3),
+
+    /* Sud-Est */
+    60px 60px 25px 8px rgba(255, 220, 100, 0.7),
+    68px 68px 30px 5px rgba(255, 200, 80, 0.5),
+    76px 76px 35px 3px rgba(255, 180, 60, 0.3),
+
+    /* Sud */
+    0 85px 25px 8px rgba(255, 220, 100, 0.7),
+    0 95px 30px 5px rgba(255, 200, 80, 0.5),
+    0 105px 35px 3px rgba(255, 180, 60, 0.3),
+
+    /* Sud-Ouest */
+    -60px 60px 25px 8px rgba(255, 220, 100, 0.7),
+    -68px 68px 30px 5px rgba(255, 200, 80, 0.5),
+    -76px 76px 35px 3px rgba(255, 180, 60, 0.3),
+
+    /* Ouest */
+    -85px 0 25px 8px rgba(255, 220, 100, 0.7),
+    -95px 0 30px 5px rgba(255, 200, 80, 0.5),
+    -105px 0 35px 3px rgba(255, 180, 60, 0.3),
+
+    /* Nord-Ouest */
+    -60px -60px 25px 8px rgba(255, 220, 100, 0.7),
+    -68px -68px 30px 5px rgba(255, 200, 80, 0.5),
+    -76px -76px 35px 3px rgba(255, 180, 60, 0.3);
+
+  animation: flameWave 4s ease-in-out infinite;
+}
+
+/* --- Couronne secondaire (flammes décalées) --- */
+.home-background__sun::after {
+  box-shadow:
+    30px -80px 22px 7px rgba(255, 230, 120, 0.65),
+    35px -88px 28px 4px rgba(255, 210, 90, 0.45),
+    40px -96px 32px 2px rgba(255, 190, 70, 0.25),
+
+    80px -30px 22px 7px rgba(255, 230, 120, 0.65),
+    88px -35px 28px 4px rgba(255, 210, 90, 0.45),
+    96px -40px 32px 2px rgba(255, 190, 70, 0.25),
+
+    80px 30px 22px 7px rgba(255, 230, 120, 0.65),
+    88px 35px 28px 4px rgba(255, 210, 90, 0.45),
+    96px 40px 32px 2px rgba(255, 190, 70, 0.25),
+
+    30px 80px 22px 7px rgba(255, 230, 120, 0.65),
+    35px 88px 28px 4px rgba(255, 210, 90, 0.45),
+    40px 96px 32px 2px rgba(255, 190, 70, 0.25),
+
+    -30px 80px 22px 7px rgba(255, 230, 120, 0.65),
+    -35px 88px 28px 4px rgba(255, 210, 90, 0.45),
+    -40px 96px 32px 2px rgba(255, 190, 70, 0.25),
+
+    -80px 30px 22px 7px rgba(255, 230, 120, 0.65),
+    -88px 35px 28px 4px rgba(255, 210, 90, 0.45),
+    -96px 40px 32px 2px rgba(255, 190, 70, 0.25),
+
+    -80px -30px 22px 7px rgba(255, 230, 120, 0.65),
+    -88px -35px 28px 4px rgba(255, 210, 90, 0.45),
+    -96px -40px 32px 2px rgba(255, 190, 70, 0.25),
+
+    -30px -80px 22px 7px rgba(255, 230, 120, 0.65),
+    -35px -88px 28px 4px rgba(255, 210, 90, 0.45),
+    -40px -96px 32px 2px rgba(255, 190, 70, 0.25);
+
+  animation: flameWave 4s ease-in-out infinite 2s;
+}
+
+/* ============================================================================
+   🌬️ ANIMATIONS
+   ============================================================================ */
+
+@keyframes sunRotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes flameWave {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.98);
+    opacity: 0.9;
+  }
+  75% {
+    transform: translate(-50%, -50%) scale(1.03);
+    opacity: 0.97;
+  }
+}
+
+/* ============================================================================
+   📱 RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .home-background__sun {
+    width: 90px;
+    height: 90px;
+  }
+
+  .home-background__sun::before,
+  .home-background__sun::after {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-background__sun {
+    width: 70px;
+    height: 70px;
+  }
+
+  .home-background__sun::before,
+  .home-background__sun::after {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* ============================================================================
+   ⚙️ ACCESSIBILITÉ & OPTIMISATION
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-background__sun,
+  .home-background__sun::before,
+  .home-background__sun::after {
+    animation: none !important;
+  }
+}
+
+.home-background__sun,
+.home-background__sun::before,
+.home-background__sun::after {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}

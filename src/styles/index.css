@@ -1,21 +1,50 @@
+/* =========================
+   BASE & LAYOUT
+   ========================= */
 @import "./base.css";
 @import "./layout.css";
+@import "./responsive.css";
+
+/* =========================
+   GLOBAL UI
+   ========================= */
 @import "./navbar.css";
-@import "./hero.css";
 @import "./components.css";
-@import "./timeline.css";
 @import "./modal.css";
 
+/* =========================
+   HOME (fond global + page)
+   ========================= */
+@import "./home/home-background.css";
+@import "./home/home-page.css";
+
+/* =========================
+   HERO (contenu uniquement)
+   ========================= */
+@import "./hero.css";
+
+/* =========================
+   CAROUSEL / PROJECTS
+   ========================= */
 @import "./carousel/projectsCarousel.css";
 @import "./carousel/projectModal.css";
 
+/* =========================
+   PARCOURS
+   ========================= */
 @import "./parcours/parcours.css";
 @import "./parcours/bubbles.css";
 @import "./parcours/screen.css";
 
-@import "./contact.css";
+/* =========================
+   VOUS & MOI
+   ========================= */
 @import "./vous-et-moi/vousEtMoi.css";
 @import "./vous-et-moi/vousEtMoiSections.css";
 @import "./vous-et-moi/aurora.css";
 @import "./vous-et-moi/contactCta.css";
-@import "./responsive.css";
+
+/* =========================
+   CONTACT
+   ========================= */
+@import "./contact.css";
