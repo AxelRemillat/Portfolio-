@@ -1,0 +1,811 @@
+/* ============================================================================
+   PROJECTS SHOWCASE - DESIGN AGENCE PREMIUM SUR FOND TRANSPARENT
+   Alternance gauche/droite, glass panels, numéros géants + num à côté texte
+   ============================================================================ */
+
+.projectsShowcase {
+  background: transparent;
+  padding: 6rem 0 3.5rem; /* ↓ réduit l’espace après le dernier projet */
+  position: relative;
+  overflow: hidden;
+}
+
+.projectsShowcaseContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ============================================================================
+   HEADER
+   ============================================================================ */
+
+.projectsShowcaseHeader {
+  text-align: center;
+  margin-bottom: 4.5rem; /* ↓ moins d’air */
+  position: relative;
+  z-index: 2;
+}
+
+/* Enlève le “PORTFOLIO” du haut */
+.projectsShowcaseKicker {
+  display: none;
+}
+
+.projectsShowcaseTitle {
+  font-size: 3.25rem;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.96);
+  margin: 0 0 0.75rem;
+  line-height: 1.05;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+}
+
+.projectsShowcaseSubtitle {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.68);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+/* Option : petit trait discret sous le header */
+.projectsShowcaseHeader::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 1px;
+  margin: 1.8rem auto 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+}
+
+/* ============================================================================
+   LISTE DE PROJETS
+   ============================================================================ */
+
+.projectsList {
+  display: flex;
+  flex-direction: column;
+  gap: 3.0rem; /* ↓ réduit l’espace entre les 2 projets */
+}
+
+/* ============================================================================
+   PROJECT CARD - ALTERNANCE GAUCHE/DROITE
+   ============================================================================ */
+
+.projectCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4.25rem; /* ↓ moins large */
+  align-items: center;
+  min-height: 520px; /* ↓ moins haut */
+}
+
+/* Numéro géant en arrière-plan - visible sur fond sombre */
+.projectCard__number {
+  position: absolute;
+  font-size: 18rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.028);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+}
+
+/* Projet à gauche : image à gauche, texte à droite */
+.projectCard--left .projectCard__number {
+  left: -1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.projectCard--left .projectCard__media {
+  order: 1;
+}
+
+.projectCard--left .projectCard__content {
+  order: 2;
+}
+
+/* Projet à droite : image à droite, texte à gauche */
+.projectCard--right .projectCard__number {
+  right: -1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.projectCard--right .projectCard__media {
+  order: 2;
+}
+
+.projectCard--right .projectCard__content {
+  order: 1;
+}
+
+/* ============================================================================
+   IMAGE AVEC CLIP-PATH ARC
+   ============================================================================ */
+
+.projectCard__media {
+  position: relative;
+  z-index: 1;
+}
+
+.projectCard__mediaInner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 1rem;
+
+  /* Clip-path arc incliné (octogone doux) */
+  clip-path: polygon(
+    10% 0%,
+    90% 0%,
+    100% 10%,
+    100% 90%,
+    90% 100%,
+    10% 100%,
+    0% 90%,
+    0% 10%
+  );
+
+  /* Shadow premium */
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.55),
+    0 10px 30px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projectCard--left .projectCard__mediaInner {
+  transform: rotate(-3deg);
+}
+
+.projectCard--right .projectCard__mediaInner {
+  transform: rotate(3deg);
+}
+
+.projectCard__mediaInner:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.projectCard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projectCard__mediaInner:hover .projectCard__img {
+  transform: scale(1.05);
+}
+
+/* ============================================================================
+   CONTENU TEXTE AVEC GLASS PANEL + NUMERO À COTE DU TEXTE
+   ============================================================================ */
+
+.projectCard__content {
+  position: relative;
+  z-index: 2;
+}
+
+.projectCard__contentInner {
+  max-width: 520px;
+  padding: 2.35rem 2.4rem;
+  border-radius: 1.5rem;
+
+  /* Glass panel lisible sans fond blanc */
+  background: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  position: relative;
+}
+
+/* Alignement alterné */
+.projectCard--left .projectCard__contentInner {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.projectCard--right .projectCard__contentInner {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* ---- NUM à côté du texte (style screen 2) ----
+   On crée une petite pastille en haut du texte.
+   Comme tu as 2 projets, on mappe via nth-child.
+*/
+.projectCard:nth-child(1) .projectCard__contentInner {
+  --small-num: "01";
+}
+.projectCard:nth-child(2) .projectCard__contentInner {
+  --small-num: "02";
+}
+
+.projectCard__contentInner::before {
+  content: var(--small-num);
+  position: absolute;
+  top: -16px;
+  left: 18px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.projectCard__kicker {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.9rem;
+}
+
+.projectCard__title {
+  font-size: 2.35rem;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.98);
+  margin-bottom: 1.15rem;
+  line-height: 1.06;
+  text-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.projectCard__desc {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.75;
+  margin-bottom: 1.8rem;
+}
+
+/* ============================================================================
+   TAGS
+   ============================================================================ */
+
+.projectCard__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 2rem;
+}
+
+.projectTag {
+  display: inline-block;
+  padding: 0.45rem 1.05rem;
+  font-size: 0.8125rem;
+  font-weight: 520;
+  color: rgba(255, 255, 255, 0.68);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.projectTag:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+}
+
+/* ============================================================================
+   CTA BUTTON
+   ============================================================================ */
+
+.projectCard__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.9rem;
+  font-size: 0.93rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.projectCard__cta::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.projectCard__cta:hover::before {
+  width: 320px;
+  height: 320px;
+}
+
+.projectCard__cta:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 1);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+}
+
+.projectCard__cta svg {
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.projectCard__cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+/* Tablettes */
+@media (max-width: 1024px) {
+  .projectsShowcase {
+    padding: 1rem 0 1rem;
+  }
+
+  .projectsShowcaseHeader {
+    margin-bottom: 0rem;
+  }
+
+  .projectsShowcaseTitle {
+    font-size: 0rem;
+  }
+
+  .projectsList {
+    gap: 5.2rem;
+  }
+
+  .projectCard {
+    gap: 3.2rem;
+    min-height: 470px;
+  }
+
+  .projectCard__number {
+    font-size: 14rem;
+  }
+
+  .projectCard__title {
+    font-size: 2.05rem;
+  }
+
+  .projectCard__contentInner {
+    padding: 2rem;
+  }
+
+  .projectCard__contentInner::before {
+    top: -14px;
+    left: 16px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .projectsShowcase {
+    padding: 4rem 0 2.5rem;
+  }
+
+  .projectsShowcaseContainer {
+    padding: 0 1.5rem;
+  }
+
+  .projectsShowcaseHeader {
+    margin-bottom: 3rem;
+  }
+
+  .projectsShowcaseTitle {
+    font-size: 2rem;
+  }
+
+  .projectsShowcaseSubtitle {
+    font-size: 0.98rem;
+  }
+
+  .projectsList {
+    gap: 4.25rem;
+  }
+
+  .projectCard {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+    min-height: auto;
+  }
+
+  .projectCard--left .projectCard__media,
+  .projectCard--right .projectCard__media {
+    order: 1;
+  }
+
+  .projectCard--left .projectCard__content,
+  .projectCard--right .projectCard__content {
+    order: 2;
+  }
+
+  .projectCard__number {
+    font-size: 9rem;
+    opacity: 0.55;
+  }
+
+  .projectCard--left .projectCard__number,
+  .projectCard--right .projectCard__number {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .projectCard__contentInner {
+    max-width: 100%;
+    padding: 1.75rem;
+  }
+
+  .projectCard--left .projectCard__contentInner,
+  .projectCard--right .projectCard__contentInner {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .projectCard__title {
+    font-size: 1.75rem;
+  }
+
+  .projectCard__desc {
+    font-size: 1rem;
+  }
+
+  .projectCard__mediaInner {
+    transform: rotate(0deg) !important;
+  }
+
+  .projectCard__contentInner::before {
+    top: -12px;
+    left: 14px;
+    padding: 7px 11px;
+    font-size: 0.82rem;
+  }
+}
+
+/* Petit mobile */
+@media (max-width: 480px) {
+  .projectsShowcase {
+    padding: 3rem 0 2.25rem;
+  }
+
+  .projectsShowcaseTitle {
+    font-size: 1.75rem;
+  }
+
+  .projectCard__number {
+    font-size: 6.5rem;
+  }
+
+  .projectCard__title {
+    font-size: 1.5rem;
+  }
+
+  .projectCard__contentInner {
+    padding: 1.5rem;
+  }
+
+  .projectCard__cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================================
+   PROJECT MODAL - OVERLAY PLEIN ÉCRAN
+   (inchangé sauf si tu veux réduire aussi ses marges)
+   ============================================================================ */
+
+.projectModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.projectModalBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+
+.projectModalPanel {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 90vh;
+  background: #1a1a1a;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.projectModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+}
+
+.projectModalHeaderContent {
+  flex: 1;
+}
+
+.projectModalKicker {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.5rem;
+}
+
+.projectModalTitle {
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.projectModalClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.projectModalClose:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.projectModalBody {
+  overflow-y: auto;
+  max-height: calc(90vh - 100px);
+  padding: 3rem;
+  background: #1a1a1a;
+}
+
+.projectModalHero {
+  margin-bottom: 3rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.projectModalHeroImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.projectModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.projectModalSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.projectModalSectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.projectModalText {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.projectModalTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.projectModalTag {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.projectModalLinks {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.projectModalLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.projectModalLink:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.projectModalVideo {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.projectModalVideo iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.projectModalGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.projectModalGalleryImg {
+  width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .projectModalOverlay {
+    padding: 0;
+  }
+
+  .projectModalPanel {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .projectModalHeader {
+    padding: 1.5rem;
+  }
+
+  .projectModalTitle {
+    font-size: 1.5rem;
+  }
+
+  .projectModalBody {
+    padding: 2rem 1.5rem;
+    max-height: calc(100vh - 80px);
+  }
+
+  .projectModalText {
+    font-size: 1rem;
+  }
+
+  .projectModalGallery {
+    grid-template-columns: 1fr;
+  }
+
+  .projectModalLinks {
+    flex-direction: column;
+  }
+
+  .projectModalLink {
+    width: 100%;
+    justify-content: center;
+  }
+}

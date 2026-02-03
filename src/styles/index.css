@@ -17,17 +17,12 @@
    ========================= */
 @import "./home/home-background.css";
 @import "./home/home-page.css";
+@import "./home/projectsShowcase.css";
 
 /* =========================
    HERO (contenu uniquement)
    ========================= */
 @import "./hero.css";
-
-/* =========================
-   CAROUSEL / PROJECTS
-   ========================= */
-@import "./carousel/projectsCarousel.css";
-@import "./carousel/projectModal.css";
 
 /* =========================
    PARCOURS

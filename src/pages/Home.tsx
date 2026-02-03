@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
 
 import Hero from "../components/Hero";
-import ProjectsCarousel3D from "../components/ProjectsCarousel3D";
 import HomeBackground from "../components/home/HomeBackground";
 import TechScroller from "../components/home/TechScroller";
-
-import { projects } from "../data/projects";
+import ProjectsShowcase from "../components/home/ProjectsShowcase";
 
 export default function Home() {
   return (
@@ -21,8 +19,8 @@ export default function Home() {
         {/* Bandeau technos (indépendant du Hero) */}
         <TechScroller />
 
-        {/* Projets */}
-        <ProjectsCarousel3D projects={projects} />
+        {/* Projets (vignettes + ouverture plein écran) */}
+        <ProjectsShowcase />
 
         {/* Next steps */}
         <section className="section next-steps">

@@ -57,6 +57,7 @@ export default function useBubbleInteraction({
     if (timerRef.current !== null) window.clearTimeout(timerRef.current);
     timerRef.current = null;
   };
+
   useEffect(() => () => clearTimer(), []);
 
   const setHover = (isOver: boolean) => {
@@ -131,7 +132,11 @@ export default function useBubbleInteraction({
     rafRef.current = requestAnimationFrame(tick);
   };
 
-  const stopListeners = (onMove: any, onUp: any, onCancel: any) => {
+  const stopListeners = (
+    onMove: (e: PointerEvent) => void,
+    onUp: (e: PointerEvent) => void,
+    onCancel: (e: PointerEvent) => void,
+  ) => {
     window.removeEventListener("pointermove", onMove);
     window.removeEventListener("pointerup", onUp);
     window.removeEventListener("pointercancel", onCancel);
