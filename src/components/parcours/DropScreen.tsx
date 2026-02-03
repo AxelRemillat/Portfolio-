@@ -15,7 +15,7 @@ function withAlpha(hexOrRgb: string, alpha: number) {
   // fallback: returns original (CSS will ignore if invalid)
   const c = hexOrRgb.trim();
 
-  if (c.startsWith("#") && (c.length === 7)) {
+  if (c.startsWith("#") && c.length === 7) {
     const r = parseInt(c.slice(1, 3), 16);
     const g = parseInt(c.slice(3, 5), 16);
     const b = parseInt(c.slice(5, 7), 16);
@@ -40,10 +40,17 @@ const DropScreen = forwardRef<HTMLDivElement, DropScreenProps>(
     const glowStrong = withAlpha(accent, 0.32);
 
     const styleVars: CSSProperties = {
-      // on garde la variable au cas où tu veux l'utiliser ailleurs
+      // variable dispo si tu veux l'utiliser ailleurs en CSS
       ["--screen-accent" as any]: accent,
 
-      // ✅ FIX IMPARABLE : inline styles
+      // ✅ toujours au-dessus du fond (important quand on met un background fixed en z-index 0)
+      position: "relative",
+      zIndex: 1,
+
+      // ✅ garde un fond transparent (évite tout “voile blanc” inattendu)
+      background: "transparent",
+
+      // styles dynamiques existants
       borderColor: accent,
       boxShadow: isDropActive
         ? `0 24px 60px rgba(5, 9, 20, 0.45), 0 0 34px ${glowStrong}`
@@ -114,7 +121,7 @@ const DropScreen = forwardRef<HTMLDivElement, DropScreenProps>(
         </div>
       </article>
     );
-  },
+  }
 );
 
 DropScreen.displayName = "DropScreen";

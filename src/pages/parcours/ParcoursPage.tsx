@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import BubbleList from "../../components/parcours/BubbleList";
 import DropScreen from "../../components/parcours/DropScreen";
+import ParcoursBackground from "../../components/parcours/ParcoursBackground";
 import { parcoursCaps } from "../../data/parcoursCaps";
 import "../../styles/parcours.css";
 
@@ -8,7 +9,7 @@ export default function ParcoursPage() {
   const current = useMemo(() => parcoursCaps.find((cap) => cap.isCurrent), []);
 
   const [selectedId, setSelectedId] = useState<string | null>(
-    current?.id ?? parcoursCaps[0]?.id ?? null,
+    current?.id ?? parcoursCaps[0]?.id ?? null
   );
   const [isDropActive, setIsDropActive] = useState(false);
 
@@ -43,7 +44,10 @@ export default function ParcoursPage() {
   const accentColor = selectedCap?.color ?? "rgba(148, 163, 184, 0.35)";
 
   return (
-    <section className="section parcours-page">
+    <section className="section parcours-page parcours-wrap">
+      {/* ✅ Fond Parcours (parallax scroll + glow curseur) */}
+      <ParcoursBackground />
+
       <h1>Parcours</h1>
       <p className="muted">
         Glissez une bulle dans l’écran ou cliquez pour afficher le détail de

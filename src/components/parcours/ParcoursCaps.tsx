@@ -1,4 +1,5 @@
 import type { ParcoursCap } from "../../data/parcoursCaps";
+import ParcoursBackground from "./ParcoursBackground";
 import ParcoursCapCard from "./ParcoursCapCard";
 
 type ParcoursCapsProps = {
@@ -7,21 +8,31 @@ type ParcoursCapsProps = {
   onToggle: (id: string) => void;
 };
 
-export default function ParcoursCaps({ caps, openId, onToggle }: ParcoursCapsProps) {
+export default function ParcoursCaps({
+  caps,
+  openId,
+  onToggle,
+}: ParcoursCapsProps) {
   return (
-    <div className="parcours-caps">
-      <div className="parcours-rail" aria-hidden="true" />
-      <div className="parcours-caps-list">
-        {caps.map((cap, index) => (
-          <ParcoursCapCard
-            key={cap.id}
-            cap={cap}
-            isOpen={openId === cap.id}
-            align={index % 2 === 0 ? "left" : "right"}
-            onToggle={onToggle}
-          />
-        ))}
+    <section className="parcours-wrap">
+      {/* ✅ Fond animé Parcours (1 seule rappelle, derrière tout) */}
+      <ParcoursBackground />
+
+      {/* ✅ Contenu au-dessus */}
+      <div className="parcours-caps">
+        <div className="parcours-rail" aria-hidden="true" />
+        <div className="parcours-caps-list">
+          {caps.map((cap, index) => (
+            <ParcoursCapCard
+              key={cap.id}
+              cap={cap}
+              isOpen={openId === cap.id}
+              align={index % 2 === 0 ? "left" : "right"}
+              onToggle={onToggle}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

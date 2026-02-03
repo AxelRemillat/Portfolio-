@@ -1,34 +1,73 @@
+/* =========================
+   PARCOURS — PAGE WRAPPER
+   ========================= */
+
 .parcours-page {
-  display: grid;
-  gap: 24px;
+  /* on casse toute tentative de centrage vertical héritée */
+  display: block;
+  position: relative;
+  z-index: 1;
+
+  /* rythme vertical contrôlé */
+  padding-top: 96px; /* espace sous la navbar */
+  padding-bottom: 120px;
+
+  background: transparent;
 }
+
+/* =========================
+   PARCOURS — LAYOUT
+   ========================= */
 
 .parcours-layout {
   display: grid;
   gap: 24px;
+
+  /* sécurité : pas de centrage caché */
+  align-items: start;
+  justify-items: stretch;
+
+  background: transparent;
 }
 
-/* colonne bulles */
+/* =========================
+   COLONNE BULLES
+   ========================= */
+
 .parcours-bubble-list {
   display: grid;
   gap: 18px;
+
+  /* mobile : bulles centrées */
   justify-items: center;
 }
+
+/* =========================
+   DESKTOP
+   ========================= */
 
 @media (min-width: 900px) {
   .parcours-layout {
     grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
-
-    /* ✅ important: on garde le top align (rien ne "monte") */
-    align-items: start;
+    align-items: start; /* contenu toujours en haut */
   }
 
   .parcours-bubble-list {
     justify-items: start;
   }
 
-  /* ✅ écran plus long uniquement vers le bas */
+  /* carte de détail : plus longue vers le bas uniquement */
   .parcours-screen {
-    min-height: 650px; /* ajuste si tu veux: 520 / 600 */
+    min-height: 650px; /* ajuste si besoin */
   }
+}
+
+/* =========================
+   BACKGROUND & STACKING
+   ========================= */
+
+/* le fond est fixed derrière, tout le contenu passe au-dessus */
+.parcours-wrap {
+  position: relative;
+  z-index: 1;
 }

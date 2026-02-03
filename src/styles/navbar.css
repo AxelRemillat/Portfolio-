@@ -17,6 +17,15 @@
   gap: 16px;
 }
 
+/* ✅ bloc gauche : bouton audio + brand */
+.navbar-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* ✅ brand existante (inchangée) */
 .brand {
   font-weight: 600;
   letter-spacing: 0.28em;
@@ -29,6 +38,46 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+/* ✅ bouton musique */
+.nav-audio-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.86);
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    opacity 160ms ease;
+}
+
+.nav-audio-toggle:hover {
+  transform: translateY(-1px);
+  background: rgba(15, 23, 42, 0.52);
+  border-color: rgba(148, 163, 184, 0.26);
+}
+
+.nav-audio-toggle:active {
+  transform: translateY(0px);
+}
+
+.nav-audio-toggle:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.55);
+  outline-offset: 2px;
+}
+
+.nav-audio-toggle.is-off {
+  opacity: 0.78;
 }
 
 .nav {
@@ -55,4 +104,19 @@
   opacity: 1;
   border-color: rgba(59, 130, 246, 0.7);
   color: #f1f5ff;
+}
+
+/* ✅ responsive : éviter que la nav casse le layout */
+@media (max-width: 520px) {
+  .navbar-inner {
+    padding: 14px 14px;
+  }
+
+  .brand {
+    max-width: 150px;
+  }
+
+  .nav {
+    gap: 14px;
+  }
 }
