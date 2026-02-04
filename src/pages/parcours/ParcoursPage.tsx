@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import BubbleList from "../../components/parcours/BubbleList";
 import DropScreen from "../../components/parcours/DropScreen";
 import ParcoursBackground from "../../components/parcours/ParcoursBackground";
+import ParcoursSkills from "../../components/parcours/ParcoursSkills";
 import { parcoursCaps } from "../../data/parcoursCaps";
 import "../../styles/parcours.css";
 
@@ -48,12 +49,16 @@ export default function ParcoursPage() {
       {/* ✅ Fond Parcours (parallax scroll + glow curseur) */}
       <ParcoursBackground />
 
-      <h1>Parcours</h1>
-      <p className="muted">
-        Glissez une bulle dans l’écran ou cliquez pour afficher le détail de
-        l’étape.
-      </p>
+      {/* ✅ Header premium, au-dessus de tout */}
+      <header className="parcours-header">
+        <h1 className="parcours-title">Mon parcours</h1>
+        <p className="muted parcours-subtitle">
+          Explorez mon évolution étape par étape. Cliquez sur une bulle ou
+          glissez-la dans l’écran pour afficher les détails.
+        </p>
+      </header>
 
+      {/* ✅ Zone bulles + écran */}
       <div className="parcours-layout">
         <BubbleList
           caps={parcoursCaps}
@@ -73,6 +78,9 @@ export default function ParcoursPage() {
           />
         )}
       </div>
+
+      {/* ✅ Nouveau bloc "Compétences" (camembert 3D + panneau) */}
+      <ParcoursSkills />
     </section>
   );
 }

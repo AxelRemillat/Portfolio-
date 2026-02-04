@@ -3,16 +3,127 @@
    ========================= */
 
 .parcours-page {
-  /* on casse toute tentative de centrage vertical héritée */
   display: block;
   position: relative;
   z-index: 1;
 
-  /* rythme vertical contrôlé */
-  padding-top: 96px; /* espace sous la navbar */
+  /* Espace sous la navbar (évite que tout soit “trop bas” ou collé) */
+  padding-top: 64px;
   padding-bottom: 120px;
 
   background: transparent;
+}
+
+/* Ajustements responsive */
+@media (max-width: 520px) {
+  .parcours-page {
+    padding-top: 56px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .parcours-page {
+    padding-top: 72px;
+  }
+}
+
+/* Si tu utilises des ancres / scroll to section */
+.parcours-page {
+  scroll-margin-top: 90px;
+}
+
+/* =========================
+   PARCOURS — HEADER (titre + description) — VERSION HERO
+   ========================= */
+
+.parcours-header {
+  max-width: 1080px;
+  margin: 0 auto 34px;
+  padding: 0 20px;
+
+  position: relative;
+
+  /* panel glass discret pour détacher du background */
+  border-radius: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: linear-gradient(
+    180deg,
+    rgba(12, 16, 26, 0.58),
+    rgba(12, 16, 26, 0.38)
+  );
+  backdrop-filter: blur(14px);
+
+  padding: 22px 22px 18px;
+
+  /* profondeur */
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.42),
+    0 1px 0 rgba(255, 255, 255, 0.03) inset;
+}
+
+/* petite ligne “agence” en haut (subtile) */
+.parcours-header::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 0;
+  height: 2px;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255, 160, 100, 0.0),
+    rgba(255, 160, 100, 0.55),
+    rgba(255, 160, 100, 0.0)
+  );
+  opacity: 0.9;
+}
+
+/* glow ultra léger derrière (pas un gros néon) */
+.parcours-header::after {
+  content: "";
+  position: absolute;
+  inset: -18px -12px auto -12px;
+  height: 140px;
+  pointer-events: none;
+  border-radius: 28px;
+
+  background: radial-gradient(
+    600px 160px at 18% 30%,
+    rgba(255, 160, 100, 0.18),
+    transparent 60%
+  );
+  filter: blur(8px);
+  opacity: 0.9;
+}
+
+.parcours-title {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+
+  font-size: clamp(44px, 5.6vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: #f4f7ff;
+
+  text-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.parcours-subtitle {
+  margin: 12px 0 0;
+  position: relative;
+  z-index: 1;
+
+  max-width: 74ch;
+  font-size: clamp(14px, 1.25vw, 18px);
+  line-height: 1.65;
+
+  color: rgba(226, 232, 240, 0.82);
+  text-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
 }
 
 /* =========================
@@ -20,14 +131,20 @@
    ========================= */
 
 .parcours-layout {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+
   display: grid;
   gap: 24px;
 
-  /* sécurité : pas de centrage caché */
   align-items: start;
   justify-items: stretch;
 
   background: transparent;
+
+  /* Espace sous le header avant le contenu principal */
+  margin-top: 6px;
 }
 
 /* =========================
@@ -38,7 +155,6 @@
   display: grid;
   gap: 18px;
 
-  /* mobile : bulles centrées */
   justify-items: center;
 }
 
@@ -47,18 +163,22 @@
    ========================= */
 
 @media (min-width: 900px) {
+  .parcours-header {
+    margin-bottom: 40px;
+    padding: 26px 26px 22px;
+  }
+
   .parcours-layout {
     grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
-    align-items: start; /* contenu toujours en haut */
+    align-items: start;
   }
 
   .parcours-bubble-list {
     justify-items: start;
   }
 
-  /* carte de détail : plus longue vers le bas uniquement */
   .parcours-screen {
-    min-height: 650px; /* ajuste si besoin */
+    min-height: 650px;
   }
 }
 
@@ -66,7 +186,6 @@
    BACKGROUND & STACKING
    ========================= */
 
-/* le fond est fixed derrière, tout le contenu passe au-dessus */
 .parcours-wrap {
   position: relative;
   z-index: 1;
