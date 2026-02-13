@@ -1,3 +1,12 @@
+/* ============================================================================
+   INDEX.CSS — Imports globaux (source unique)
+   ============================================================================
+   Note:
+   - "Vous & Moi" : aurora.css doit être importé AVANT vousEtMoi.css
+     (sinon vousEtMoi.css peut masquer le fond avec son background plein)
+   - Même logique si tu ajoutes plus tard un background Contact spécifique.
+   ============================================================================ */
+
 /* =========================
    BASE & LAYOUT
    ========================= */
@@ -33,11 +42,11 @@
 @import "./parcours/skills-pie.css";
 
 /* =========================
-   VOUS & MOI
+   VOUS & MOI (fond d’abord)
    ========================= */
+@import "./vous-et-moi/aurora.css";
 @import "./vous-et-moi/vousEtMoi.css";
 @import "./vous-et-moi/vousEtMoiSections.css";
-@import "./vous-et-moi/aurora.css";
 @import "./vous-et-moi/contactCta.css";
 
 /* =========================

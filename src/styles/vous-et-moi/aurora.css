@@ -1,81 +1,146 @@
-/* ✅ Unified aurora background for "Vous & Moi"
-   - Full page off-white base
-   - Soft vertical gradient that can shift with --vem-scroll
-   - 3 blobs with slow motion
-*/
+/* ========================================
+   AURORA BACKGROUND — METAL BRONZE (STRONG)
+   Off-white metal + warm bronze
+   + variation au scroll via --vem-scroll (0..1)
+   Sans blobs ronds / sans formes "aurora"
+   ======================================== */
 
 .vem-background {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: #f6f2ea;
   overflow: hidden;
+
+  /* Scroll factor (0 -> 1) mis à jour via JS */
   --vem-scroll: 0;
+
+  /* ===== Palette (plus marquée) ===== */
+  --offwhite-hi: #fffaf2; /* highlight métal */
+  --offwhite-1:  #f2eadf; /* base */
+  --offwhite-2:  #e2d8c9; /* shadow chaude */
+  --grey-cool:   #bfb7aa; /* ombre froide douce */
+
+  --bronze-hi:   #f0cfa3; /* bronze clair */
+  --bronze-1:    #d2a26f; /* bronze principal */
+  --bronze-2:    #a56f44; /* bronze profond */
+  --bronze-3:    #7d5233; /* très profond (touches) */
+
+  /* Angles */
+  --angle-base: 135deg;
+
+  /* Les reflets "glissent" au scroll */
+  --sheen-shift: calc(var(--vem-scroll) * 22%); /* 0% -> 22% */
+  --bronze-shift: calc(var(--vem-scroll) * 14%); /* 0% -> 14% */
+
+  /* fallback */
+  background: var(--offwhite-1);
 }
 
-/* base gradient: ivoire -> light gray down the page */
+/* ✅ Background (empilement) */
 .vem-background__gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    #f6f2ea 0%,
-    #f1ede4 40%,
-    #e6e7ea calc(70% + (var(--vem-scroll) * 20%))
-  );
+
+  /* 1) Base marquée (gris -> offwhite -> bronze) qui évolue avec le scroll */
+  /* 2) Reflets métal longs (sheen) qui se déplacent */
+  /* 3) Accent bronze large côté droite + bas (sans radial) */
+
+  background:
+    /* (3) Accent bronze large (droite) – bouge légèrement au scroll */
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(240, 207, 163, 0.00) calc(48% - var(--bronze-shift)),
+      rgba(210, 162, 111, 0.30) calc(70% - var(--bronze-shift)),
+      rgba(165, 111, 68, 0.56) 100%
+    ),
+
+    /* (3 bis) Bronze bas (très doux mais présent) */
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 62%,
+      rgba(210, 162, 111, 0.18) calc(78% - (var(--vem-scroll) * 6%)),
+      rgba(125, 82, 51, 0.34) 100%
+    ),
+
+    /* (2) Reflet #1 (fort) */
+    linear-gradient(
+      18deg,
+      rgba(255, 255, 255, 0.00) 0%,
+      rgba(255, 255, 255, 0.70) calc(12% + var(--sheen-shift)),
+      rgba(255, 255, 255, 0.00) calc(22% + var(--sheen-shift)),
+      rgba(255, 255, 255, 0.00) 100%
+    ),
+
+    /* (2 bis) Reflet #2 (plus large) */
+    linear-gradient(
+      42deg,
+      rgba(255, 255, 255, 0.00) 0%,
+      rgba(255, 250, 242, 0.42) calc(36% + (var(--sheen-shift) * 0.7)),
+      rgba(255, 255, 255, 0.00) calc(52% + (var(--sheen-shift) * 0.7)),
+      rgba(255, 255, 255, 0.00) 100%
+    ),
+
+    /* (1) Base principale */
+    linear-gradient(
+      var(--angle-base),
+      var(--offwhite-2) 0%,
+      var(--grey-cool) 20%,
+      var(--offwhite-1) 52%,
+      rgba(240, 207, 163, 0.36) calc(74% + (var(--vem-scroll) * 6%)),
+      rgba(165, 111, 68, 0.60) 100%
+    );
+
+  /* Rend le métal plus "présent" */
+  filter: saturate(1.18) contrast(1.16);
 }
 
-/* aurora blobs */
+/* ✅ Aucun blob/forme aurora */
 .vem-background__blob {
+  display: none !important;
+}
+
+/* ✅ Grain (matière) — léger, désactivable si tu veux 0 texture */
+.vem-background__grain {
   position: absolute;
-  width: min(60vw, 780px);
-  height: min(60vw, 780px);
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.35;
-  animation: vemFloat 22s ease-in-out infinite;
+  inset: 0;
+  pointer-events: none;
+
+  opacity: 0.14;           /* monte à 0.18 si tu veux + matière */
+  mix-blend-mode: multiply;
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(11, 18, 32, 0.012) 0px,
+      rgba(11, 18, 32, 0.012) 1px,
+      rgba(255, 255, 255, 0) 4px,
+      rgba(255, 255, 255, 0) 11px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(11, 18, 32, 0.010) 0px,
+      rgba(11, 18, 32, 0.010) 1px,
+      rgba(255, 255, 255, 0) 4px,
+      rgba(255, 255, 255, 0) 13px
+    );
 }
 
-.vem-background__blob--one {
-  top: -15%;
-  left: -10%;
-  background: radial-gradient(circle, rgba(230, 210, 182, 0.65), transparent 70%);
-}
-
-.vem-background__blob--two {
-  top: 10%;
-  right: -20%;
-  background: radial-gradient(circle, rgba(206, 214, 232, 0.45), transparent 70%);
-  animation-delay: -6s;
-}
-
-.vem-background__blob--three {
-  bottom: -25%;
-  left: 15%;
-  background: radial-gradient(circle, rgba(214, 206, 226, 0.45), transparent 70%);
-  animation-delay: -12s;
-}
-
-@keyframes vemFloat {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(6%, -4%, 0) scale(1.05);
-  }
-}
-
+/* Mobile : on garde le look mais un poil moins punchy */
 @media (max-width: 520px) {
-  .vem-background__blob {
-    filter: blur(75px);
-    opacity: 0.32;
+  .vem-background__gradient {
+    filter: saturate(1.14) contrast(1.12);
+  }
+  .vem-background__grain {
+    opacity: 0.12;
   }
 }
 
+/* Accessibilité */
 @media (prefers-reduced-motion: reduce) {
-  .vem-background__blob {
-    animation: none;
+  .vem-background {
+    --vem-scroll: 0;
   }
 }

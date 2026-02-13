@@ -46,12 +46,20 @@
 }
 
 .skills-pie {
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(10, 12, 18, 0.35);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
-  padding: 12px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 12, 18, 0.42);
+  backdrop-filter: blur(14px);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 20px 48px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 22px 12px 20px;
+
+  /* ✅ aide au centrage visuel */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .skills-pie__svg {
@@ -60,40 +68,28 @@
   display: block;
 }
 
-.skills-pie__shadow {
-  fill: rgba(0, 0, 0, 0.35);
-  filter: blur(2px);
+/* ✅ Transition visible et plus lente (glissement) */
+.skills-pie__move {
+  transition:
+    transform 780ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 520ms ease,
+    opacity 520ms ease;
+  will-change: transform;
 }
 
+/* On garde .skills-pie__slice (mais on évite "all") */
 .skills-pie__slice {
-  cursor: pointer;
-  transform-origin: 150px 110px;
-  transition: transform 220ms ease, filter 220ms ease;
+  transition:
+    filter 520ms ease,
+    opacity 520ms ease;
 }
 
 .skills-pie__slice:hover {
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
+  filter: brightness(1.08) drop-shadow(0 8px 20px rgba(0,0,0,0.5));
 }
 
-.skills-pie__pct {
-  font-size: 14px;
-  font-weight: 700;
-  fill: rgba(255, 255, 255, 0.92);
-  letter-spacing: 0.4px;
-  paint-order: stroke;
-  stroke: rgba(0, 0, 0, 0.35);
-  stroke-width: 2px;
-}
-
-.skills-pie__center .skills-pie__title {
-  font-size: 15px;
-  font-weight: 700;
-  fill: rgba(255, 255, 255, 0.92);
-}
-
-.skills-pie__center .skills-pie__sub {
-  font-size: 12px;
-  fill: rgba(255, 255, 255, 0.72);
+.skills-pie__slice.is-active {
+  filter: brightness(1.12);
 }
 
 .skills-legend {
@@ -106,31 +102,61 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 10px;
+  padding: 9px 13px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(10, 12, 18, 0.32);
-  color: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: rgba(10, 12, 18, 0.35);
+  color: rgba(255, 255, 255, 0.89);
   cursor: pointer;
-  transition: transform 200ms ease, background 200ms ease, border-color 200ms ease;
+  font-size: 13px;
+  font-weight: 500;
+  transition: 
+    transform 220ms ease-out, 
+    background 220ms ease, 
+    border-color 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .skills-legend__item:hover {
-  transform: translateY(-1px);
-  background: rgba(10, 12, 18, 0.44);
-  border-color: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+  background: rgba(10, 12, 18, 0.50);
+  border-color: rgba(255, 255, 255, 0.20);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .skills-legend__item.is-active {
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(10, 12, 18, 0.52);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(10, 12, 18, 0.62);
+  box-shadow: 
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .skills-legend__dot {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   border-radius: 999px;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.10);
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.14),
+    0 0 10px currentColor,
+    0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 220ms ease;
+}
+
+.skills-legend__item:hover .skills-legend__dot {
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.24),
+    0 0 14px currentColor,
+    0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.skills-legend__item.is-active .skills-legend__dot {
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.30),
+    0 0 16px currentColor,
+    0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .skills-panel {

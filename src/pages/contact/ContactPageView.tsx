@@ -3,6 +3,8 @@ import type { FormEvent } from "react";
 import ContactForm from "../../components/contact/ContactForm";
 import ContactHero from "../../components/contact/ContactHero";
 import ContactSidebar from "../../components/contact/ContactSidebar";
+import VemBackground from "../../components/vous-et-moi/VemBackground";
+import CursorEffect from "../../components/vous-et-moi/CursorEffect";
 
 type FormState = {
   name: string;
@@ -100,6 +102,12 @@ export default function ContactPageView() {
 
   return (
     <section className="contact-page">
+      {/* 🎨 Background bronze/blanc cassé */}
+      <VemBackground />
+      
+      {/* ✨ Effet croix lumineuse */}
+      <CursorEffect />
+
       <ContactHero />
       <div className="contact-page__grid">
         <div className="contact-page__form">

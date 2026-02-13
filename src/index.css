@@ -1,12 +1,108 @@
+/* ========================================
+   GLOBAL STYLES & IMPORTS
+   ======================================== */
+
+/* Reset & Base */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
-a {
-  color: inherit;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.6;
+  color: rgba(11, 18, 32, 0.95);
+  background: #0b1220;
+}
+
+/* ========================================
+   IMPORTS
+   ======================================== */
+
+/* Navigation */
+@import './styles/navbar.css';
+
+/* Hero */
+@import './styles/hero.css';
+
+/* Parcours */
+@import './styles/parcours/parcours.css';
+@import './styles/parcours/skills-pie.css';
+@import './styles/parcours/timeline.css';
+
+/* Vous & Moi */
+@import './styles/vous-et-moi/aurora.css';
+@import './styles/vous-et-moi/vousEtMoi.css';
+@import './styles/vous-et-moi/vousEtMoiSections.css';
+
+/* Projets */
+@import './styles/projets/projets.css';
+
+/* Contact */
+@import './styles/contact.css';
+
+/* Footer */
+@import './styles/footer.css';
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 80px 0;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+}
+
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*:focus-visible {
+  outline: 2px solid rgba(11, 18, 32, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media print {
+  .navbar,
+  .footer {
+    display: none;
+  }
+  
+  body {
+    background: white !important;
+    color: black;
+  }
 }

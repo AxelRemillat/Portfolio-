@@ -2,6 +2,7 @@ import ContactCTASection from "../../components/vous-et-moi/ContactCTASection";
 import SectionBlock from "../../components/vous-et-moi/SectionBlock";
 import useBodyClass from "../../components/vous-et-moi/useBodyClass";
 import VemBackground from "../../components/vous-et-moi/VemBackground";
+import CursorEffect from "../../components/vous-et-moi/CursorEffect";
 import { sectionsData } from "./sectionsData";
 
 export default function VousEtMoiPage() {
@@ -10,8 +11,11 @@ export default function VousEtMoiPage() {
 
   return (
     <section className="vous-et-moi">
-      {/* ✅ unifie: on garde VemBackground (aurora + gradient scroll) */}
+      {/* ✅ Background bronze/blanc cassé */}
       <VemBackground />
+      
+      {/* 🎯 NOUVEAU : Effet curseur par-dessus */}
+      <CursorEffect />
 
       <div className="vous-et-moi-inner">
         <header className="vous-et-moi-header">
@@ -33,7 +37,7 @@ export default function VousEtMoiPage() {
           ))}
         </div>
 
-        {/* ✅ section finale “Let’s work together” */}
+        {/* ✅ section finale "Let's work together" */}
         <ContactCTASection />
       </div>
     </section>
