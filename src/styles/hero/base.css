@@ -52,7 +52,7 @@
   z-index: 1;
 }
 
-/* Badge scoped au hero (évite de toucher d’autres pages) */
+/* Badge scoped au hero (évite de toucher d'autres pages) */
 .hero .badge {
   display: inline-flex;
   align-items: center;
@@ -82,7 +82,7 @@
   color: rgba(255, 255, 255, 0.98);
 }
 
-/* Optionnel mais très “premium” : gradient léger sur le nom (ne casse pas la lisibilité) */
+/* Optionnel mais très "premium" : gradient léger sur le nom (ne casse pas la lisibilité) */
 .hero-title {
   background: linear-gradient(
     92deg,
@@ -117,7 +117,7 @@
   font-weight: 720;
 }
 
-/* Highlights : plus aligné, plus “UI” */
+/* Highlights : plus aligné, plus "UI" */
 .hero-highlights {
   margin-top: 18px;
   display: grid;
@@ -151,22 +151,247 @@
   flex-wrap: wrap;
 }
 
-/* Bouton existant : on le rend plus net sans casser ton système */
+/* Bouton 3D Premium avec Animations Avancées */
 .hero .btn.primary {
-  height: 44px;
-  padding: 0 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
-  transform: translateZ(0);
+  position: relative;
+  height: 56px;
+  padding: 0 32px 0 28px;
+  border-radius: 16px;
+  border: none;
+  background: 
+    linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+  color: rgba(255, 255, 255, 0.98);
+  font-size: 15.5px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  overflow: visible;
+  
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 8px 24px rgba(37, 99, 235, 0.45),
+    0 16px 48px rgba(37, 99, 235, 0.25);
+  
+  transform: translate(0, 0) perspective(1000px) rotateX(0deg) rotateY(0deg);
+  transform-style: preserve-3d;
+  transition: 
+    transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 320ms ease;
+  
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  isolation: isolate;
+}
+
+/* Particules flottantes au lieu du shine */
+.hero .btn.primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.6) 2px, transparent 2px),
+    radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.5) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.7) 2.5px, transparent 2.5px),
+    radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.4) 1.8px, transparent 1.8px),
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.55) 2px, transparent 2px),
+    radial-gradient(circle at 90% 60%, rgba(255, 255, 255, 0.6) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 15% 55%, rgba(255, 255, 255, 0.5) 2px, transparent 2px),
+    radial-gradient(circle at 70% 90%, rgba(255, 255, 255, 0.65) 1.8px, transparent 1.8px);
+  background-size: 100% 100%;
+  background-position: 0% 0%;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  animation: float-particles-idle 8s ease-in-out infinite;
+}
+
+@keyframes float-particles-idle {
+  0%, 100% {
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+  25% {
+    background-position: 10% -5%, -5% 10%, 8% 3%, -3% 8%, 5% -8%, 12% 6%, -6% 12%, 7% -10%;
+  }
+  50% {
+    background-position: 15% -10%, -10% 15%, 12% 6%, -6% 12%, 8% -12%, 18% 10%, -10% 18%, 10% -15%;
+  }
+  75% {
+    background-position: 10% -5%, -5% 10%, 8% 3%, -3% 8%, 5% -8%, 12% 6%, -6% 12%, 7% -10%;
+  }
+}
+
+.hero .btn.primary:hover::before {
+  opacity: 1;
+  animation: float-particles 4s ease-in-out infinite;
+}
+
+@keyframes float-particles {
+  0%, 100% {
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+  25% {
+    background-position: 15% -8%, -8% 15%, 12% 5%, -5% 12%, 8% -12%, 18% 10%, -10% 18%, 12% -15%;
+  }
+  50% {
+    background-position: 25% -15%, -15% 25%, 20% 10%, -10% 20%, 15% -20%, 30% 18%, -18% 30%, 20% -25%;
+  }
+  75% {
+    background-position: 15% -8%, -8% 15%, 12% 5%, -5% 12%, 8% -12%, 18% 10%, -10% 18%, 12% -15%;
+  }
+}
+
+/* Glow pulsant */
+.hero .btn.primary::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+  z-index: -1;
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 320ms ease;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.hero .btn.primary:hover::after {
+  opacity: 1;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+/* Border lumineux animé */
+.hero .btn.primary {
+  --angle: 0deg;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.hero .btn.primary {
+  background: 
+    linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%),
+    conic-gradient(
+      from var(--angle),
+      transparent 0%,
+      rgba(255, 255, 255, 0.4) 10%,
+      transparent 20%,
+      transparent 80%,
+      rgba(255, 255, 255, 0.4) 90%,
+      transparent 100%
+    );
+  background-size: 100%, 200% 200%;
+  background-position: center, center;
+  background-clip: padding-box, border-box;
+  border: 2px solid transparent;
 }
 
 .hero .btn.primary:hover {
-  transform: translateY(-1px);
+  --angle: 360deg;
+  transition: --angle 3s linear infinite;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 12px 32px rgba(37, 99, 235, 0.6),
+    0 20px 60px rgba(37, 99, 235, 0.4);
+}
+
+.hero .btn.primary:active {
+  transform: translate(0, 3px) perspective(1000px) rotateX(0deg) rotateY(0deg) scale(0.97);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.hero .btn-text {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hero .btn-arrow {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  transition: transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hero .btn.primary:hover .btn-arrow {
+  transform: translateY(4px);
+  animation: bounce-arrow 1s ease-in-out infinite;
+}
+
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateY(4px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.hero .magnetic-btn {
+  will-change: transform;
+}
+
+/* Particules au hover */
+.hero .btn.primary .particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: float-particle 1.5s ease-out forwards;
+}
+
+@keyframes float-particle {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0);
+  }
+}
+
+/* Ripple effect au clic */
+.hero .btn.primary .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(0);
+  animation: ripple-animation 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(5);
+    opacity: 0;
+  }
 }
 
 /* =========================
-   PHOTO RIGHT
+   PHOTO RIGHT + CAROUSEL
    ========================= */
 
 .hero-right {
@@ -183,12 +408,10 @@
   aspect-ratio: 4 / 5;
   border-radius: 30px;
   overflow: hidden;
-
   background: rgba(0, 0, 0, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(12px);
   box-shadow: 0 28px 100px rgba(0, 0, 0, 0.48);
-
   transform: translateY(6px);
   position: relative;
 }
@@ -210,15 +433,34 @@
       rgba(0, 0, 0, 0) 62%
     );
   pointer-events: none;
+  z-index: 2;
 }
 
-.hero-photoImage {
+/* Carousel slides */
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 800ms ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.carousel-slide .hero-photoImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
   filter: saturate(1.05) contrast(1.06);
+  transform: scale(1);
+  transition: transform 4000ms ease-out;
+}
+
+.carousel-slide.active .hero-photoImage {
+  transform: scale(1.05);
 }
 
 .hero-photoFallback {

@@ -45,11 +45,17 @@
   padding: 6px 12px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.18s ease;
 }
 
 .contact-sidebar__copy:hover {
   background: rgba(165, 111, 68, 0.25);
+  transform: translateY(-1px);
+}
+
+.contact-sidebar__copy:focus-visible {
+  outline: 2px solid rgba(165, 111, 68, 0.55);
+  outline-offset: 3px;
 }
 
 .contact-sidebar__meta {
@@ -60,6 +66,7 @@
 .contact-sidebar__socials {
   display: flex;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .contact-sidebar__socials a {
@@ -71,4 +78,66 @@
 
 .contact-sidebar__socials a:hover {
   border-color: rgba(165, 111, 68, 0.8); /* Soulignement bronze */
+}
+
+/* =========================
+   NEW: ACTIONS (share + CV)
+   ========================= */
+
+.contact-sidebar__actions {
+  display: grid;
+  gap: 10px;
+}
+
+@media (min-width: 520px) {
+  .contact-sidebar__actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-sidebar__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  background: rgba(165, 111, 68, 0.14);
+  border: 1px solid rgba(165, 111, 68, 0.22);
+  color: #2c2419;
+
+  font-weight: 600;
+  font-size: 0.98rem;
+  cursor: pointer;
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.18s ease;
+}
+
+.contact-sidebar__action:hover {
+  background: rgba(165, 111, 68, 0.22);
+  border-color: rgba(165, 111, 68, 0.34);
+  transform: translateY(-1px);
+}
+
+.contact-sidebar__action:active {
+  transform: translateY(0);
+}
+
+.contact-sidebar__action:focus-visible {
+  outline: 2px solid rgba(165, 111, 68, 0.55);
+  outline-offset: 3px;
+}
+
+.contact-sidebar__hint {
+  margin: 10px 0 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba(44, 36, 25, 0.8);
 }
