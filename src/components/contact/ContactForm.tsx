@@ -11,7 +11,7 @@ type FormState = {
 
 type ContactFormProps = {
   data: FormState;
-  status: "idle" | "sending" | "sent";
+  status: "idle" | "sending" | "sent" | "error";
 
   onChange: (field: keyof FormState, value: string) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
