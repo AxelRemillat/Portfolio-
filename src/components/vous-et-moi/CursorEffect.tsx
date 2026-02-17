@@ -43,4 +43,4 @@ export default function CursorEffect() {
       <div ref={light2Ref} className="cursor-light cursor-light--small" />
     </div>
   );
-}
+} 

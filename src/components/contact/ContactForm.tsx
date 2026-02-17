@@ -55,10 +55,7 @@ export default function ContactForm({
         data-ready={canSend ? "true" : "false"}
         aria-hidden="false"
       >
-        <ContactSubmitOrb
-          status={status}
-          disabled={!canSend || status === "sending"}
-        />
+        <ContactSubmitOrb status={status} disabled={!canSend || status === "sending"} />
       </div>
 
       <div className="contact-form__row">
@@ -124,10 +121,15 @@ export default function ContactForm({
             aria-invalid={Boolean(serviceError)}
           >
             <option value="">Choisir une option</option>
-            <option value="web">Web design</option>
-            <option value="dev">Développement</option>
-            <option value="ux">UX</option>
-            <option value="autre">Autre</option>
+
+            <option value="web-apps">Développement Web &amp; Applications</option>
+            <option value="ai-automation">Automatisation &amp; IA</option>
+            <option value="data-bigdata">Data / Big Data</option>
+            <option value="mvp">Prototypage Startup (MVP)</option>
+            <option value="digital-strategy">Stratégie Digitale</option>
+
+            {/* ✅ Dernier choix “Autres” */}
+            <option value="autres">Autres</option>
           </select>
 
           {serviceError && (

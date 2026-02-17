@@ -1,117 +1,92 @@
 .vem-section {
   position: relative;
+  padding-bottom: 48px; /* espace propre entre sections */
 }
 
 /* ligne style magazine */
 .vem-section-line {
   height: 1px;
   width: 100%;
-  margin-bottom: 44px;
+  margin-bottom: 28px;
   background: linear-gradient(
     90deg,
-    rgba(11, 18, 32, 0.18),
-    rgba(11, 18, 32, 0.08),
+    rgba(11, 18, 32, 0.26),
+    rgba(11, 18, 32, 0.10),
+    rgba(11, 18, 32, 0.26)
+  );
+}
+
+/* LAYOUT */
+.vem-section-content {
+  display: grid;
+  gap: 40px;
+}
+
+/* TITRE */
+.vem-title {
+  font-family: var(--vem-font-display, "Inter Tight", "Inter", sans-serif);
+  white-space: nowrap;
+  font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+  font-weight: 760;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: rgba(11, 18, 32, 0.96);
+}
+
+.vem-title::after {
+  content: "";
+  display: block;
+  width: 68px;
+  height: 2px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(165, 111, 68, 0.55),
     rgba(11, 18, 32, 0.18)
   );
 }
 
-/* layout */
-.vem-section-content {
-  display: grid;
-  gap: 34px;
-}
-
-.vem-title {
-  font-family: var(--vem-font-display, "Inter Tight", "Inter", sans-serif);
-  font-size: clamp(2.05rem, 3.25vw, 3.15rem);
-  font-weight: 600;
-  line-height: 1.06;
-  letter-spacing: -0.02em;
-  margin: 0;
+/* TEXTE */
+.vem-text-block {
+  max-width: 660px;
 }
 
 .vem-text {
-  margin: 0 0 12px;
-  line-height: 1.75;
-  color: rgba(11, 18, 32, 0.74);
-  font-size: 1.02rem;
+  margin: 0 0 18px;
+  line-height: 1.9;
+  font-size: 1.08rem;
+  color: rgba(11, 18, 32, 0.86);
 }
 
-.vem-text-block {
-  max-width: 560px;
-}
-
+/* IMAGE */
 .vem-image-block {
   position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 4 / 5;
 }
 
-/* image plus “editorial” */
 .vem-image-block img {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
   border-radius: 22px;
-
-  box-shadow: 0 34px 80px rgba(11, 18, 32, 0.18);
-  border: 1px solid rgba(11, 18, 32, 0.08);
-  background: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 30px 70px rgba(11, 18, 32, 0.18),
+    0 10px 24px rgba(165, 111, 68, 0.08);
 }
 
-/* petit détail graphique */
-.vem-orb {
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(11, 18, 32, 0.12),
-    rgba(11, 18, 32, 0.06)
-  );
-  position: absolute;
-  opacity: 0;
-  filter: blur(0.2px);
-}
-
-/* =========================
-   REVEAL (stagger) + plus marqué
-   ========================= */
-.reveal {
-  opacity: 0;
-  transform: translateY(44px);
-  filter: blur(6px);
-  transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: calc(var(--stagger, 0) * 160ms);
-}
-
-.reveal[data-stagger="0"] {
-  --stagger: 0;
-}
-
-.reveal[data-stagger="1"] {
-  --stagger: 1;
-}
-
-.reveal[data-stagger="2"] {
-  --stagger: 2;
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
-
+/* DESKTOP */
 @media (min-width: 900px) {
   .vem-section-content {
     grid-template-columns: repeat(12, 1fr);
-    gap: 30px;
-    align-items: center;
+    gap: 44px;
+    align-items: start;
   }
 
-  /* Layout A: texte gauche, image droite (image un peu plus haute) */
+  /* Section 1 */
   .vem-section--a .vem-title-block,
   .vem-section--a .vem-text-block {
     grid-column: 1 / 7;
@@ -119,54 +94,60 @@
 
   .vem-section--a .vem-image-block {
     grid-column: 7 / 13;
-    transform: translateY(-18px);
   }
 
-  /* Layout B: image gauche, texte droite (texte plus “tard”) */
+  /* Section 2 */
+  .vem-section--b .vem-image-block {
+    grid-column: 1 / 6;
+
+    /* 🔼 remonte image 2 proprement */
+    transform: translateY(-120px);
+  }
+
   .vem-section--b .vem-title-block,
   .vem-section--b .vem-text-block {
     grid-column: 6 / 13;
   }
 
-  .vem-section--b .vem-image-block {
-    grid-column: 1 / 6;
-    transform: translateY(54px);
+  /* Section 3 */
+  .vem-section--c {
+    /* 🔼 remonte toute la section 3 pour garder petit espace */
+    margin-top: -120px;
   }
 
-  /* Layout C: stacked + décalé */
   .vem-section--c .vem-title-block,
   .vem-section--c .vem-text-block {
-    grid-column: 2 / 12;
-  }
-
-  .vem-section--c .vem-text-block {
-    max-width: 640px;
+    grid-column: 1 / 7;
   }
 
   .vem-section--c .vem-image-block {
-    grid-column: 2 / 8;
-    margin-top: 30px;
-    transform: translateX(-8px);
-  }
-
-  .vem-section--c .vem-orb {
-    opacity: 1;
-    bottom: -26px;
-    right: 10%;
+    grid-column: 7 / 13;
+    justify-self: end;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    filter: none;
-    transition: none;
+/* MOBILE */
+@media (max-width: 899px) {
+  .vem-title {
+    white-space: normal;
   }
 
-  .vem-section--a .vem-image-block,
-  .vem-section--b .vem-image-block,
-  .vem-section--c .vem-image-block {
-    transform: none;
+  .vem-section {
+    padding-bottom: 56px;
+  }
+
+  .vem-section--c {
+    margin-top: 0;
+  }
+
+  .vem-section-content {
+    gap: 28px;
+  }
+}
+
+/* ACCESSIBILITÉ */
+@media (prefers-reduced-motion: reduce) {
+  .vem-image-block {
+    transform: none !important;
   }
 }

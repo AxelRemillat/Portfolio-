@@ -498,7 +498,7 @@
 .hero-right.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition: opacity 540ms ease 80ms, transform 540ms ease 80ms;
+  transition: opacity 540ms ease 80ms, transform 240ms ease 80ms;
 }
 
 /* Responsive */

@@ -12,7 +12,7 @@
   margin-left: calc(50% - 50vw);
   background: #f6f2ea;
   color: var(--vem-text, #0b1220);
-  padding: 120px 0 140px;
+  padding: 0px 0 140px;
   overflow: hidden;
 
   --vem-font-display: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", Roboto,

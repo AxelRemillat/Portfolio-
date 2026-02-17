@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const fallbackAvatar = "/images/vous-et-moi-1.svg";
-const defaultAvatar = "/images/axel.jpg";
+const defaultAvatar = "/images/axel-contact.jpg"; // ✅ ton image
 
 export default function ContactHero() {
   const [avatarSrc, setAvatarSrc] = useState(defaultAvatar);
@@ -15,11 +15,13 @@ export default function ContactHero() {
           Quelques infos et un message suffisent pour lancer la conversation.
         </p>
       </div>
+
       <div className="contact-hero__avatar">
         <img
           src={avatarSrc}
           alt="Portrait d'Axel"
           onError={() => setAvatarSrc(fallbackAvatar)}
+          className="contact-hero__avatarImg"
         />
       </div>
     </header>
