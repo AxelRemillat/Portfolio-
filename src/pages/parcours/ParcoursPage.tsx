@@ -52,9 +52,8 @@ export default function ParcoursPage() {
       {/* ✅ Header premium, au-dessus de tout */}
       <header className="parcours-header">
         <h1 className="parcours-title">Mon parcours</h1>
-        <p className="muted parcours-subtitle">
-          Explorez mon évolution étape par étape. Cliquez sur une bulle ou
-          glissez-la dans l’écran pour afficher les détails.
+        <p className="parcours-subtitle">
+          👆 Cliquez sur une bulle — ou faites-la glisser vers l’écran à droite — pour afficher les détails.
         </p>
       </header>
 

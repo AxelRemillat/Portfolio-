@@ -71,7 +71,7 @@ const DropScreen = forwardRef<HTMLDivElement, DropScreenProps>(
             <p className="muted">{cap.org}</p>
           </div>
 
-          {cap.isCurrent && (
+          {cap.badge && (
             <span
               className="parcours-screen-badge"
               style={
@@ -82,7 +82,7 @@ const DropScreen = forwardRef<HTMLDivElement, DropScreenProps>(
                 } as CSSProperties
               }
             >
-              En cours
+              {cap.badge}
             </span>
           )}
         </header>

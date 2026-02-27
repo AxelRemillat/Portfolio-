@@ -36,4 +36,20 @@
     animation: none !important;
     display: none !important;
   }
+
+  .hero .update-badge {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .quote-card,
+  .quote-card-1,
+  .quote-card-2,
+  .quote-card:hover,
+  .quote-icon,
+  .quote-card:hover .quote-icon {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
 }

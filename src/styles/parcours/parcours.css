@@ -7,8 +7,8 @@
   position: relative;
   z-index: 1;
 
-  /* Espace sous la navbar (évite que tout soit “trop bas” ou collé) */
-  padding-top: 64px;
+  /* Espace sous la navbar */
+  padding-top: 20px;
   padding-bottom: 120px;
 
   background: transparent;
@@ -17,13 +17,13 @@
 /* Ajustements responsive */
 @media (max-width: 520px) {
   .parcours-page {
-    padding-top: 56px;
+    padding-top: 12px;
   }
 }
 
 @media (min-width: 1200px) {
   .parcours-page {
-    padding-top: 72px;
+    padding-top: 28px;
   }
 }
 
@@ -38,7 +38,7 @@
 
 .parcours-header {
   max-width: 1080px;
-  margin: 0 auto 34px;
+  margin: 0 auto 20px;
   padding: 0 20px;
 
   position: relative;
@@ -114,16 +114,54 @@
 }
 
 .parcours-subtitle {
-  margin: 12px 0 0;
+  margin: 16px 0 0;
   position: relative;
   z-index: 1;
 
-  max-width: 74ch;
-  font-size: clamp(14px, 1.25vw, 18px);
-  line-height: 1.65;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 
-  color: rgba(226, 232, 240, 0.82);
-  text-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  padding: 13px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 160, 100, 0.38);
+  background: rgba(255, 160, 100, 0.1);
+
+  max-width: 74ch;
+  font-size: clamp(15px, 1.35vw, 18px);
+  line-height: 1.55;
+  font-weight: 600;
+
+  color: rgba(255, 225, 185, 1);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
+
+  animation: subtitlePulse 3s ease-in-out infinite;
+  cursor: default;
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.parcours-subtitle:hover {
+  background: rgba(255, 160, 100, 0.18);
+  border-color: rgba(255, 160, 100, 0.6);
+  transform: translateY(-1px);
+  animation-play-state: paused;
+}
+
+@keyframes subtitlePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 160, 100, 0);
+    border-color: rgba(255, 160, 100, 0.38);
+  }
+  50% {
+    box-shadow: 0 0 14px 3px rgba(255, 160, 100, 0.22);
+    border-color: rgba(255, 160, 100, 0.65);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parcours-subtitle {
+    animation: none;
+  }
 }
 
 /* =========================
@@ -164,7 +202,7 @@
 
 @media (min-width: 900px) {
   .parcours-header {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     padding: 26px 26px 22px;
   }
 
