@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import type { Project } from "../../data/projects";
 
 type ProjectModalProps = {
@@ -7,7 +7,6 @@ type ProjectModalProps = {
 };
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
-  // fermeture ESC
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -16,7 +15,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
-  // lock scroll body
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -25,10 +23,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
     };
   }, []);
 
-  const title = project.title;
-  const kicker = project.subtitle ?? "Projet";
-  const heroImg = project.coverImage ?? (project.images?.[0] ?? "");
-  const gallery = useMemo(() => project.images ?? [], [project.images]);
+  const { rich, stats, timeline } = project;
 
   return (
     <div className="projectModalOverlay" role="dialog" aria-modal="true">
@@ -40,116 +35,264 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       />
 
       <div className="projectModalPanel">
+        {/* ── HEADER compact ── */}
         <div className="projectModalHeader">
           <div className="projectModalHeaderContent">
-            <p className="projectModalKicker">{kicker}</p>
-            <h2 className="projectModalTitle">{title}</h2>
-            {project.description ? (
-              <p className="projectModalSubtitle">{project.description}</p>
-            ) : null}
+            <p className="projectModalKicker">{project.kicker ?? project.subtitle ?? "Projet"}</p>
+            <h2 className="projectModalTitle">{project.title}</h2>
           </div>
-
-          <button className="projectModalClose" type="button" onClick={onClose}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path
-                d="M18 6L6 18M6 6L18 18"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+          <button className="projectModalClose" type="button" onClick={onClose} aria-label="Fermer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
         </div>
 
-        <div className="projectModalBody">
-          <div className="projectModalHero">
-            {heroImg ? (
-              <img src={heroImg} alt={title} className="projectModalHeroImg" />
-            ) : null}
-
-            <div className="projectModalHeroText">
-              <h3>À propos</h3>
-              <p className="projectModalHint">
-                {project.details ?? project.description}
-              </p>
-
-              {project.tags?.length ? (
-                <div className="projectModalLinks" aria-label="Technologies">
-                  {project.tags.map((t) => (
-                    <span key={t} className="projectModalLink">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              ) : null}
-
-              {(project.liveUrl || project.repoUrl) && (
-                <div className="projectModalLinks">
-                  {project.liveUrl ? (
-                    <a
-                      className="projectModalLink"
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Voir le site ↗
-                    </a>
-                  ) : null}
-
-                  {project.repoUrl ? (
-                    <a
-                      className="projectModalLink"
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Code ↗
-                    </a>
-                  ) : null}
-                </div>
-              )}
-            </div>
+        {/* ── STATS BAR ── */}
+        {stats && stats.length > 0 && (
+          <div className="projectModalStats">
+            {stats.map((s) => (
+              <div key={s.label} className="projectModalStat">
+                <span className="projectModalStatValue">{s.value}</span>
+                <span className="projectModalStatLabel">{s.label}</span>
+              </div>
+            ))}
           </div>
+        )}
+
+        <div className="projectModalBody">
+          {/* ── TIMELINE ── */}
+          {timeline && timeline.length > 0 && (
+            <div className="projectModalTimeline">
+              {timeline.map((step, i) => (
+                <div key={step.label} className={`pmTimeline__step pmTimeline__step--${step.status}`}>
+                  <div className="pmTimeline__dot" />
+                  {i < timeline.length - 1 && <div className="pmTimeline__line" />}
+                  <span className="pmTimeline__label">{step.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="projectModalContent">
-            {gallery.length > 0 ? (
-              <div className="projectModalSection">
-                <h3 className="projectModalSectionTitle">Galerie</h3>
+            {/* ── VISION ── */}
+            {rich?.vision && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">🔥</span>
+                  <h3 className="pmSection__title">Vision</h3>
+                </div>
+                <p className="pmSection__text" style={{ whiteSpace: "pre-line" }}>{rich.vision}</p>
+              </div>
+            )}
+
+            {/* ── PROBLÈME ── */}
+            {rich?.problem && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">🎯</span>
+                  <h3 className="pmSection__title">Problème</h3>
+                </div>
+                <ul className="pmSection__list">
+                  {rich.problem.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* ── SOLUTION ── */}
+            {rich?.solution && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">💡</span>
+                  <h3 className="pmSection__title">Solution</h3>
+                </div>
+                <p className="pmSection__text">{rich.solution.intro}</p>
+                <ul className="pmSection__list pmSection__list--2col">
+                  {rich.solution.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                {rich.solution.objectives && (
+                  <div className="pmSection__objectives">
+                    {rich.solution.objectives.map((obj) => (
+                      <span key={obj} className="pmSection__objective">✔ {obj}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ── BUSINESS MODEL ── */}
+            {rich?.businessModel && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">💰</span>
+                  <h3 className="pmSection__title">Business Model</h3>
+                </div>
+                <p className="pmSection__text">{rich.businessModel.description}</p>
+                <div className="pmSection__pills">
+                  {rich.businessModel.items.map((item) => (
+                    <span key={item} className="pmSection__pill">→ {item}</span>
+                  ))}
+                </div>
+                {rich.businessModel.beneficiaries && (
+                  <ul className="pmSection__list pmSection__list--inline">
+                    {rich.businessModel.beneficiaries.map((b) => (
+                      <li key={b}>{b}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+
+            {/* ── TRACTION ── */}
+            {rich?.traction && (
+              <div className="pmSection pmSection--highlight">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">🏆</span>
+                  <h3 className="pmSection__title">Traction & Reconnaissance</h3>
+                </div>
+                <ul className="pmSection__list pmSection__list--2col">
+                  {rich.traction.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* ── MON RÔLE ── */}
+            {rich?.myRole && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">👤</span>
+                  <h3 className="pmSection__title">Mon rôle — {rich.myRole.title}</h3>
+                </div>
+                <ul className="pmSection__list pmSection__list--2col">
+                  {rich.myRole.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* ── CE QUE ÇA PROUVE ── */}
+            {rich?.proofs && (
+              <div className="pmSection pmSection--proof">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">🧠</span>
+                  <h3 className="pmSection__title">Ce que ça prouve</h3>
+                </div>
+                <ul className="pmSection__list pmSection__list--2col">
+                  {rich.proofs.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <p className="pmSection__callout">
+                  Ce n'est pas un projet scolaire.<br />C'est une startup en cours de structuration.
+                </p>
+              </div>
+            )}
+
+            {/* ── STACK ── */}
+            {rich?.stack && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">🛠</span>
+                  <h3 className="pmSection__title">Stack & Tech</h3>
+                </div>
+                <div className="pmSection__stack">
+                  {rich.stack.map((s) => (
+                    <div key={s.category} className="pmSection__stackItem">
+                      <span className="pmSection__stackCat">{s.category}</span>
+                      <span className="pmSection__stackVal">{s.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ── PROCHAINES ÉTAPES ── */}
+            {rich?.nextSteps && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">🔮</span>
+                  <h3 className="pmSection__title">Prochaines étapes</h3>
+                </div>
+                <ul className="pmSection__list">
+                  {rich.nextSteps.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* ── NOTE RECRUTEUR ── */}
+            {rich?.recruiterNote && (
+              <div className="pmSection pmSection--recruiter">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">🎯</span>
+                  <h3 className="pmSection__title">Pourquoi ce projet compte pour vous ?</h3>
+                </div>
+                <p className="pmSection__recruiterText">{rich.recruiterNote}</p>
+              </div>
+            )}
+
+            {/* ── GALERIE ── */}
+            {project.images && project.images.length > 0 && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">🖼</span>
+                  <h3 className="pmSection__title">Galerie</h3>
+                </div>
                 <div className="projectModalGallery">
-                  {gallery.map((img, i) => (
+                  {project.images.map((img, i) => (
                     <img
                       key={`${img}-${i}`}
                       src={img}
-                      alt={`${title} ${i + 1}`}
+                      alt={`${project.title} ${i + 1}`}
                       className="projectModalGalleryImg"
                       loading="lazy"
                     />
                   ))}
                 </div>
               </div>
-            ) : null}
+            )}
 
-            {project.videoUrl ? (
-              <div className="projectModalSection">
-                <h3 className="projectModalSectionTitle">Vidéo</h3>
+            {/* ── VIDÉO ── */}
+            {project.videoUrl && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">▶</span>
+                  <h3 className="pmSection__title">Vidéo démo</h3>
+                </div>
                 <div className="projectModalVideo">
                   <iframe
                     src={project.videoUrl}
-                    title={`Vidéo ${title}`}
+                    title={`Vidéo ${project.title}`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 </div>
               </div>
-            ) : null}
+            )}
+
+            {/* Fallback si pas de rich content */}
+            {!rich && (
+              <div className="pmSection">
+                <div className="pmSection__header">
+                  <span className="pmSection__icon">📋</span>
+                  <h3 className="pmSection__title">À propos</h3>
+                </div>
+                <p className="pmSection__text">{project.details ?? project.description}</p>
+                <div className="pmSection__pills">
+                  {project.tags.map((t) => (
+                    <span key={t} className="pmSection__pill">{t}</span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

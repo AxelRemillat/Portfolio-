@@ -61,7 +61,7 @@ export default function ProjectsShowcase() {
                   <div className="projectCard__content">
                     <div className="projectCard__contentInner">
                       <p className="projectCard__kicker">
-                        {project.subtitle ?? "Projet"}
+                        {project.kicker ?? project.subtitle ?? "Projet"}
                       </p>
 
                       <h3 className="projectCard__title">{project.title}</h3>
@@ -77,13 +77,18 @@ export default function ProjectsShowcase() {
                         ))}
                       </div>
 
+                      {/* Micro-proof */}
+                      {project.microProof && (
+                        <p className="projectCard__microProof">{project.microProof}</p>
+                      )}
+
                       {/* CTA */}
                       <button
                         type="button"
                         className="projectCard__cta"
                         onClick={() => setActiveProjectId(project.id)}
                       >
-                        Voir le projet
+                        Découvrir le projet
                         <svg
                           width="16"
                           height="16"
