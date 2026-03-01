@@ -3,7 +3,8 @@ export type ProjectTimelineStep = { label: string; status: "done" | "current" | 
 export type ProjectStackItem = { category: string; value: string };
 
 export type ProjectRichContent = {
-  heroVideoFile?: string;
+  heroVideoFile?: string;   // local MP4 (dev only, gitignored)
+  heroVideoUrl?: string;    // YouTube embed (production)
   vision?: string;
   problem?: string[];
   solution?: { intro: string; items: string[]; objectives?: string[]; images?: string[] };
@@ -17,7 +18,8 @@ export type ProjectRichContent = {
   stackImage?: string;
   nextSteps?: string[];
   recruiterNote?: string;
-  videoFile?: string;
+  videoFile?: string;       // local MP4 (dev only, gitignored)
+  videoEmbedUrl?: string;   // YouTube embed (production)
 };
 
 export type Project = {
@@ -68,7 +70,7 @@ export const projects: Project[] = [
       { label: "Incubateur", status: "next" },
     ],
     rich: {
-      heroVideoFile: "/images/RISE_screens/RISE_VERSION_FINALE.mp4",
+      // heroVideoUrl: "" // ← à remplir quand la vidéo finale sera sur YouTube
       vision:
         "Chaque année, des milliers d'étudiants doivent choisir une destination internationale sans avoir accès à des informations fiables, structurées et personnalisées.\n\nRISE transforme ce processus complexe en une expérience claire, guidée et optimisée.",
       problem: [
@@ -163,7 +165,7 @@ export const projects: Project[] = [
       ],
       recruiterNote:
         "RISE prouve ma capacité à mener un projet tech complet : vision produit, exécution, communication et structuration stratégique. Je ne suis pas seulement développeur — je comprends la valeur business derrière la technologie.",
-      videoFile: "/images/RISE_screens/PresentationSite_clip.mp4",
+      videoEmbedUrl: "https://www.youtube.com/embed/3txKZQY4beU",
     },
     coverImage: "/images/RISE_screens/logo_RISE.png",
   },

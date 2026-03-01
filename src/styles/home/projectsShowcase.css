@@ -1088,6 +1088,25 @@
   background: #000;
 }
 
+/* ── IFRAME YOUTUBE (16:9) ── */
+.pmSection__iframeWrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  margin-top: 0.6rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pmSection__iframeWrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 .pmSection__video {
   width: 100%;
   display: block;

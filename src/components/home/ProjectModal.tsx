@@ -107,21 +107,32 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div className="projectModalContent">
 
               {/* ── VIDÉO HERO (en haut, coupe le son ambiant) ── */}
-              {rich.heroVideoFile && (
+              {(rich.heroVideoUrl || rich.heroVideoFile) && (
                 <div className="pmSection pmSection--heroVideo">
-                  <div className="pmSection__videoWrap">
-                    <video
-                      ref={heroVideoRef}
-                      src={rich.heroVideoFile}
-                      controls
-                      playsInline
-                      className="pmSection__video"
-                      preload="metadata"
-                      onPlay={onVideoPlay}
-                      onPause={onVideoStop}
-                      onEnded={onVideoStop}
-                    />
-                  </div>
+                  {rich.heroVideoUrl ? (
+                    <div className="pmSection__iframeWrap">
+                      <iframe
+                        src={rich.heroVideoUrl}
+                        title="Présentation RISE"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : (
+                    <div className="pmSection__videoWrap">
+                      <video
+                        ref={heroVideoRef}
+                        src={rich.heroVideoFile}
+                        controls
+                        playsInline
+                        className="pmSection__video"
+                        preload="metadata"
+                        onPlay={onVideoPlay}
+                        onPause={onVideoStop}
+                        onEnded={onVideoStop}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -354,24 +365,35 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
               )}
 
-              {/* ── DÉMO CLIP (muet) ── */}
-              {rich.videoFile && (
+              {/* ── DÉMO (YouTube embed en priorité, sinon fichier local) ── */}
+              {(rich.videoEmbedUrl || rich.videoFile) && (
                 <div className="pmSection">
                   <div className="pmSection__header">
                     <span className="pmSection__icon">▶</span>
                     <h3 className="pmSection__title">Démo — Présentation du site</h3>
                   </div>
-                  <div className="pmSection__videoWrap">
-                    <video
-                      src={rich.videoFile}
-                      controls
-                      playsInline
-                      muted
-                      loop
-                      className="pmSection__video"
-                      preload="metadata"
-                    />
-                  </div>
+                  {rich.videoEmbedUrl ? (
+                    <div className="pmSection__iframeWrap">
+                      <iframe
+                        src={rich.videoEmbedUrl}
+                        title="Démo RISE"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  ) : (
+                    <div className="pmSection__videoWrap">
+                      <video
+                        src={rich.videoFile}
+                        controls
+                        playsInline
+                        muted
+                        loop
+                        className="pmSection__video"
+                        preload="metadata"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
