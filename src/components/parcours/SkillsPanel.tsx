@@ -14,7 +14,6 @@ function SkillsPanel({ active }: Props) {
         />
         <div>
           <div className="skills-panel__title">{active.label}</div>
-          <div className="skills-panel__meta">{active.level}</div>
         </div>
       </div>
 
@@ -40,16 +39,6 @@ function SkillsPanel({ active }: Props) {
         </div>
       </div>
 
-      <div className="skills-panel__section">
-        <div className="skills-panel__label">Preuves</div>
-        <div className="skills-panel__links">
-          {active.proofs.map((p) => (
-            <a key={p.label} className="skills-link" href={p.href}>
-              {p.label}
-            </a>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

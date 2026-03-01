@@ -2,11 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useScrollProgress from "./useScrollProgress";
 
-type ContactLink = {
-  label: string;
-  href: string;
-};
-
 export default function ContactCTASection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -25,11 +20,6 @@ export default function ContactCTASection() {
   const email = "axelremillat@netcourrier.com";
   const phoneDisplay = " 07 49 72 71 92";
   const phoneHref = "+33749727192";
-
-  // --- Social unique
-  const socials: ContactLink[] = [
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
-  ];
 
   const dynamicStyle = useMemo(() => {
     if (reducedMotion) return undefined;
@@ -79,24 +69,6 @@ export default function ContactCTASection() {
         </Link>
       </div>
 
-      <footer className="vem-contact__footer" aria-label="Réseaux">
-        <div className="vem-contact__footer-right">
-        
-          <nav className="vem-contact__socials" aria-label="Lien LinkedIn">
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                className="vem-contact__social"
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {s.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </footer>
     </section>
   );
 }

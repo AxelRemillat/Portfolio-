@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Large video files — hébergés sur YouTube, pas dans le repo
+public/images/RISE_screens/*.mp4

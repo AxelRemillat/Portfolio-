@@ -98,6 +98,8 @@ export default function AudioProvider({ src, children }: AudioProviderProps) {
 
     const bootMutedAutoplay = async () => {
       if (!isEnabled) return;
+      // Si l'audio a déjà démarré (ex: toggle ON après mute), on ne re-mute pas
+      if (startedRef.current) return;
 
       await wait(50);
       if (cancelled) return;
@@ -133,7 +135,7 @@ export default function AudioProvider({ src, children }: AudioProviderProps) {
       // Si pas démarré (autoplay muet bloqué), on tente play
       if (!startedRef.current) {
         audio.muted = false;
-        audio.volume = 0.18;
+        audio.volume = 0.27;
 
         const ok1 = await tryPlay(audio);
         if (cancelled) return;
@@ -157,7 +159,7 @@ export default function AudioProvider({ src, children }: AudioProviderProps) {
 
       // Sinon: lecture muette déjà lancée => on unmute (c'est le "démarrage" au scroll)
       audio.muted = false;
-      audio.volume = 0.18;
+      audio.volume = 0.27;
 
       // sécurité si jamais c'était repassé en pause
       if (audio.paused) {
@@ -230,7 +232,7 @@ export default function AudioProvider({ src, children }: AudioProviderProps) {
 
       // ON : comme c'est un clic sur le bouton => geste user => on peut unmute direct
       audio.muted = false;
-      audio.volume = 0.18;
+      audio.volume = 0.27;
 
       void (async () => {
         const ok1 = await tryPlay(audio);

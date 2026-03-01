@@ -4,7 +4,7 @@ import AudioProvider from "../audio/AudioProvider";
 
 export default function Layout() {
   return (
-    <AudioProvider src="/audio/ambiance.mp3">
+    <AudioProvider src="/audio/quietphase-ambient-zen-489706.mp3">
       <div className="page">
         <Navbar />
         <main className="content">

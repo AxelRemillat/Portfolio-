@@ -3,16 +3,21 @@ export type ProjectTimelineStep = { label: string; status: "done" | "current" | 
 export type ProjectStackItem = { category: string; value: string };
 
 export type ProjectRichContent = {
+  heroVideoFile?: string;
   vision?: string;
   problem?: string[];
-  solution?: { intro: string; items: string[]; objectives?: string[] };
+  solution?: { intro: string; items: string[]; objectives?: string[]; images?: string[] };
+  testimonials?: { image: string; caption?: string };
   businessModel?: { description: string; items: string[]; beneficiaries?: string[] };
   traction?: string[];
+  tractionImage?: string;
   myRole?: { title: string; items: string[] };
   proofs?: string[];
   stack?: ProjectStackItem[];
+  stackImage?: string;
   nextSteps?: string[];
   recruiterNote?: string;
+  videoFile?: string;
 };
 
 export type Project = {
@@ -63,6 +68,7 @@ export const projects: Project[] = [
       { label: "Incubateur", status: "next" },
     ],
     rich: {
+      heroVideoFile: "/images/RISE_screens/RISE_VERSION_FINALE.mp4",
       vision:
         "Chaque année, des milliers d'étudiants doivent choisir une destination internationale sans avoir accès à des informations fiables, structurées et personnalisées.\n\nRISE transforme ce processus complexe en une expérience claire, guidée et optimisée.",
       problem: [
@@ -75,9 +81,9 @@ export const projects: Project[] = [
         intro:
           "RISE est une plateforme privée accessible uniquement aux étudiants d'universités partenaires.",
         items: [
-          "Témoignages étudiants vérifiés",
-          "Fiches universités partenaires",
-          "Informations pays",
+          "Carte interactive des universités partenaires",
+          "Fiches universités détaillées (infos, notes, contacts)",
+          "Témoignages étudiants vérifiés par destination",
           "Conseils logement / services / vie locale",
           "Interface claire et structurée",
           "Un compte unique par étudiant",
@@ -87,6 +93,15 @@ export const projects: Project[] = [
           "Fiabiliser les données",
           "Améliorer l'expérience globale",
         ],
+        images: [
+          "/images/RISE_screens/capture_carte_universitaire.png",
+          "/images/RISE_screens/capture_infos_universités.png",
+        ],
+      },
+      testimonials: {
+        image: "/images/RISE_screens/capture_temoignage.png",
+        caption:
+          "Témoignages étudiants filtrés par destination, université et contexte de vie — une des fonctionnalités les plus attendues par les étudiants en mobilité.",
       },
       businessModel: {
         description:
@@ -109,6 +124,7 @@ export const projects: Project[] = [
         "🚀 Bêta en cours de déploiement",
         "🏢 Intégration en cours à l'incubateur de l'école",
       ],
+      tractionImage: "/images/RISE_screens/Capture_trophées.png",
       myRole: {
         title: "Cofondateur (4 membres)",
         items: [
@@ -132,11 +148,12 @@ export const projects: Project[] = [
       stack: [
         { category: "Frontend", value: "React" },
         { category: "Backend", value: "Firebase" },
-        { category: "BDD", value: "NoSQL" },
+        { category: "BDD", value: "Firestore NoSQL" },
+        { category: "Auth", value: "Firebase Auth" },
         { category: "Design", value: "Figma" },
-        { category: "Marketing", value: "Canva" },
         { category: "Gestion", value: "GitHub" },
       ],
+      stackImage: "/images/RISE_screens/capture_BDD_fireBase_comptes.png",
       nextSteps: [
         "Signature officielle avec universités partenaires",
         "Intégration incubateur",
@@ -146,13 +163,9 @@ export const projects: Project[] = [
       ],
       recruiterNote:
         "RISE prouve ma capacité à mener un projet tech complet : vision produit, exécution, communication et structuration stratégique. Je ne suis pas seulement développeur — je comprends la valeur business derrière la technologie.",
+      videoFile: "/images/RISE_screens/PresentationSite_clip.mp4",
     },
-    coverImage:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1487014679447-9f8336841d58?auto=format&fit=crop&w=1200&q=80",
-    ],
+    coverImage: "/images/RISE_screens/logo_RISE.png",
   },
   {
     id: "automation",
@@ -165,10 +178,5 @@ export const projects: Project[] = [
     value: "Réduit fortement les tâches manuelles et améliore la fiabilité des flux de données.",
     coverImage:
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
-    images: [
-      "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=1200&q=80",
-    ],
-    videoUrl: "https://www.youtube.com/embed/jNQXAC9IVRw",
   },
 ];

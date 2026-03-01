@@ -10,7 +10,8 @@
 }
 
 html {
-  font-size: 16px;
+  /* Base 16px pour laptop (~1920px) — scale automatique sur grand écran */
+  font-size: clamp(14px, 0.9vw, 26px);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;

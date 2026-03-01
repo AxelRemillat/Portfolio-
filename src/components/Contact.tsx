@@ -44,7 +44,7 @@ export default function Contact() {
           <a className="link" href="mailto:tonmail@example.com">
             tonmail@example.com
           </a>
-          <a className="link" href="https://linkedin.com/in/tonprofil" target="_blank" rel="noreferrer">
+          <a className="link" href="https://www.linkedin.com/in/axel-remillatesmelyon" target="_blank" rel="noreferrer">
             LinkedIn
           </a>
           <a className="link" href="https://github.com/TON_USER" target="_blank" rel="noreferrer">

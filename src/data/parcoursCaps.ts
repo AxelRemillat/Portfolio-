@@ -142,7 +142,7 @@ export const parcoursCaps: ParcoursCap[] = [
     color: "#f472b6",
     period: "2021",
     title: "Baccalauréat général — Mention Bien",
-    org: "Lycée de la Tour du Pin",
+    org: "Lycée général de la Matheysine",
     summary: "Socle scientifique solide, logique d'analyse et rigueur.",
     learned: [
       "Raisonnement scientifique et logique",

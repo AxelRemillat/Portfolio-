@@ -35,6 +35,10 @@ export default function ProjectsShowcase() {
                   className={`projectCard ${
                     isEven ? "projectCard--left" : "projectCard--right"
                   }`}
+                  onClick={() => setActiveProjectId(project.id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setActiveProjectId(project.id); }}
                 >
                   {/* Numéro géant en arrière-plan */}
                   <div className="projectCard__number" aria-hidden="true">
@@ -86,7 +90,7 @@ export default function ProjectsShowcase() {
                       <button
                         type="button"
                         className="projectCard__cta"
-                        onClick={() => setActiveProjectId(project.id)}
+                        onClick={(e) => { e.stopPropagation(); setActiveProjectId(project.id); }}
                       >
                         Découvrir le projet
                         <svg
