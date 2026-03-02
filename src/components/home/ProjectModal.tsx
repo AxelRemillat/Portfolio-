@@ -14,6 +14,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   const isEnabledRef = useRef(isEnabled);
   const mutedForVideoRef = useRef(false);
   const heroVideoRef = useRef<HTMLVideoElement | null>(null);
+  const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
 
   useEffect(() => { isEnabledRef.current = isEnabled; }, [isEnabled]);
 
@@ -42,6 +43,42 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       }
     }
   }, [toggle]);
+
+  // YouTube IFrame API — coupe le son ambiant quand la vidéo démarre
+  useEffect(() => {
+    if (!project.rich?.heroVideoUrl) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let player: any;
+
+    const createPlayer = () => {
+      if (!ytIframeRef.current || !w.YT?.Player) return;
+      player = new w.YT.Player(ytIframeRef.current, {
+        events: {
+          onStateChange: (e: { data: number }) => {
+            if (e.data === 1) onVideoPlay();
+            else if (e.data === 0 || e.data === 2) onVideoStop();
+          },
+        },
+      });
+    };
+
+    if (w.YT?.Player) {
+      createPlayer();
+    } else {
+      if (!document.getElementById("yt-api")) {
+        const s = document.createElement("script");
+        s.id = "yt-api";
+        s.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(s);
+      }
+      const prev = w.onYouTubeIframeAPIReady;
+      w.onYouTubeIframeAPIReady = () => { prev?.(); createPlayer(); };
+    }
+
+    return () => { player?.destroy?.(); };
+  }, [project.rich?.heroVideoUrl, onVideoPlay, onVideoStop]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -112,7 +149,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   {rich.heroVideoUrl ? (
                     <div className="pmSection__iframeWrap">
                       <iframe
-                        src={rich.heroVideoUrl}
+                        ref={ytIframeRef}
+                        src={`${rich.heroVideoUrl}?enablejsapi=1`}
                         title="Présentation RISE"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen

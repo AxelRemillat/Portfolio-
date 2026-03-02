@@ -70,7 +70,7 @@ export const projects: Project[] = [
       { label: "Incubateur", status: "next" },
     ],
     rich: {
-      // heroVideoUrl: "" // ← à remplir quand la vidéo finale sera sur YouTube
+      heroVideoUrl: "https://www.youtube.com/embed/mAC6xgOqSNg",
       vision:
         "Chaque année, des milliers d'étudiants doivent choisir une destination internationale sans avoir accès à des informations fiables, structurées et personnalisées.\n\nRISE transforme ce processus complexe en une expérience claire, guidée et optimisée.",
       problem: [
