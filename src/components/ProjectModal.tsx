@@ -40,9 +40,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
         )}
 
-        {project.images?.length > 0 && (
+        {(project.images?.length ?? 0) > 0 && (
           <div className="project-modal-gallery">
-            {project.images.map((image) => (
+            {project.images!.map((image) => (
               <img key={image} src={image} alt={project.title} loading="lazy" />
             ))}
           </div>

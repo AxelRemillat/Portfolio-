@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import useScrollProgress from "./useScrollProgress";
 
 export default function ContactCTASection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {

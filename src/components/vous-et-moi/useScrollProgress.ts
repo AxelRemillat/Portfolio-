@@ -24,7 +24,7 @@ function easeOutCubic(t: number) {
 }
 
 export default function useScrollProgress(
-  target: RefObject<HTMLElement>,
+  target: RefObject<HTMLElement | null>,
   options: ScrollProgressOptions = {},
 ) {
   const { disabled = false, start = 0.85, end = 0.25 } = options;

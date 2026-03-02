@@ -55,7 +55,7 @@ export default function ContactForm({
         data-ready={canSend ? "true" : "false"}
         aria-hidden="false"
       >
-        <ContactSubmitOrb status={status} disabled={!canSend || status === "sending"} />
+        <ContactSubmitOrb status={status === "error" ? "idle" : status} disabled={!canSend || status === "sending"} />
       </div>
 
       <div className="contact-form__row">

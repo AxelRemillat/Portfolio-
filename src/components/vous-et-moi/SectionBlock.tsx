@@ -2,15 +2,9 @@ import useRevealOnScroll from "./useRevealOnScroll";
 import type { SectionData } from "../../pages/vous-et-moi/sectionsData";
 
 const layoutClassMap: Record<SectionData["layout"], string> = {
-  // ✅ variantes "a/b/c" (style déstructuré)
   a: "vem-section--a",
   b: "vem-section--b",
   c: "vem-section--c",
-
-  // ✅ compat si jamais SectionData contient encore les anciens layouts
-  "text-left": "vem-section--text-left",
-  "text-right": "vem-section--text-right",
-  stacked: "vem-section--stacked",
 };
 
 type SectionBlockProps = {
