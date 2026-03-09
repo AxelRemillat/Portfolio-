@@ -28,8 +28,8 @@ export default function Navbar() {
           </button>
 
           <span className="brand">Axel Remillat</span>
-          <span className="nav-view-count" title="Visiteurs uniques">
-            👁 {viewCount === "loading" ? "—" : viewCount.toLocaleString("fr-FR")}
+          <span className="nav-view-count" title="Nombre de visites du portfolio">
+            👁 {viewCount === "loading" ? "—" : viewCount.toLocaleString("fr-FR")} vues
           </span>
         </div>
 
