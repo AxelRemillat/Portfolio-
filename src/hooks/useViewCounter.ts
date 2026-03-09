@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
 
-const HIT_URL = "https://api.countapi.xyz/hit/axelremillat/portfolio-views";
-const GET_URL = "https://api.countapi.xyz/get/axelremillat/portfolio-views";
 const SESSION_KEY = "ar-view-counted";
 
 export function useViewCounter() {
-  const [count, setCount] = useState<number | null>(null);
+  // "loading" = chargement en cours, number = valeur reçue
+  const [count, setCount] = useState<number | "loading">("loading");
 
   useEffect(() => {
     const alreadyCounted = sessionStorage.getItem(SESSION_KEY);
-    const url = alreadyCounted ? GET_URL : HIT_URL;
+    const url = alreadyCounted ? "/api/views" : "/api/views?hit=1";
 
     fetch(url)
       .then((r) => r.json())
-      .then((d: { value?: number }) => {
-        if (typeof d.value === "number") {
-          setCount(d.value);
+      .then((d: { count?: number }) => {
+        if (typeof d.count === "number") {
+          setCount(d.count);
           if (!alreadyCounted) sessionStorage.setItem(SESSION_KEY, "1");
+        } else {
+          setCount(0);
         }
       })
-      .catch(() => {/* silent — le compteur ne bloque pas le site */});
+      .catch(() => setCount(0));
   }, []);
 
   return count;

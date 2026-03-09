@@ -28,11 +28,9 @@ export default function Navbar() {
           </button>
 
           <span className="brand">Axel Remillat</span>
-          {viewCount !== null && (
-            <span className="nav-view-count" title="Visiteurs uniques">
-              👁 {viewCount.toLocaleString("fr-FR")}
-            </span>
-          )}
+          <span className="nav-view-count" title="Visiteurs uniques">
+            👁 {viewCount === "loading" ? "—" : viewCount.toLocaleString("fr-FR")}
+          </span>
         </div>
 
         <nav className="nav">
