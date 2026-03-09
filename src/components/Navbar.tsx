@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useSiteAudio } from "../audio/AudioProvider";
+import { useViewCounter } from "../hooks/useViewCounter";
 
 const navItems = [
   { label: "Home", to: "/" },
@@ -10,6 +11,7 @@ const navItems = [
 
 export default function Navbar() {
   const { isEnabled, toggle } = useSiteAudio();
+  const viewCount = useViewCounter();
 
   return (
     <header className="navbar">
@@ -26,6 +28,11 @@ export default function Navbar() {
           </button>
 
           <span className="brand">Axel Remillat</span>
+          {viewCount !== null && (
+            <span className="nav-view-count" title="Visiteurs uniques">
+              👁 {viewCount.toLocaleString("fr-FR")}
+            </span>
+          )}
         </div>
 
         <nav className="nav">

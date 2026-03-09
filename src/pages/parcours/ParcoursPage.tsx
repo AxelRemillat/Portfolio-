@@ -4,7 +4,6 @@ import DropScreen from "../../components/parcours/DropScreen";
 import ParcoursBackground from "../../components/parcours/ParcoursBackground";
 import ParcoursSkills from "../../components/parcours/ParcoursSkills";
 import { parcoursCaps } from "../../data/parcoursCaps";
-import "../../styles/parcours.css";
 
 export default function ParcoursPage() {
   const current = useMemo(() => parcoursCaps.find((cap) => cap.isCurrent), []);

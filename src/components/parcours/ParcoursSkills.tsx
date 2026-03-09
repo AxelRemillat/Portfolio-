@@ -19,7 +19,7 @@ function ParcoursSkills() {
       <div className="parcours-skills__header">
         <h2 className="parcours-skills__title">Compétences</h2>
         <p className="parcours-skills__desc">
-          Un aperçu des domaines que je mobilise au quotidien (clique sur une
+          Un aperçu des domaines que je mobilise au quotidien (cliquez sur une
           part).
         </p>
       </div>

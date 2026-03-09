@@ -12,7 +12,7 @@ export default function ContactHero() {
         <p className="contact-hero__eyebrow">Contact</p>
         <h1>Let’s start a project together.</h1>
         <p className="contact-hero__subtitle">
-          Quelques infos et un message suffisent pour lancer la conversation.
+          Quelques informations et un message suffisent pour lancer la conversation.
         </p>
       </div>
 
